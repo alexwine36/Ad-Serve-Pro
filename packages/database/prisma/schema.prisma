@@ -120,8 +120,10 @@ model Organization {
 
   companies Company[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  advertisements Advertisement[]
+  Campaign       Campaign[]
 }
 
 enum MemberRole {
@@ -168,6 +170,90 @@ model Company {
   social         Json?
   organizationId String
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  // TODO: consider adding an "Agency for representing a company"
+  // TODO: consider adding a "CompanyMember" model to represent the members of a company
+
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  contacts      Contact[]
+  Advertisement Advertisement[]
+  Campaign      Campaign[]
+}
+
+model Contact {
+  id         String  @id @default(cuid())
+  companyId  String
+  name       String
+  email      String?
+  phone      String?
+  title      String?
+  department String?
+  notes      String?
+
+  // TODO: consider adding a notifications setting
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// #endregion
+
+// #region Advertising
+
+model Campaign {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  startDate   DateTime
+  endDate     DateTime
+  isActive    Boolean  @default(true)
+  budget      Float
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  companyId      String
+  company        Company      @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Advertisement {
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  companyId      String
+  company        Company      @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  name           String
+  description    String?
+
+  // Ad content
+  imageUrl  String?
+  videoUrl  String?
+  targetUrl String?
+
+  // Targeting
+  targetAudience Json?
+  placement      AdPlacement[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AdPlacement {
+  id              String        @id @default(cuid())
+  advertisementId String
+  advertisement   Advertisement @relation(fields: [advertisementId], references: [id], onDelete: Cascade)
+
+  // Placement details
+  location String // e.g., "homepage", "sidebar", "article"
+  width    Int
+  height   Int
+  priority Int     @default(1)
+  isActive Boolean @default(true)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
