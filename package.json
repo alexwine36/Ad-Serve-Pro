@@ -17,7 +17,7 @@
     "lint:ci": "biome check --diagnostic-level=error",
     "migrate": "cd packages/database && npx prisma format && npx prisma generate && npx prisma db push",
     "prepare": "husky install",
-    "sync:fix": "run-s sync:format sync:fix-*",
+    "sync:fix": "run-s sync:format sync:fix-* format",
     "sync:fix-mismatches": "syncpack fix-mismatches",
     "sync:fix-semver": "syncpack set-semver-ranges",
     "sync:format": "syncpack format",
