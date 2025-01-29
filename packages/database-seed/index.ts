@@ -1,8 +1,8 @@
-import { PrismaClient } from "@repo/database";
-import { keys } from "./keys";
-import { seedCompanies } from "./lib/company";
-import { getOrganization, seedMembers } from "./lib/organization";
-import { generatePages } from "./lib/page";
+import { PrismaClient } from '@repo/database';
+import { keys } from './keys';
+import { seedCompanies } from './lib/company';
+import { getOrganization, seedMembers } from './lib/organization';
+import { generatePages } from './lib/page';
 
 const _env = keys();
 
@@ -12,7 +12,7 @@ const prisma = new PrismaClient();
   try {
     const org = await getOrganization(
       {
-        name: "Acme Inc.",
+        name: 'Acme Inc.',
       },
       prisma
     );
