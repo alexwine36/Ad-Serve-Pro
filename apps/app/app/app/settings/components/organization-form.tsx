@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import { OrganizationInput } from '@repo/common-types';
+import { OrganizationInput } from "@repo/common-types";
 import {
   Form,
   FormInput,
   zodResolver,
-} from '@repo/design-system/components/inputs';
-import { Button } from '@repo/design-system/components/ui/button';
-import { useToast } from '@repo/design-system/hooks/use-toast';
-import type React from 'react';
-import { useForm } from 'react-hook-form';
-import { trpc } from '../../../../utils/trpc';
+} from "@repo/design-system/components/inputs";
+import { Button } from "@repo/design-system/components/ui/button";
+import { useToast } from "@repo/design-system/hooks/use-toast";
+import type React from "react";
+import { useForm } from "react-hook-form";
+import { trpc } from "../../../../utils/trpc";
 type OrganizationFormProps = {
   organization?: OrganizationInput;
 };
@@ -24,10 +24,7 @@ export const OrganizationForm: React.FC<OrganizationFormProps> = ({
   const form = useForm<OrganizationInput>({
     resolver: zodResolver(OrganizationInput),
     defaultValues: {
-      description: '',
-      name: '',
-      slug: '',
-      website: undefined,
+      name: "",
       image: undefined,
       ...organization,
     },
@@ -35,9 +32,9 @@ export const OrganizationForm: React.FC<OrganizationFormProps> = ({
 
   const handleSuccess = () => {
     toast({
-      title: 'Organization saved',
+      title: "Organization saved",
       // description: 'Organization saved',
-      variant: 'success',
+      variant: "success",
     });
     utils.organization.invalidate();
   };
@@ -77,35 +74,12 @@ export const OrganizationForm: React.FC<OrganizationFormProps> = ({
           />
           <FormInput
             className="min-w-72 flex-auto"
-            label="Slug"
-            control={form.control}
-            name="slug"
-            prefix={'/'}
-          />
-          <FormInput
-            // className="flex-1"
-            className="min-w-72 flex-auto"
             label="Image"
             control={form.control}
             name="image"
-            //   prefix={'/'}
-          />
-          <FormInput
-            // className="flex-1"
-            className="min-w-72 flex-auto"
-            label="Website"
-            control={form.control}
-            name="website"
-            //   prefix={'/'}
           />
         </div>
 
-        <FormInput
-          type="textarea"
-          label="Description"
-          control={form.control}
-          name="description"
-        />
         <div className="flex justify-end">
           <Button disabled={form.formState.isSubmitting} type="submit">
             Save

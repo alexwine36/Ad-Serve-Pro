@@ -15,7 +15,7 @@ export const organizationRouter = router({
 
   update: authedProcedure
     .input(OrganizationUpdateSchema)
-    .query(organizationUpdateHandler),
+    .mutation(organizationUpdateHandler),
 
   getOne: authedProcedure
     .input(OrganizationGetOneSchema)

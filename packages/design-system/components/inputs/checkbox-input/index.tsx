@@ -1,9 +1,10 @@
-import { Checkbox } from '@radix-ui/react-checkbox';
 import type {
   FieldPath,
   FieldValues,
   UseControllerProps,
-} from 'react-hook-form';
+} from "react-hook-form";
+import { cn } from "../../../lib/utils";
+import { Checkbox } from "../../ui/checkbox";
 import {
   FormControl,
   FormDescription,
@@ -11,25 +12,27 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '../../ui/form';
+} from "../../ui/form";
 
 interface FormInputProps<
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 > extends UseControllerProps<TFieldValues> {
   name: TName;
   label: string;
   description?: string;
+  className?: string;
 }
 
 export const CheckboxInput = <
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 >({
   control,
   name,
   label,
   description,
+  className,
 }: FormInputProps<TFieldValues, TName>) => {
   return (
     <FormField
@@ -37,7 +40,12 @@ export const CheckboxInput = <
       name={name}
       render={({ field }) => {
         return (
-          <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
+          <FormItem
+            className={cn(
+              "flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow",
+              className
+            )}
+          >
             <FormControl>
               <Checkbox
                 checked={field.value}

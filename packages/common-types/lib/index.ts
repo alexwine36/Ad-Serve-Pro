@@ -1,2 +1,3 @@
-export * from './company';
-export * from './organization';
+export * from "./company";
+export * from "./member";
+export * from "./organization";
