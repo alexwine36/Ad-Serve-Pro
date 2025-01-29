@@ -1,0 +1,63 @@
+name: Typecheck
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  typecheck:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: ./.github/actions/ci-setup
+
+      # Checking dependency versions
+      - name: Syncpack...
+        run: pnpm sync:lint
+        env:
+          NODE_OPTIONS: "--max_old_space_size=8192"
+
+      # Running Lint with --quiet to only print errors
+      - name: Linting...
+        run: pnpm lint:ci
+        env:
+          NODE_OPTIONS: "--max_old_space_size=8192"
+
+      - name: Running Typecheck...
+        run: pnpm typecheck
+        env:
+          NODE_OPTIONS: "--max_old_space_size=8192"
+
+      - name: Typecheck ✅
+        if: ${{ success() }}
+        run: |
+          curl --request POST \
+          --url https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.sha }} \
+          --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+          --header 'content-type: application/json' \
+          --data '{
+            "context": "typecheck",
+            "state": "success",
+            "description": "Typecheck passed",
+            "target_url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          }'
+
+      - name: Typecheck 🚨
+        if: ${{ failure() }}
+        run: |
+          curl --request POST \
+          --url https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.sha }} \
+          --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+          --header 'content-type: application/json' \
+          --data '{
+            "context": "typecheck",
+            "state": "failure",
+            "description": "Typecheck failed",
+            "target_url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          }'

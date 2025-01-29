@@ -1,0 +1,29 @@
+{
+  "name": "@repo/database-seed",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "db:seed": "tsx index.ts",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+  },
+  "dependencies": {
+    "@repo/common-types": "workspace:*",
+    "@repo/database": "workspace:*",
+    "@repo/trpc": "workspace:*",
+    "@t3-oss/env-nextjs": "0.11.1",
+    "react": "19.0.0"
+  },
+  "devDependencies": {
+    "@anatine/zod-mock": "^3.13.5",
+    "@faker-js/faker": "^9.3.0",
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "^22.10.5",
+    "@types/react": "^19.0.2",
+    "@types/react-dom": "^19.0.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8",
+    "zod": "^3.24.1"
+  }
+}

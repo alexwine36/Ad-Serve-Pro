@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Background square with rounded corners -->
+  <rect x="10" y="10" width="180" height="180" rx="15" fill="#2C3E50"/>
+  
+  <!-- Company name split into two lines -->
+  <text x="100" y="85" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="white" text-anchor="middle" dominant-baseline="middle">ACME</text>
+  <text x="100" y="125" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="white" text-anchor="middle" dominant-baseline="middle">INC</text>
+  
+  <!-- Decorative triangle -->
+  <path d="M60 140 L80 100 L100 140 Z" fill="none" stroke="white" stroke-width="2"/>
+  
+  <!-- Decorative X -->
+  <line x1="120" y1="100" x2="140" y2="140" stroke="white" stroke-width="2"/>
+  <line x1="120" y1="140" x2="140" y2="100" stroke="white" stroke-width="2"/>
+</svg>

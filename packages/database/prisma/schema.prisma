@@ -1,0 +1,186 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+generator zod {
+  provider       = "zod-prisma-types"
+  output = "../../common-types/lib/generated"
+  prismaClientPath = "@repo/database"
+  useMultipleFiles = true
+  writeNullishInModelTypes = true
+  createInputTypes = false
+  
+}
+
+datasource db {
+  provider     = "postgresql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+// This is a stub model.
+// Delete it and add your own Prisma models.
+model Page {
+  id    Int     @id @default(autoincrement())
+  email String  @unique
+  name  String?
+  content Json?
+}
+
+// #region Authentication
+
+model User {
+  id            String          @id @default(cuid())
+  name          String?
+  email         String          @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  // Optional for WebAuthn support
+  Authenticator Authenticator[]
+
+  members Member[]
+  currentOrganizationId String?
+
+  currentMembership Member? @relation("CurrentMembership", fields: [currentOrganizationId, email], references: [organizationId, email])
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+ 
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+ 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  @@id([provider, providerAccountId])
+}
+ 
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+ 
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+ 
+  @@id([identifier, token])
+}
+ 
+// Optional for WebAuthn support
+model Authenticator {
+  credentialID         String  @unique
+  userId               String
+  providerAccountId    String
+  credentialPublicKey  String
+  counter              Int
+  credentialDeviceType String
+  credentialBackedUp   Boolean
+  transports           String?
+ 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  @@id([userId, credentialID])
+}
+// #endregion
+
+
+// #region Organization
+
+model Organization {
+  id          String   @id @default(cuid())
+  /// @zod.string.min(3, {message: "name must be at least 3 characters"})
+  name        String
+  /// @zod.string.min(3, {message: "must be at least 3 characters"}).regex(/^[a-z](-?[a-z])*$/, 'Slug must only contain "-" and lowercase letters'),
+  slug        String   @unique
+  image       String?
+  type        String
+  description String?
+  /// @zod.string.url({message: "must be a valid URL"})
+  website     String?
+  social      Json?
+  members     Member[]
+
+  companies  Company[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+enum MemberRole {
+  OWNER
+  ADMIN
+  MEMBER
+}
+
+model Member {
+
+  email         String
+  organizationId String
+  role           MemberRole @default(MEMBER)
+  active Boolean @default(true)
+  title          String?
+  description    String?
+  image          String?
+  social         Json?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+ 
+  user         User?         @relation(fields: [email], references: [email], onDelete: Restrict, onUpdate: Restrict)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+ 
+  @@id([email, organizationId])
+  User User[] @relation("CurrentMembership")
+  @@unique([organizationId, email])
+}
+
+// #endregion
+
+// #region Company
+
+model Company {
+  id          String   @id @default(cuid())
+    /// @zod.string.min(3, {message: "name must be at least 3 characters"})
+  name        String
+   /// @zod.string.min(3, {message: "must be at least 3 characters"}).regex(/^[a-z](-?[a-z])*$/, 'Slug must only contain "-" and lowercase letters'),
+  slug        String   @unique
+
+  image       String?
+  type        String
+  description String?
+  /// @zod.string.url({message: "must be a valid URL"})
+  website     String?
+  social      Json?
+  organizationId String
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// #endregion

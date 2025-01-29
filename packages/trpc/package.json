@@ -1,0 +1,42 @@
+{
+  "name": "@repo/trpc",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "tsup",
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "dev": "rm -rf dist && tsup --watch",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": ["dist/**"],
+  "dependencies": {
+    "@repo/auth": "workspace:*",
+    "@tanstack/react-query": "5.64.2",
+    "@trpc/client": "11.0.0-rc.708",
+    "@trpc/next": "11.0.0-rc.708",
+    "@trpc/react-query": "11.0.0-rc.708",
+    "next": "15.1.5",
+    "react": "19.0.0",
+    "remeda": "2.19.1",
+    "superjson": "2.2.2",
+    "zod": "3.24.1"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "@trpc/server": "11.0.0-rc.708",
+    "@types/node": "^22.10.5",
+    "@types/react": "^19.0.2",
+    "@types/react-dom": "^19.0.2",
+    "inquirer-directory": "^2.2.0",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "peerDependencies": {
+    "@repo/common-types": "workspace:*",
+    "@repo/database": "workspace:*"
+  }
+}

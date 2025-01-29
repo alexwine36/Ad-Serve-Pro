@@ -1,0 +1,106 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 99%;
+    --foreground: 0 0% 5%;
+    --card: 0 0% 98%;
+    --card-foreground: 0 0% 5%;
+    --popover: 0 0% 96%;
+    --popover-foreground: 0 0% 5%;
+    --primary: 226 68% 46%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 256 68% 53%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 82%;
+    --muted-foreground: 0 0% 30%;
+    --accent: 196 68% 48%;
+    --accent-foreground: 0 0% 0%;
+    --destructive: 350 91% 55%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 69%;
+    --input: 0 0% 73%;
+    --ring: 214 68% 35%;
+    --chart-1: 226 68% 41%;
+    --chart-2: 16 68% 41%;
+    --chart-3: 76 68% 41%;
+    --chart-4: 196 68% 41%;
+    --chart-5: 256 68% 41%;
+    --radius: 0.15rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 226 68% 46%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8% / 0.1;
+
+    --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif,
+      "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+      "Noto Color Emoji";
+
+    --font-mono: var(--font-roboto-mono);
+  }
+  .dark {
+    --background: 0 0% 2%;
+    --foreground: 0 0% 95%;
+    --card: 0 0% 9%;
+    --card-foreground: 0 0% 95%;
+    --popover: 0 0% 9%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 226 68% 60%;
+    --primary-foreground: 0 0% 95%;
+    --secondary: 256 68% 32%;
+    --secondary-foreground: 0 0% 95%;
+    --muted: 0 0% 32%;
+    --muted-foreground: 0 0% 70%;
+    --accent: 196 68% 26%;
+    --accent-foreground: 0 0% 95%;
+    --destructive: 350 91% 36%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 25%;
+    --input: 0 0% 25%;
+    --ring: 214 68% 35%;
+    --chart-1: 226 68% 41%;
+    --chart-2: 16 68% 41%;
+    --chart-3: 76 68% 41%;
+    --chart-4: 196 68% 41%;
+    --chart-5: 256 68% 41%;
+
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+/* This layer is added by shadcn/ui */
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* This layer is by next-forge */
+@layer base {
+  * {
+    @apply min-w-0;
+  }
+  html {
+    text-rendering: optimizelegibility;
+  }
+  body {
+    @apply min-h-[100dvh];
+  }
+}

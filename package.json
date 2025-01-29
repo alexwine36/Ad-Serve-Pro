@@ -1,0 +1,51 @@
+{
+  "name": "turbo-starter",
+  "version": "1.0.0",
+  "scripts": {
+    "analyze": "turbo analyze",
+    "build": "turbo build",
+    "bump-deps": "npx npm-check-updates --deep -u -x react-day-picker && pnpm install",
+    "clean": "pnpm clean:modules && pnpm clean:main",
+    "clean:main": "git clean -xdf .turbo node_modules",
+    "clean:modules": "turbo clean",
+    "db:push": "turbo run db:push",
+    "db:seed": "turbo run db:seed",
+    "db:up": "docker compose up -d",
+    "dev": "turbo dev",
+    "format": "ultracite format",
+    "lint": "ultracite lint",
+    "lint:ci": "biome check --diagnostic-level=error",
+    "migrate": "cd packages/database && npx prisma format && npx prisma generate && npx prisma db push",
+    "prepare": "husky install",
+    "sync:fix": "run-s sync:format sync:fix-*",
+    "sync:fix-mismatches": "syncpack fix-mismatches",
+    "sync:fix-semver": "syncpack set-semver-ranges",
+    "sync:format": "syncpack format",
+    "sync:lint": "syncpack lint",
+    "sync:list": "syncpack list",
+    "sync:update": "pnpm syncpack update",
+    "test": "turbo test",
+    "test:ci": "turbo test -- --passWithNoTests",
+    "typecheck": "turbo typecheck",
+    "ui:add": "shadcn add -c packages/design-system",
+    "ui:update": "shadcn add --all --overwrite -c packages/design-system"
+  },
+  "devDependencies": {
+    "@auto-it/first-time-contributor": "^11.3.0",
+    "@biomejs/biome": "^1.9.4",
+    "@repo/typescript-config": "workspace:*",
+    "@turbo/gen": "^2.3.3",
+    "husky": "^8.0.0",
+    "mintlify": "^4.0.319",
+    "npm-run-all": "^4.1.5",
+    "shadcn": "^2.1.6",
+    "syncpack": "^13.0.0",
+    "turbo": "^2.3.3",
+    "typescript": "^5.7.2",
+    "ultracite": "^4.1.14"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "pnpm@9.15.2"
+}

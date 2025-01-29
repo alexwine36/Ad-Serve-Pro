@@ -1,0 +1,18 @@
+import type { TRPCContextInnerWithSession } from '@/server/create-context';
+import type { {{ schemaName }} } from './{{ baseHandlerFile }}-schema'
+
+type {{ handlerOptions }} = {
+    ctx: TRPCContextInnerWithSession;
+    input: {{ schemaName }};
+}
+
+export const {{ handlerName }} = async ({ ctx, input }: {{handlerOptions}}) => {
+
+    const { prisma, session } = ctx;
+    
+    const res = []
+
+    return res;
+}
+
+export type {{ handlerResponse }} = Awaited<ReturnType<typeof {{ handlerName }}>>;
