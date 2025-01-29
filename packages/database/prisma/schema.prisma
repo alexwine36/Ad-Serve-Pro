@@ -120,10 +120,8 @@ model Organization {
 
   companies Company[]
 
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
-  advertisements Advertisement[]
-  Campaign       Campaign[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum MemberRole {
@@ -174,11 +172,11 @@ model Company {
   // TODO: consider adding an "Agency for representing a company"
   // TODO: consider adding a "CompanyMember" model to represent the members of a company
 
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
-  contacts      Contact[]
-  Advertisement Advertisement[]
-  Campaign      Campaign[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  contacts  Contact[]
+
+  campaigns Campaign[]
 }
 
 model Contact {
@@ -203,60 +201,130 @@ model Contact {
 
 // #region Advertising
 
-model Campaign {
-  id          String   @id @default(cuid())
-  name        String
-  description String?
-  startDate   DateTime
-  endDate     DateTime
-  isActive    Boolean  @default(true)
-  budget      Float
-
-  organizationId String
-  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  companyId      String
-  company        Company      @relation(fields: [companyId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
 model Advertisement {
-  id             String       @id @default(cuid())
-  organizationId String
-  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  companyId      String
-  company        Company      @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  name           String
-  description    String?
-
-  // Ad content
-  imageUrl  String?
-  videoUrl  String?
-  targetUrl String?
-
-  // Targeting
-  targetAudience Json?
-  placement      AdPlacement[]
-
+  id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  name      String
+  type      AdType
+  content   String // HTML/Image URL/Video URL
+  metadata  Json? // Store additional metadata based on type
+  isActive  Boolean  @default(true)
+
+  // Relations
+  campaigns CampaignAd[]
+  analytics AdAnalytics[]
 }
 
-model AdPlacement {
-  id              String        @id @default(cuid())
-  advertisementId String
-  advertisement   Advertisement @relation(fields: [advertisementId], references: [id], onDelete: Cascade)
+model Campaign {
+  id        String         @id @default(cuid())
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  name      String
+  startDate DateTime
+  endDate   DateTime
+  budget    Float
+  status    CampaignStatus
+  targeting Json // Store targeting criteria
 
-  // Placement details
-  location String // e.g., "homepage", "sidebar", "article"
-  width    Int
-  height   Int
-  priority Int     @default(1)
-  isActive Boolean @default(true)
+  // Relations
+  company   Company             @relation(fields: [companyId], references: [id])
+  companyId String
+  ads       CampaignAd[]
+  analytics CampaignAnalytics[]
+}
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model CampaignAd {
+  id         String        @id @default(cuid())
+  createdAt  DateTime      @default(now())
+  campaign   Campaign      @relation(fields: [campaignId], references: [id])
+  campaignId String
+  ad         Advertisement @relation(fields: [adId], references: [id])
+  adId       String
+  weight     Int           @default(1) // For A/B testing
+  isActive   Boolean       @default(true)
+
+  @@unique([campaignId, adId])
+}
+
+model Client {
+  id          String   @id @default(cuid())
+  firstSeen   DateTime @default(now())
+  lastSeen    DateTime @updatedAt
+  fingerprint String   @unique // Browser fingerprint
+  userAgent   String
+  language    String?
+  timezone    String?
+  platform    String?
+  device      String?
+
+  // Relations
+  analytics AdAnalytics[]
+}
+
+model AdAnalytics {
+  id        String        @id @default(cuid())
+  timestamp DateTime      @default(now())
+  type      AnalyticsType
+  client    Client        @relation(fields: [clientId], references: [id])
+  clientId  String
+  ad        Advertisement @relation(fields: [adId], references: [id])
+  adId      String
+
+  // Location data
+  country String?
+  region  String?
+  city    String?
+
+  // Technical data
+  viewportSize   String?
+  screenSize     String?
+  connectionType String?
+
+  // Session data
+  sessionId String?
+  pageUrl   String?
+  referrer  String?
+
+  // Custom data
+  metadata Json?
+}
+
+model CampaignAnalytics {
+  id         String   @id @default(cuid())
+  timestamp  DateTime @default(now())
+  campaign   Campaign @relation(fields: [campaignId], references: [id])
+  campaignId String
+
+  impressions Int   @default(0)
+  clicks      Int   @default(0)
+  spend       Float @default(0)
+
+  // Aggregated metrics
+  ctr Float? // Click-through rate
+  cpc Float? // Cost per click
+  cpm Float? // Cost per thousand impressions
+}
+
+enum AdType {
+  HTML
+  IMAGE
+  VIDEO
+}
+
+enum CampaignStatus {
+  DRAFT
+  SCHEDULED
+  ACTIVE
+  PAUSED
+  COMPLETED
+  CANCELLED
+}
+
+enum AnalyticsType {
+  IMPRESSION
+  CLICK
+  CONVERSION
 }
 
 // #endregion
