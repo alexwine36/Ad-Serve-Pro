@@ -2,10 +2,16 @@
 
 import { trpc } from "@/utils/trpc";
 import type { MemberData } from "@repo/common-types";
+import type { MemberRole } from "@repo/database";
 import type { DataTableRowAction } from "@repo/design-system/components/custom/data-table";
 import { DataTable } from "@repo/design-system/components/custom/data-table";
 import { DeleteDialog } from "@repo/design-system/components/custom/delete-dialog";
+import {
+  Badge,
+  type BadgeProps,
+} from "@repo/design-system/components/ui/badge";
 import { Button } from "@repo/design-system/components/ui/button";
+import { Checkbox } from "@repo/design-system/components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,7 +23,32 @@ import {
 import { useDataTable } from "@repo/design-system/hooks/use-datatable";
 import { Ellipsis } from "lucide-react";
 import { useState } from "react";
+import { capitalize, pipe, toLowerCase } from "remeda";
 import { MemberDialog } from "../member-dialog";
+
+const RoleBadge = ({ role }: { role: MemberData["role"] }) => {
+  const display = pipe(role, toLowerCase(), capitalize());
+  const getColor = (role: MemberRole): BadgeProps["outlineColor"] => {
+    switch (role) {
+      case "ADMIN":
+        return "violet";
+      case "OWNER":
+        return "teal";
+      case "MEMBER":
+        return "blue";
+
+      default:
+        break;
+    }
+  };
+  const color = getColor(role);
+  // const className = `border-${color}-500 bg-${color}-100/25 text-${color}-700 dark:bg-${color}-900 dark:text-${color}-100`;
+  return (
+    <Badge variant="outline" outlineColor={color}>
+      {display}
+    </Badge>
+  );
+};
 
 export const MemberTable = () => {
   const { data } = trpc.member.getAll.useQuery({});
@@ -48,18 +79,18 @@ export const MemberTable = () => {
         enableSorting: true,
       },
       {
+        accessorKey: "title",
+        header: "Title",
+      },
+      {
         accessorKey: "active",
         header: "Active",
 
         cell: ({ cell }) => {
           const value = cell.getValue<boolean>();
           return (
-            <div>
-              {value ? (
-                <span className="text-green-500">Active</span>
-              ) : (
-                <span className="text-red-500">Inactive</span>
-              )}
+            <div className="flex items-center justify-center">
+              <Checkbox checked={value} disabled />
             </div>
           );
         },
@@ -69,11 +100,16 @@ export const MemberTable = () => {
         header: "Role",
         enableColumnFilter: true,
         filterFn: "arrIncludesSome",
+        cell: ({ cell }) => {
+          const value = cell.getValue<MemberRole>();
+          return (
+            <div className="flex items-center justify-center">
+              <RoleBadge role={value} />
+            </div>
+          );
+        },
       },
-      {
-        accessorKey: "title",
-        header: "Title",
-      },
+
       {
         accessorKey: "description",
         header: "Description",

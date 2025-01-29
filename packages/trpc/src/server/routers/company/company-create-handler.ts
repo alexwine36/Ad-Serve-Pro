@@ -1,6 +1,6 @@
-import type { TRPCContextInnerWithSession } from '@/server/create-context';
-import { CompanyData } from '@repo/common-types';
-import type { CompanyCreateSchema } from './company-create-schema';
+import type { TRPCContextInnerWithSession } from "@/server/create-context";
+import { CompanyData } from "@repo/common-types";
+import type { CompanyCreateSchema } from "./company-create-schema";
 
 type CompanyCreateOptions = {
   ctx: TRPCContextInnerWithSession;
@@ -15,7 +15,7 @@ export const companyCreateHandler = async ({
   const { currentOrganizationId } = session.user;
 
   if (!currentOrganizationId) {
-    throw new Error('No current organization');
+    throw new Error("No current organization");
   }
 
   const { social, ...rest } = input;
