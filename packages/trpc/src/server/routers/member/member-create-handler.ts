@@ -1,5 +1,5 @@
-import type { TRPCContextInnerWithSession } from "@/server/create-context";
-import type { MemberCreateSchema } from "./member-create-schema";
+import type { TRPCContextInnerWithSession } from '@/server/create-context';
+import type { MemberCreateSchema } from './member-create-schema';
 
 type MemberCreateOptions = {
   ctx: TRPCContextInnerWithSession;
@@ -14,7 +14,7 @@ export const memberCreateHandler = async ({
 
   const { currentOrganizationId } = session.user;
   if (!currentOrganizationId) {
-    throw new Error("No organization id found");
+    throw new Error('No organization id found');
   }
   const { prevEmail, ...rest } = input;
   const res = await prisma.member.create({

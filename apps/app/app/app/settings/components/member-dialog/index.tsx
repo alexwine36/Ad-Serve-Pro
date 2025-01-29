@@ -1,6 +1,7 @@
 'use client';
 
 import type { MemberData } from '@repo/common-types';
+import { Button } from '@repo/design-system/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -9,11 +10,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@repo/design-system/components/ui/dialog';
-import type React from 'react';
-import { trpc } from '@/utils/trpc';
-import { MemberForm } from '../member-form';
-import { Button } from '@repo/design-system/components/ui/button';
 import { Edit, PlusIcon } from 'lucide-react';
+import type React from 'react';
+import { MemberForm } from '../member-form';
 
 export interface MemberDialogProps
   extends React.ComponentPropsWithoutRef<typeof Dialog> {
@@ -25,30 +24,27 @@ export const MemberDialog: React.FC<MemberDialogProps> = ({
   member,
   open,
   onOpenChange,
-  showTrigger
+  showTrigger,
 }) => {
-
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-         {showTrigger ? (
+      {showTrigger ? (
         <DialogTrigger asChild>
           <Button variant="outline" size="icon">
-            {
-              member ? <Edit /> : <PlusIcon />
-            }
+            {member ? <Edit /> : <PlusIcon />}
           </Button>
         </DialogTrigger>
       ) : null}
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{ member ? 'Edit' : 'Create'} Member</DialogTitle>
+          <DialogTitle>{member ? 'Edit' : 'Create'} Member</DialogTitle>
           <DialogDescription>
-            { member ? 'Edit an existing member' : 'Create a new member'}
+            {member ? 'Edit an existing member' : 'Create a new member'}
           </DialogDescription>
         </DialogHeader>
 
         <MemberForm
-          member={ member }
+          member={member}
           onSuccess={() => {
             onOpenChange?.(false);
           }}

@@ -2,7 +2,7 @@ import type {
   FieldPath,
   FieldValues,
   UseControllerProps,
-} from "react-hook-form";
+} from 'react-hook-form';
 import {
   FormControl,
   FormDescription,
@@ -10,18 +10,18 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../../ui/form";
+} from '../../ui/form';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../ui/select";
+} from '../../ui/select';
 
 interface SelectInputProps<
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 > extends UseControllerProps<TFieldValues, TName> {
   name: TName;
   label: string;
@@ -36,7 +36,7 @@ interface SelectInputProps<
 
 export const SelectInput = <
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >({
   control,
   name,

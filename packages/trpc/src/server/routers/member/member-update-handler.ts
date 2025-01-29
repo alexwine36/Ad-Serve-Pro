@@ -1,5 +1,5 @@
-import type { TRPCContextInnerWithSession } from "@/server/create-context";
-import type { MemberUpdateSchema } from "./member-update-schema";
+import type { TRPCContextInnerWithSession } from '@/server/create-context';
+import type { MemberUpdateSchema } from './member-update-schema';
 
 type MemberUpdateOptions = {
   ctx: TRPCContextInnerWithSession;
@@ -13,11 +13,11 @@ export const memberUpdateHandler = async ({
   const { prisma, session } = ctx;
   const { currentOrganizationId } = session.user;
   if (!currentOrganizationId) {
-    throw new Error("No organization id found");
+    throw new Error('No organization id found');
   }
   const { prevEmail, email, ...rest } = input;
-  console.log("input", input);
-  console.log("currentOrganizationId", currentOrganizationId);
+  console.log('input', input);
+  console.log('currentOrganizationId', currentOrganizationId);
   const member = await prisma.member.update({
     where: {
       email_organizationId: {

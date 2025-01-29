@@ -1,5 +1,5 @@
-import type { TRPCContextInnerWithSession } from "@/server/create-context";
-import type { OrganizationUpdateSchema } from "./organization-update-schema";
+import type { TRPCContextInnerWithSession } from '@/server/create-context';
+import type { OrganizationUpdateSchema } from './organization-update-schema';
 
 type OrganizationUpdateOptions = {
   ctx: TRPCContextInnerWithSession;

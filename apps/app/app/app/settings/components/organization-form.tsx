@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import { OrganizationInput } from "@repo/common-types";
+import { OrganizationInput } from '@repo/common-types';
 import {
   Form,
   FormInput,
   zodResolver,
-} from "@repo/design-system/components/inputs";
-import { Button } from "@repo/design-system/components/ui/button";
-import { useToast } from "@repo/design-system/hooks/use-toast";
-import type React from "react";
-import { useForm } from "react-hook-form";
-import { trpc } from "../../../../utils/trpc";
+} from '@repo/design-system/components/inputs';
+import { Button } from '@repo/design-system/components/ui/button';
+import { useToast } from '@repo/design-system/hooks/use-toast';
+import type React from 'react';
+import { useForm } from 'react-hook-form';
+import { trpc } from '../../../../utils/trpc';
 type OrganizationFormProps = {
   organization?: OrganizationInput;
 };
@@ -24,7 +24,7 @@ export const OrganizationForm: React.FC<OrganizationFormProps> = ({
   const form = useForm<OrganizationInput>({
     resolver: zodResolver(OrganizationInput),
     defaultValues: {
-      name: "",
+      name: '',
       image: undefined,
       ...organization,
     },
@@ -32,9 +32,9 @@ export const OrganizationForm: React.FC<OrganizationFormProps> = ({
 
   const handleSuccess = () => {
     toast({
-      title: "Organization saved",
+      title: 'Organization saved',
       // description: 'Organization saved',
-      variant: "success",
+      variant: 'success',
     });
     utils.organization.invalidate();
   };

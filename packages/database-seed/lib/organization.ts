@@ -1,8 +1,8 @@
-import { faker } from "@faker-js/faker";
-import type { Organization, Prisma, PrismaClient } from "@repo/database";
+import { faker } from '@faker-js/faker';
+import type { Organization, Prisma, PrismaClient } from '@repo/database';
 
 export const getOrganization = async (
-  data: Omit<Prisma.OrganizationCreateInput, "type">,
+  data: Omit<Prisma.OrganizationCreateInput, 'type'>,
   prisma: PrismaClient
 ) => {
   const org = await prisma.organization.findFirst({
@@ -25,8 +25,8 @@ export const getOrganization = async (
 
       members: {
         create: {
-          role: "OWNER",
-          email: "alexwine36@gmail.com",
+          role: 'OWNER',
+          email: 'alexwine36@gmail.com',
         },
       },
     },
@@ -46,7 +46,7 @@ export const seedMembers = async (org: Organization, prisma: PrismaClient) => {
   new Array(faker.number.int({ min: 5, max: 10 })).fill(0).map(async () => {
     await prisma.member.create({
       data: {
-        role: faker.helpers.arrayElement(["ADMIN", "MEMBER"]),
+        role: faker.helpers.arrayElement(['ADMIN', 'MEMBER']),
         email: faker.internet.email(),
         organizationId: org.id,
       },

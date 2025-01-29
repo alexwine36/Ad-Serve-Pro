@@ -2,9 +2,9 @@ import type {
   FieldPath,
   FieldValues,
   UseControllerProps,
-} from "react-hook-form";
-import { cn } from "../../../lib/utils";
-import { Checkbox } from "../../ui/checkbox";
+} from 'react-hook-form';
+import { cn } from '../../../lib/utils';
+import { Checkbox } from '../../ui/checkbox';
 import {
   FormControl,
   FormDescription,
@@ -12,11 +12,11 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../../ui/form";
+} from '../../ui/form';
 
 interface FormInputProps<
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 > extends UseControllerProps<TFieldValues> {
   name: TName;
   label: string;
@@ -26,7 +26,7 @@ interface FormInputProps<
 
 export const CheckboxInput = <
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >({
   control,
   name,
@@ -42,7 +42,7 @@ export const CheckboxInput = <
         return (
           <FormItem
             className={cn(
-              "flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow",
+              'flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow',
               className
             )}
           >

@@ -1,5 +1,5 @@
-import { z } from "zod";
-import { MemberSchema } from "./generated";
+import { z } from 'zod';
+import { MemberSchema } from './generated';
 
 export const MemberData = MemberSchema.extend({
   email: z

@@ -1,5 +1,5 @@
-import type { TRPCContextInnerWithSession } from "@/server/create-context";
-import type { OrganizationCreateSchema } from "./organization-create-schema";
+import type { TRPCContextInnerWithSession } from '@/server/create-context';
+import type { OrganizationCreateSchema } from './organization-create-schema';
 
 type OrganizationCreateOptions = {
   ctx: TRPCContextInnerWithSession;
@@ -12,7 +12,7 @@ export const organizationCreateHandler = async ({
 }: OrganizationCreateOptions) => {
   const { prisma, session } = ctx;
   if (!session) {
-    throw new Error("Not authenticated");
+    throw new Error('Not authenticated');
   }
   const user = session.user;
 
@@ -24,7 +24,7 @@ export const organizationCreateHandler = async ({
       ...input,
       members: {
         create: {
-          role: "OWNER",
+          role: 'OWNER',
           email: user.email,
         },
       },

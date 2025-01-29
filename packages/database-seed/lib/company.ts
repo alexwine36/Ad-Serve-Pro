@@ -1,7 +1,7 @@
-import { generateMock } from "@anatine/zod-mock";
-import { faker } from "@faker-js/faker";
-import { CompanyInput, slugify } from "@repo/common-types";
-import type { Organization, PrismaClient } from "@repo/database";
+import { generateMock } from '@anatine/zod-mock';
+import { faker } from '@faker-js/faker';
+import { CompanyInput, slugify } from '@repo/common-types';
+import type { Organization, PrismaClient } from '@repo/database';
 
 export const seedCompanies = async (
   org: Organization,

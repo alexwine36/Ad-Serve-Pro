@@ -1,20 +1,20 @@
-"use client";
+'use client';
 
-import { trpc } from "@/utils/trpc";
-import { type MemberData, MemberInput } from "@repo/common-types";
-import { MemberRole } from "@repo/database";
+import { trpc } from '@/utils/trpc';
+import { type MemberData, MemberInput } from '@repo/common-types';
+import { MemberRole } from '@repo/database';
 import {
   CheckboxInput,
   Form,
   FormInput,
   SelectInput,
   zodResolver,
-} from "@repo/design-system/components/inputs";
-import { Button } from "@repo/design-system/components/ui/button";
-import { useToast } from "@repo/design-system/hooks/use-toast";
-import type React from "react";
-import { useForm } from "react-hook-form";
-import { capitalize, pipe, toLowerCase } from "remeda";
+} from '@repo/design-system/components/inputs';
+import { Button } from '@repo/design-system/components/ui/button';
+import { useToast } from '@repo/design-system/hooks/use-toast';
+import type React from 'react';
+import { useForm } from 'react-hook-form';
+import { capitalize, pipe, toLowerCase } from 'remeda';
 
 type MemberFormProps = {
   onSuccess: (value: MemberData) => void;
@@ -32,21 +32,21 @@ export const MemberForm: React.FC<MemberFormProps> = ({
   const form = useForm<MemberInput>({
     resolver: zodResolver(MemberInput),
     defaultValues: {
-      prevEmail: member?.email || "",
-      title: "",
-      email: "",
+      prevEmail: member?.email || '',
+      title: '',
+      email: '',
       active: true,
       role: MemberRole.MEMBER,
-      description: "",
+      description: '',
       ...member,
     },
   });
 
   const handleSuccess = (data: MemberData) => {
     toast({
-      title: "Success",
-      description: member ? "Member saved" : "Member created",
-      variant: "success",
+      title: 'Success',
+      description: member ? 'Member saved' : 'Member created',
+      variant: 'success',
     });
     utils.member.getAll.invalidate();
     onSuccess(data);

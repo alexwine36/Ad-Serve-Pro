@@ -1,23 +1,23 @@
-import { auth } from "@repo/auth/auth";
+import { auth } from '@repo/auth/auth';
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@repo/design-system/components/ui/card";
-import { Container } from "@repo/design-system/components/ui/container";
-import { redirect } from "next/navigation";
-import { Header } from "../components/header";
-import { MemberCard } from "./components/member-card";
-import { OrganizationProvider } from "./components/organization-provider";
+} from '@repo/design-system/components/ui/card';
+import { Container } from '@repo/design-system/components/ui/container';
+import { redirect } from 'next/navigation';
+import { Header } from '../components/header';
+import { MemberCard } from './components/member-card';
+import { OrganizationProvider } from './components/organization-provider';
 const Settings = async () => {
   const session = await auth();
 
   if (
     !session?.user.currentOrganizationId ||
-    session.user.currentRole === "MEMBER"
+    session.user.currentRole === 'MEMBER'
   ) {
-    redirect("/");
+    redirect('/');
   }
 
   return (

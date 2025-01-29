@@ -1,5 +1,5 @@
-import { MemberInput } from "@repo/common-types";
-import type { z } from "zod";
+import { MemberInput } from '@repo/common-types';
+import type { z } from 'zod';
 
 export const MemberCreateSchema = MemberInput;
 

@@ -1,6 +1,6 @@
-import type { TRPCContextInner } from "@/server/create-context";
-import type { MemberData } from "@repo/common-types";
-import type { MemberGetAllSchema } from "./member-get-all-schema.ts";
+import type { TRPCContextInner } from '@/server/create-context';
+import type { MemberData } from '@repo/common-types';
+import type { MemberGetAllSchema } from './member-get-all-schema.ts';
 type MemberGetAllOptions = {
   ctx: TRPCContextInner;
   input: MemberGetAllSchema;

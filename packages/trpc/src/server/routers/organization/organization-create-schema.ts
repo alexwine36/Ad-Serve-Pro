@@ -1,5 +1,5 @@
-import { OrganizationInput } from "@repo/common-types";
-import type { z } from "zod";
+import { OrganizationInput } from '@repo/common-types';
+import type { z } from 'zod';
 
 export const OrganizationCreateSchema = OrganizationInput;
 

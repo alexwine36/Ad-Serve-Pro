@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import { trpc } from "@/utils/trpc";
-import type { MemberData } from "@repo/common-types";
-import type { MemberRole } from "@repo/database";
-import type { DataTableRowAction } from "@repo/design-system/components/custom/data-table";
-import { DataTable } from "@repo/design-system/components/custom/data-table";
-import { DeleteDialog } from "@repo/design-system/components/custom/delete-dialog";
+import { trpc } from '@/utils/trpc';
+import type { MemberData } from '@repo/common-types';
+import type { MemberRole } from '@repo/database';
+import type { DataTableRowAction } from '@repo/design-system/components/custom/data-table';
+import { DataTable } from '@repo/design-system/components/custom/data-table';
+import { DeleteDialog } from '@repo/design-system/components/custom/delete-dialog';
 import {
   Badge,
   type BadgeProps,
-} from "@repo/design-system/components/ui/badge";
-import { Button } from "@repo/design-system/components/ui/button";
-import { Checkbox } from "@repo/design-system/components/ui/checkbox";
+} from '@repo/design-system/components/ui/badge';
+import { Button } from '@repo/design-system/components/ui/button';
+import { Checkbox } from '@repo/design-system/components/ui/checkbox';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,23 +19,23 @@ import {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "@repo/design-system/components/ui/dropdown-menu";
-import { useDataTable } from "@repo/design-system/hooks/use-datatable";
-import { Ellipsis } from "lucide-react";
-import { useState } from "react";
-import { capitalize, pipe, toLowerCase } from "remeda";
-import { MemberDialog } from "../member-dialog";
+} from '@repo/design-system/components/ui/dropdown-menu';
+import { useDataTable } from '@repo/design-system/hooks/use-datatable';
+import { Ellipsis } from 'lucide-react';
+import { useState } from 'react';
+import { capitalize, pipe, toLowerCase } from 'remeda';
+import { MemberDialog } from '../member-dialog';
 
-const RoleBadge = ({ role }: { role: MemberData["role"] }) => {
+const RoleBadge = ({ role }: { role: MemberData['role'] }) => {
   const display = pipe(role, toLowerCase(), capitalize());
-  const getColor = (role: MemberRole): BadgeProps["outlineColor"] => {
+  const getColor = (role: MemberRole): BadgeProps['outlineColor'] => {
     switch (role) {
-      case "ADMIN":
-        return "violet";
-      case "OWNER":
-        return "teal";
-      case "MEMBER":
-        return "blue";
+      case 'ADMIN':
+        return 'violet';
+      case 'OWNER':
+        return 'teal';
+      case 'MEMBER':
+        return 'blue';
 
       default:
         break;
@@ -58,7 +58,7 @@ export const MemberTable = () => {
 
   const handleDelete = async (data: MemberData[]) => {
     const promise = new Promise((resolve, reject) => {
-      setTimeout(() => resolve("Data from promise"), 1000);
+      setTimeout(() => resolve('Data from promise'), 1000);
     });
     await promise;
     console.log(data);
@@ -69,22 +69,22 @@ export const MemberTable = () => {
 
     columns: [
       {
-        accessorKey: "name",
-        header: "Name",
+        accessorKey: 'name',
+        header: 'Name',
         enableSorting: true,
       },
       {
-        accessorKey: "email",
-        header: "Email",
+        accessorKey: 'email',
+        header: 'Email',
         enableSorting: true,
       },
       {
-        accessorKey: "title",
-        header: "Title",
+        accessorKey: 'title',
+        header: 'Title',
       },
       {
-        accessorKey: "active",
-        header: "Active",
+        accessorKey: 'active',
+        header: 'Active',
 
         cell: ({ cell }) => {
           const value = cell.getValue<boolean>();
@@ -96,10 +96,10 @@ export const MemberTable = () => {
         },
       },
       {
-        accessorKey: "role",
-        header: "Role",
+        accessorKey: 'role',
+        header: 'Role',
         enableColumnFilter: true,
-        filterFn: "arrIncludesSome",
+        filterFn: 'arrIncludesSome',
         cell: ({ cell }) => {
           const value = cell.getValue<MemberRole>();
           return (
@@ -111,22 +111,22 @@ export const MemberTable = () => {
       },
 
       {
-        accessorKey: "description",
-        header: "Description",
+        accessorKey: 'description',
+        header: 'Description',
       },
 
       {
-        accessorKey: "createdAt",
+        accessorKey: 'createdAt',
         enableSorting: true,
-        header: "Created At",
+        header: 'Created At',
         cell: ({ cell }) => {
           const date = cell.getValue<Date>();
           return date.toLocaleDateString();
         },
       },
       {
-        id: "actions",
-        header: "",
+        id: 'actions',
+        header: '',
         size: 40,
         cell: ({ row }) => {
           return (
@@ -142,14 +142,14 @@ export const MemberTable = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-40">
                 <DropdownMenuItem
-                  onSelect={() => setRowAction({ row, type: "update" })}
+                  onSelect={() => setRowAction({ row, type: 'update' })}
                 >
                   Edit
                 </DropdownMenuItem>
 
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
-                  onSelect={() => setRowAction({ row, type: "delete" })}
+                  onSelect={() => setRowAction({ row, type: 'delete' })}
                 >
                   Delete
                   <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
@@ -167,7 +167,7 @@ export const MemberTable = () => {
       <DataTable {...table} />
       <MemberDialog
         member={rowAction?.row?.original}
-        open={rowAction?.type === "update"}
+        open={rowAction?.type === 'update'}
         onOpenChange={(isOpen) => {
           if (!isOpen) {
             setRowAction(undefined);
@@ -178,7 +178,7 @@ export const MemberTable = () => {
         label="member"
         handleDelete={handleDelete}
         data={rowAction?.row?.original ? [rowAction.row.original] : []}
-        open={rowAction?.type === "delete"}
+        open={rowAction?.type === 'delete'}
         onOpenChange={() => setRowAction(undefined)}
         onSuccess={() => rowAction?.row.toggleSelected(false)}
       />
