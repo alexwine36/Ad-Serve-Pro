@@ -1,4 +1,3 @@
-import type { JSX } from 'react';
 import {
   Card,
   CardDescription,
@@ -6,6 +5,7 @@ import {
   CardTitle,
 } from '@repo/design-system/components/ui/card';
 import { ChartBarIcon, Search, WalletIcon } from 'lucide-react';
+import type { JSX } from 'react';
 
 interface ServiceProps {
   title: string;
