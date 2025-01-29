@@ -1,0 +1,19 @@
+import { z } from 'zod';
+import { {{ className }}Schema } from './generated';
+
+export const {{ className }}Data = {{ className }}Schema.extend({
+  // Update base types here
+});
+
+export type {{ className }}Data = z.infer<typeof {{ className }}Data>;
+
+export const {{ className }}UpdateInput = {{ className }}Data.omit({
+  createdAt: true,
+  updatedAt: true,
+  // organizationId: true,
+});
+
+export type {{ className }}UpdateInput = z.infer<typeof {{ className }}UpdateInput>;
+
+export const {{ className }}Input = {{ className }}UpdateInput;
+export type {{ className }}Input = z.infer<typeof {{ className }}Input>;

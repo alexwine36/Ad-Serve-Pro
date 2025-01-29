@@ -174,14 +174,14 @@ model Company {
   // TODO: consider adding an "Agency for representing a company"
   // TODO: consider adding a "CompanyMember" model to represent the members of a company
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  contacts  Contact[]
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  contacts  CompanyContact[]
 
   campaigns Campaign[]
 }
 
-model Contact {
+model CompanyContact {
   id         String  @id @default(cuid())
   companyId  String
   name       String

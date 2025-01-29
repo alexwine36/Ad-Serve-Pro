@@ -1,1 +1,1 @@
-export const COMPANY_NAME = 'Acme Inc.';
+export const COMPANY_NAME = "AdServePro";
