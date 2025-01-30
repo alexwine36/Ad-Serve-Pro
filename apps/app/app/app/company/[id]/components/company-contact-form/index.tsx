@@ -99,6 +99,7 @@ export const CompanyContactForm: React.FC<CompanyContactFormProps> = ({
             label="Phone"
             control={form.control}
             name="phone"
+            type="phone"
           />
           <FormInput
             className="min-w-72 flex-auto"

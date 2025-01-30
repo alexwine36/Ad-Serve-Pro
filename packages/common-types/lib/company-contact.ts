@@ -1,9 +1,11 @@
 import { z } from 'zod';
+import { OptionalPhoneType } from './common';
 import { CompanyContactSchema } from './generated';
 
 export const CompanyContactData = CompanyContactSchema.extend({
   // Update base types here
   email: z.union([z.string().email(), z.literal('')]).nullish(),
+  phone: OptionalPhoneType,
   name: z.string().min(2),
 });
 
