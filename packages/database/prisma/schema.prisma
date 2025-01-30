@@ -178,7 +178,8 @@ model Company {
   updatedAt DateTime         @updatedAt
   contacts  CompanyContact[]
 
-  campaigns Campaign[]
+  campaigns      Campaign[]
+  advertisements Advertisement[]
 }
 
 model CompanyContact {
@@ -212,6 +213,9 @@ model Advertisement {
   content   String // HTML/Image URL/Video URL
   metadata  Json? // Store additional metadata based on type
   isActive  Boolean  @default(true)
+
+  companyId String
+  company   Company @relation(fields: [companyId], references: [id])
 
   // Relations
   campaigns CampaignAd[]
