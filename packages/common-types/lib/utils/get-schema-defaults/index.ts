@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 export const getSchemaDefaults = <Schema extends z.ZodFirstPartySchemaTypes>(
   schema: Schema
@@ -16,7 +16,7 @@ export const getSchemaDefaults = <Schema extends z.ZodFirstPartySchemaTypes>(
       );
     }
     case z.ZodFirstPartyTypeKind.ZodString:
-      return "";
+      return '';
     case z.ZodFirstPartyTypeKind.ZodNull:
       return null;
     case z.ZodFirstPartyTypeKind.ZodNullable:

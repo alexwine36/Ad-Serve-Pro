@@ -1,5 +1,5 @@
-import { z } from "zod";
-import { getSchemaDefaults } from ".";
+import { z } from 'zod';
+import { getSchemaDefaults } from '.';
 
 const TestSchema = z
   .object({
@@ -9,14 +9,14 @@ const TestSchema = z
   })
   .default({
     // Define default values here
-    hello: "world",
+    hello: 'world',
   });
 
-describe("GetSchemaDefaults", () => {
-  test("should return defaults for TestSchema", () => {
+describe('GetSchemaDefaults', () => {
+  test('should return defaults for TestSchema', () => {
     const defaults = getSchemaDefaults(TestSchema);
     expect(defaults).toEqual({
-      hello: "world",
+      hello: 'world',
     });
   });
 });

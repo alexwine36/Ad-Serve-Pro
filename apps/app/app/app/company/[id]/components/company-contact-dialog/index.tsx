@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import type { CompanyContactData } from "@repo/common-types";
-import { Button } from "@repo/design-system/components/ui/button";
+import type { CompanyContactData } from '@repo/common-types';
+import { Button } from '@repo/design-system/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -9,10 +9,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@repo/design-system/components/ui/dialog";
-import { Edit, PlusIcon } from "lucide-react";
-import type React from "react";
-import { CompanyContactForm } from "../company-contact-form";
+} from '@repo/design-system/components/ui/dialog';
+import { Edit, PlusIcon } from 'lucide-react';
+import type React from 'react';
+import { CompanyContactForm } from '../company-contact-form';
 
 export interface CompanyContactDialogProps
   extends React.ComponentPropsWithoutRef<typeof Dialog> {
@@ -40,12 +40,12 @@ export const CompanyContactDialog: React.FC<CompanyContactDialogProps> = ({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            {companyContact ? "Edit" : "Create"} Contact
+            {companyContact ? 'Edit' : 'Create'} Contact
           </DialogTitle>
           <DialogDescription>
             {companyContact
-              ? "Edit an existing Contact"
-              : "Create a new Contact"}
+              ? 'Edit an existing Contact'
+              : 'Create a new Contact'}
           </DialogDescription>
         </DialogHeader>
 

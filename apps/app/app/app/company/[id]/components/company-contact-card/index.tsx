@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@repo/design-system/components/ui/card";
-import React from "react";
-import { CompanyContactDialog } from "../company-contact-dialog";
-import { CompanyContactTable } from "../company-contact-table";
+} from '@repo/design-system/components/ui/card';
+import React from 'react';
+import { CompanyContactDialog } from '../company-contact-dialog';
+import { CompanyContactTable } from '../company-contact-table';
 
 export const CompanyContactCard: React.FC<{
   companyId: string;

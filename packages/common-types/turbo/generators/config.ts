@@ -1,5 +1,5 @@
-import type { PlopTypes } from "@turbo/gen";
-import { capitalize, pipe, toCamelCase, toKebabCase } from "remeda";
+import type { PlopTypes } from '@turbo/gen';
+import { capitalize, pipe, toCamelCase, toKebabCase } from 'remeda';
 type TurboAnswers = {
   turbo: {
     paths: {
@@ -11,13 +11,13 @@ type TurboAnswers = {
 };
 
 export default function generator(plop: PlopTypes.NodePlopAPI): void {
-  plop.setGenerator("create-type", {
-    description: "Generate a new Common Type",
+  plop.setGenerator('create-type', {
+    description: 'Generate a new Common Type',
     prompts: [
       {
-        type: "input",
-        name: "name",
-        message: "What is the name of the route?",
+        type: 'input',
+        name: 'name',
+        message: 'What is the name of the route?',
       },
     ],
     actions: (rawData) => {
@@ -36,14 +36,14 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
       const actions: PlopTypes.ActionType[] = [];
 
       actions.push({
-        type: "add",
+        type: 'add',
         templateFile: `${templatePath}/schema.ts.hbs`,
         path: `${targetPath}/${filePath}.ts`,
       });
       actions.push({
-        type: "append",
+        type: 'append',
         template: `export * from './{{filePath}}';`,
-        pattern: ";",
+        pattern: ';',
         path: `${targetPath}/index.ts`,
       });
 

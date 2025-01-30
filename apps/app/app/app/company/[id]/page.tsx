@@ -1,7 +1,7 @@
-import { Container } from "@repo/design-system/components/ui/container";
-import { trpcCaller } from "../../../../utils/trpc-server";
-import { Header } from "../../components/header";
-import { CompanyContactCard } from "./components/company-contact-card";
+import { Container } from '@repo/design-system/components/ui/container';
+import { trpcCaller } from '../../../../utils/trpc-server';
+import { Header } from '../../components/header';
+import { CompanyContactCard } from './components/company-contact-card';
 
 const CompanyPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const caller = await trpcCaller();
@@ -15,7 +15,7 @@ const CompanyPage = async ({ params }: { params: Promise<{ id: string }> }) => {
     <>
       <Header
         page={company?.name}
-        pages={[{ label: "Companies", href: "/app/company" }]}
+        pages={[{ label: 'Companies', href: '/app/company' }]}
       />
       <Container>
         <CompanyContactCard companyId={company.id} />

@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { trpc } from "@/utils/trpc";
-import type { CompanyContactData } from "@repo/common-types";
-import type { DataTableRowAction } from "@repo/design-system/components/custom/data-table";
-import { DataTable } from "@repo/design-system/components/custom/data-table";
-import { DeleteDialog } from "@repo/design-system/components/custom/delete-dialog";
-import { Button } from "@repo/design-system/components/ui/button";
+import { trpc } from '@/utils/trpc';
+import type { CompanyContactData } from '@repo/common-types';
+import type { DataTableRowAction } from '@repo/design-system/components/custom/data-table';
+import { DataTable } from '@repo/design-system/components/custom/data-table';
+import { DeleteDialog } from '@repo/design-system/components/custom/delete-dialog';
+import { Button } from '@repo/design-system/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,12 +13,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "@repo/design-system/components/ui/dropdown-menu";
-import { useDataTable } from "@repo/design-system/hooks/use-datatable";
-import { Ellipsis } from "lucide-react";
-import type React from "react";
-import { useState } from "react";
-import { CompanyContactDialog } from "../company-contact-dialog";
+} from '@repo/design-system/components/ui/dropdown-menu';
+import { useDataTable } from '@repo/design-system/hooks/use-datatable';
+import { Ellipsis } from 'lucide-react';
+import type React from 'react';
+import { useState } from 'react';
+import { CompanyContactDialog } from '../company-contact-dialog';
 
 export const CompanyContactTable: React.FC<{
   companyId: string;
@@ -63,40 +63,40 @@ export const CompanyContactTable: React.FC<{
       //   },
       // },
       {
-        accessorKey: "name",
-        header: "Name",
+        accessorKey: 'name',
+        header: 'Name',
         enableSorting: true,
       },
 
       {
-        accessorKey: "email",
-        header: "Email",
+        accessorKey: 'email',
+        header: 'Email',
       },
       {
-        accessorKey: "phone",
-        header: "Phone",
+        accessorKey: 'phone',
+        header: 'Phone',
       },
 
       {
-        accessorKey: "title",
-        header: "Title",
+        accessorKey: 'title',
+        header: 'Title',
       },
       {
-        accessorKey: "department",
-        header: "Department",
+        accessorKey: 'department',
+        header: 'Department',
       },
       {
-        accessorKey: "createdAt",
+        accessorKey: 'createdAt',
         enableSorting: true,
-        header: "Created At",
+        header: 'Created At',
         cell: ({ cell }) => {
           const date = cell.getValue<Date>();
           return date.toLocaleDateString();
         },
       },
       {
-        id: "actions",
-        header: "",
+        id: 'actions',
+        header: '',
         size: 40,
         cell: ({ row }) => {
           return (
@@ -112,14 +112,14 @@ export const CompanyContactTable: React.FC<{
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-40">
                 <DropdownMenuItem
-                  onSelect={() => setRowAction({ row, type: "update" })}
+                  onSelect={() => setRowAction({ row, type: 'update' })}
                 >
                   Edit
                 </DropdownMenuItem>
 
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
-                  onSelect={() => setRowAction({ row, type: "delete" })}
+                  onSelect={() => setRowAction({ row, type: 'delete' })}
                 >
                   Delete
                   <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
@@ -138,7 +138,7 @@ export const CompanyContactTable: React.FC<{
       <CompanyContactDialog
         companyId={companyId}
         companyContact={rowAction?.row?.original}
-        open={rowAction?.type === "update"}
+        open={rowAction?.type === 'update'}
         onOpenChange={(isOpen) => {
           if (!isOpen) {
             setRowAction(undefined);
@@ -149,7 +149,7 @@ export const CompanyContactTable: React.FC<{
         label="companyContact"
         handleDelete={handleDelete}
         data={rowAction?.row?.original ? [rowAction.row.original] : []}
-        open={rowAction?.type === "delete"}
+        open={rowAction?.type === 'delete'}
         onOpenChange={() => setRowAction(undefined)}
         onSuccess={() => rowAction?.row.toggleSelected(false)}
       />

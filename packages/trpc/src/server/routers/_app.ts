@@ -1,16 +1,16 @@
-import { router } from "@/server/trpc";
+import { router } from '@/server/trpc';
 import { companyContactRouter } from './company-contact/_router';
 
-import { z } from "zod";
-import publicProcedure from "../procedures/public-procedure";
+import { z } from 'zod';
+import publicProcedure from '../procedures/public-procedure';
 
-import { companyRouter } from "./company/_router";
+import { companyRouter } from './company/_router';
 
-import { memberRouter } from "./member/_router";
+import { memberRouter } from './member/_router';
 
-import { userRouter } from "./user/_router";
+import { userRouter } from './user/_router';
 
-import { organizationRouter } from "@/server/routers/organization/_router"; //'./organization/_router';
+import { organizationRouter } from '@/server/routers/organization/_router'; //'./organization/_router';
 
 export const appRouter = router({
   hello: publicProcedure
@@ -26,7 +26,7 @@ export const appRouter = router({
     }),
   // Handlers
 
-companyContact: companyContactRouter,
+  companyContact: companyContactRouter,
 
   company: companyRouter,
 

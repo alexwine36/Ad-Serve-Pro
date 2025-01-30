@@ -1,8 +1,8 @@
-import type { PlopTypes } from "@turbo/gen";
-import path from "node:path";
+import path from 'node:path';
+import type { PlopTypes } from '@turbo/gen';
 // @ts-ignore
-import directoryPrompt from "inquirer-directory";
-import { capitalize, pipe, toCamelCase, toKebabCase } from "remeda";
+import directoryPrompt from 'inquirer-directory';
+import { capitalize, pipe, toCamelCase, toKebabCase } from 'remeda';
 
 type TurboAnswers = {
   turbo: {
@@ -14,38 +14,38 @@ type TurboAnswers = {
   };
 };
 
-const routerPath = path.resolve(__dirname, "../../");
+const routerPath = path.resolve(__dirname, '../../');
 
 export default function generator(plop: PlopTypes.NodePlopAPI): void {
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  plop.setPrompt("directory", directoryPrompt as any);
-  plop.setGenerator("add-resource-table", {
-    description: "Generate resource table",
+  plop.setPrompt('directory', directoryPrompt as any);
+  plop.setGenerator('add-resource-table', {
+    description: 'Generate resource table',
     prompts: [
       {
-        type: "input",
-        name: "name",
-        message: "What is the name of the route?",
+        type: 'input',
+        name: 'name',
+        message: 'What is the name of the route?',
       },
 
       {
-        type: "directory",
-        name: "directory",
-        message: "Select a directory",
+        type: 'directory',
+        name: 'directory',
+        message: 'Select a directory',
         basePath: routerPath,
         // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       } as any,
       {
-        type: "input",
-        name: "dataType",
-        message: "What is the name of the data type import?",
+        type: 'input',
+        name: 'dataType',
+        message: 'What is the name of the data type import?',
         default: ({ name }: { name: string }) =>
           `${pipe(name, toCamelCase(), capitalize())}Data`,
       },
       {
-        type: "input",
-        name: "inputType",
-        message: "What is the name of the form input type import?",
+        type: 'input',
+        name: 'inputType',
+        message: 'What is the name of the form input type import?',
         default: ({ name }: { name: string }) =>
           `${pipe(name, toCamelCase(), capitalize())}Input`,
       },
@@ -75,25 +75,25 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
       const actions: PlopTypes.Actions = [];
 
       actions.push({
-        type: "add",
+        type: 'add',
         templateFile: `${templateBasePath}/form.tsx.hbs`,
         path: `${basePath}/components/${pathName}-form/index.tsx`,
       });
 
       actions.push({
-        type: "add",
+        type: 'add',
         templateFile: `${templateBasePath}/dialog.tsx.hbs`,
         path: `${basePath}/components/${pathName}-dialog/index.tsx`,
       });
 
       actions.push({
-        type: "add",
+        type: 'add',
         templateFile: `${templateBasePath}/table.tsx.hbs`,
         path: `${basePath}/components/${pathName}-table/index.tsx`,
       });
 
       actions.push({
-        type: "add",
+        type: 'add',
         templateFile: `${templateBasePath}/card.tsx.hbs`,
         path: `${basePath}/components/${pathName}-card/index.tsx`,
       });

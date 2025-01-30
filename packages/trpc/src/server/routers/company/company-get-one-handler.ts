@@ -1,5 +1,5 @@
-import type { TRPCContextInnerWithSession } from "@/server/create-context";
-import type { CompanyGetOneSchema } from "./company-get-one-schema";
+import type { TRPCContextInnerWithSession } from '@/server/create-context';
+import type { CompanyGetOneSchema } from './company-get-one-schema';
 
 type CompanyGetOneOptions = {
   ctx: TRPCContextInnerWithSession;

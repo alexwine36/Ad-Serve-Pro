@@ -1,5 +1,5 @@
-import { CompanyData } from "@repo/common-types";
-import { z } from "zod";
+import { CompanyData } from '@repo/common-types';
+import { z } from 'zod';
 
 const BaseSchema = CompanyData.pick({
   id: true,

@@ -1,7 +1,7 @@
-import type { TRPCContextInnerWithSession } from "@/server/create-context";
-import { CompanyContactData } from "@repo/common-types";
-import { z } from "zod";
-import type { CompanyContactGetAllSchema } from "./company-contact-get-all-schema";
+import type { TRPCContextInnerWithSession } from '@/server/create-context';
+import { CompanyContactData } from '@repo/common-types';
+import { z } from 'zod';
+import type { CompanyContactGetAllSchema } from './company-contact-get-all-schema';
 
 type CompanyContactGetAllOptions = {
   ctx: TRPCContextInnerWithSession;

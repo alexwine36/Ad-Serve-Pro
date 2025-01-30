@@ -1,9 +1,9 @@
-import { z } from "zod";
-import { CompanyContactSchema } from "./generated";
+import { z } from 'zod';
+import { CompanyContactSchema } from './generated';
 
 export const CompanyContactData = CompanyContactSchema.extend({
   // Update base types here
-  email: z.union([z.string().email(), z.literal("")]).nullish(),
+  email: z.union([z.string().email(), z.literal('')]).nullish(),
   name: z.string().min(2),
 });
 
@@ -23,8 +23,8 @@ export const CompanyContactInput = CompanyContactUpdateInput.partial({
   id: true,
 }).default({
   // Define default values here
-  name: "",
+  name: '',
   email: undefined,
-  companyId: "",
+  companyId: '',
 });
 export type CompanyContactInput = z.infer<typeof CompanyContactInput>;

@@ -1,5 +1,5 @@
-import { CompanyContactInput } from "@repo/common-types";
-import type { z } from "zod";
+import { CompanyContactInput } from '@repo/common-types';
+import type { z } from 'zod';
 
 export const CompanyContactCreateSchema = CompanyContactInput;
 
