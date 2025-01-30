@@ -15,8 +15,7 @@ import {
   DropdownMenuTrigger,
 } from "@repo/design-system/components/ui/dropdown-menu";
 import { useDataTable } from "@repo/design-system/hooks/use-datatable";
-import { Ellipsis, Eye } from "lucide-react";
-import Link from "next/link";
+import { Ellipsis } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
 import { CompanyContactDialog } from "../company-contact-dialog";
@@ -31,33 +30,38 @@ export const CompanyContactTable: React.FC<{
     DataTableRowAction<CompanyContactData> | undefined
   >(undefined);
 
+  const utils = trpc.useUtils();
+
+  const { mutate: deleteContact } = trpc.companyContact.delete.useMutation({
+    onSuccess: () => {
+      utils.companyContact.getAll.invalidate();
+    },
+  });
+
   const handleDelete = async (data: CompanyContactData[]) => {
-    const promise = new Promise((resolve, reject) => {
-      setTimeout(() => resolve("Data from promise"), 1000);
-    });
-    await promise;
-    console.log(data);
+    const res = await Promise.all(data.map((d) => deleteContact({ id: d.id })));
+    console.log(data, res);
   };
 
   const table = useDataTable({
     data: data || [],
 
     columns: [
-      {
-        accessorKey: "id",
-        header: "",
-        size: 40,
-        cell: ({ cell }) => {
-          const id = cell.getValue<string>();
-          return (
-            <Button variant={"ghost"} size={"icon"} asChild>
-              <Link href={`/companies/${id}`}>
-                <Eye />
-              </Link>
-            </Button>
-          );
-        },
-      },
+      // {
+      //   accessorKey: "id",
+      //   header: "",
+      //   size: 40,
+      //   cell: ({ cell }) => {
+      //     const id = cell.getValue<string>();
+      //     return (
+      //       <Button variant={"ghost"} size={"icon"} asChild>
+      //         <Link href={`/companies/${id}`}>
+      //           <Eye />
+      //         </Link>
+      //       </Button>
+      //     );
+      //   },
+      // },
       {
         accessorKey: "name",
         header: "Name",
@@ -132,6 +136,7 @@ export const CompanyContactTable: React.FC<{
     <>
       <DataTable {...table} />
       <CompanyContactDialog
+        companyId={companyId}
         companyContact={rowAction?.row?.original}
         open={rowAction?.type === "update"}
         onOpenChange={(isOpen) => {

@@ -1,18 +1,16 @@
-import { router } from '@/server/trpc';
-import { z } from 'zod';
-import publicProcedure from '../procedures/public-procedure';
-
-// Imports
-
+import { router } from "@/server/trpc";
 import { companyContactRouter } from './company-contact/_router';
 
-import { companyRouter } from './company/_router';
+import { z } from "zod";
+import publicProcedure from "../procedures/public-procedure";
 
-import { memberRouter } from './member/_router';
+import { companyRouter } from "./company/_router";
 
-import { userRouter } from './user/_router';
+import { memberRouter } from "./member/_router";
 
-import { organizationRouter } from '@/server/routers/organization/_router'; //'./organization/_router';
+import { userRouter } from "./user/_router";
+
+import { organizationRouter } from "@/server/routers/organization/_router"; //'./organization/_router';
 
 export const appRouter = router({
   hello: publicProcedure

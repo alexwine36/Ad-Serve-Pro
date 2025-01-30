@@ -1,1 +1,2 @@
-export * from './slugify';
+export * from "./get-schema-defaults";
+export * from "./slugify";

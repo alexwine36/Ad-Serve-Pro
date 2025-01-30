@@ -1,29 +1,30 @@
-'use client';
+"use client";
 
-import { trpc } from '@/utils/trpc';
+import { trpc } from "@/utils/trpc";
 import {
   type CompanyContactData,
   CompanyContactInput,
-} from '@repo/common-types';
-import { useToast } from '@repo/design-system/hooks/use-toast';
-import type React from 'react';
-import { useForm } from 'react-hook-form';
+  getSchemaDefaults,
+} from "@repo/common-types";
 import {
   Form,
   FormInput,
   zodResolver,
-} from '@repo/design-system/components/inputs';
-import { Button } from '@repo/design-system/components/ui/button';
-
-
+} from "@repo/design-system/components/inputs";
+import { Button } from "@repo/design-system/components/ui/button";
+import { useToast } from "@repo/design-system/hooks/use-toast";
+import type React from "react";
+import { useForm } from "react-hook-form";
 
 type CompanyContactFormProps = {
   onSuccess: (value: CompanyContactData) => void;
   companyContact?: CompanyContactData;
+  companyId: string;
 };
 
 export const CompanyContactForm: React.FC<CompanyContactFormProps> = ({
   companyContact,
+  companyId,
   onSuccess,
 }) => {
   const { toast } = useToast();
@@ -33,15 +34,18 @@ export const CompanyContactForm: React.FC<CompanyContactFormProps> = ({
   const form = useForm<CompanyContactInput>({
     resolver: zodResolver(CompanyContactInput),
     defaultValues: {
+      ...getSchemaDefaults(CompanyContactInput),
+      companyId,
       ...companyContact,
     },
   });
-
   const handleSuccess = (data: CompanyContactData) => {
     toast({
-      title: 'Success',
-      description: companyContact ? 'CompanyContact saved' : 'CompanyContact created',
-      variant: 'success',
+      title: "Success",
+      description: companyContact
+        ? "CompanyContact saved"
+        : "CompanyContact created",
+      variant: "success",
     });
     utils.companyContact.getAll.invalidate();
     onSuccess(data);
@@ -53,7 +57,7 @@ export const CompanyContactForm: React.FC<CompanyContactFormProps> = ({
     },
   });
 
-  const { mutate: update } = trpc.companyContact.edit.useMutation({
+  const { mutate: update } = trpc.companyContact.update.useMutation({
     onSuccess: (d) => {
       handleSuccess(d);
     },
@@ -84,31 +88,35 @@ export const CompanyContactForm: React.FC<CompanyContactFormProps> = ({
           />
           <FormInput
             className="min-w-72 flex-auto"
-            label="Slug"
+            label="Email"
             control={form.control}
-            name="slug"
-            prefix={'/'}
+            name="email"
+          />
+
+          <FormInput
+            className="min-w-72 flex-auto"
+            label="Phone"
+            control={form.control}
+            name="phone"
           />
           <FormInput
             className="min-w-72 flex-auto"
-            label="Website"
+            label="Title"
             control={form.control}
-            name="website"
-
+            name="title"
           />
           <FormInput
             className="min-w-72 flex-auto"
-            label="Image"
+            label="Department"
             control={form.control}
-            name="image"
-
+            name="department"
           />
         </div>
         <FormInput
           type="textarea"
-          label="Description"
+          label="Notes"
           control={form.control}
-          name="description"
+          name="notes"
         />
         <div className="flex justify-end">
           <Button disabled={form.formState.isSubmitting} type="submit">

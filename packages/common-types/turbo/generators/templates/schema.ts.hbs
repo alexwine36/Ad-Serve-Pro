@@ -15,5 +15,7 @@ export const {{ className }}UpdateInput = {{ className }}Data.omit({
 
 export type {{ className }}UpdateInput = z.infer<typeof {{ className }}UpdateInput>;
 
-export const {{ className }}Input = {{ className }}UpdateInput;
+export const {{ className }}Input = {{ className }}UpdateInput.partial({
+  id: true
+});
 export type {{ className }}Input = z.infer<typeof {{ className }}Input>;

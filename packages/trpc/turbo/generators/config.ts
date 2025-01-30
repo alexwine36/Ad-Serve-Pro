@@ -118,7 +118,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
       actions.push({
         type: "append",
         path: `${targetPath}/_app.ts`,
-        pattern: "Imports\n",
+        pattern: ";",
         data,
         // template: '{{routeName}}: {{routerName}},\n',
         template: `import { {{ routerName }} } from './{{ routerFile }}/_router';\n`,
@@ -135,7 +135,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
           router: routerFile,
         });
       });
-      console.log(handlers);
+      // console.log(handlers);
 
       // addHandlerActions({
       //   ...modData,
@@ -223,20 +223,20 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
       }
     };
     const handleDataType = `${pipe(
-      rawData.name,
+      rawData.router,
       toCamelCase(),
       capitalize()
     )}Data`;
     const getHandlerReturnType = () => {
       switch (rawData.name) {
         case "get all":
-          return `: Promise<${handleDataType}[]>`;
+          return `z.array(${handleDataType}).parse(res)`;
         case "get one":
-          return `: Promise<${handleDataType}>`;
+          return `${handleDataType}.parse(res)`;
         case "create":
-          return `: Promise<${handleDataType}>`;
+          return `${handleDataType}.parse(res)`;
         case "update":
-          return `: Promise<${handleDataType}>`;
+          return `${handleDataType}.parse(res)`;
 
         default:
           return "";

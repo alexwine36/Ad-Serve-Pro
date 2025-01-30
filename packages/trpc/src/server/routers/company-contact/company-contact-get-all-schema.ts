@@ -1,8 +1,8 @@
 import { z } from "zod";
 
 export const CompanyContactGetAllSchema = z.object({
-  companyId: z.string(),
   // Define your schema here
+  companyId: z.string(),
 });
 
 export type CompanyContactGetAllSchema = z.infer<

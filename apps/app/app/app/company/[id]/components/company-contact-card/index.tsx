@@ -22,6 +22,7 @@ export const CompanyContactCard: React.FC<{
           <div className="flex items-center gap-2">
             Contacts
             <CompanyContactDialog
+              companyId={companyId}
               open={open}
               onOpenChange={setOpen}
               showTrigger
