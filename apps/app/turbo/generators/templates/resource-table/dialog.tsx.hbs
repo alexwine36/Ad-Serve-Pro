@@ -2,42 +2,45 @@
 
 import type { {{ dataType }} } from '@repo/common-types';
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
+Dialog,
+DialogContent,
+DialogDescription,
+DialogHeader,
+DialogTitle,
+DialogTrigger,
 } from '@repo/design-system/components/ui/dialog';
 import type React from 'react';
 import { trpc } from '@/utils/trpc';
 import { {{ capitalizedName }}Form } from '../{{pathName}}-form';
 import { Button } from '@repo/design-system/components/ui/button';
 import { Edit, PlusIcon } from 'lucide-react';
+import { {{ capitalizedName }}Types } from '../{{ pathName }}-types';
 
 export interface {{ capitalizedName }}DialogProps
-  extends React.ComponentPropsWithoutRef<typeof Dialog> {
+extends React.ComponentPropsWithoutRef<typeof Dialog>, {{ capitalizedName }}Types {
   {{ propertyName }}?: {{ dataType }};
   showTrigger?: boolean;
-}
+  }
 
-export const {{ capitalizedName }}Dialog: React.FC<{{ capitalizedName }}DialogProps> = ({
-  {{ propertyName }},
-  open,
-  onOpenChange,
-  showTrigger
-}) => {
+  export const {{ capitalizedName }}Dialog: React.FC<{{ capitalizedName }}DialogProps> = ({
+    {{ propertyName }},
+    open,
+    onOpenChange,
+    showTrigger
+    }) => {
 
-  return (
+    return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-         {showTrigger ? (
-        <DialogTrigger asChild>
-          <Button variant="outline" size="icon">
-            {
-              {{ propertyName }} ? <Edit /> : <PlusIcon />
-            }
-          </Button>
-        </DialogTrigger>
+      {showTrigger ? (
+      <DialogTrigger asChild>
+        <Button variant="outline" size="icon">
+          {
+          {{ propertyName }} ?
+          <Edit /> :
+          <PlusIcon />
+          }
+        </Button>
+      </DialogTrigger>
       ) : null}
       <DialogContent>
         <DialogHeader>
@@ -47,13 +50,11 @@ export const {{ capitalizedName }}Dialog: React.FC<{{ capitalizedName }}DialogPr
           </DialogDescription>
         </DialogHeader>
 
-        <{{ capitalizedName }}Form
-          {{ propertyName }}={ {{ propertyName }} }
-          onSuccess={() => {
-            onOpenChange?.(false);
+        <{{ capitalizedName }}Form {{ propertyName }}={ {{ propertyName }} } onSuccess={()=> {
+          onOpenChange?.(false);
           }}
-        />
+          />
       </DialogContent>
     </Dialog>
-  );
-};
+    );
+    };

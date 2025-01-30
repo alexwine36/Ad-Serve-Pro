@@ -1,5 +1,6 @@
 // Exports
 
+export * from './campaign/handlers';
 export * from './company-contact/handlers';
 export * from './company/handlers';
 export * from './member/handlers';

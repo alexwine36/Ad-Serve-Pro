@@ -7,22 +7,22 @@ export const seedCompanies = async (
   org: Organization,
   prisma: PrismaClient
 ) => {
-  const companies = await prisma.company.count({
+  const companies = await prisma.company.findMany({
     where: {
       organizationId: org.id,
     },
   });
-  if (companies > 5) {
-    return;
+  if (companies.length > 5) {
+    return companies;
   }
-  new Array(faker.number.int({ min: 10, max: 20 })).fill(0).map(async () => {
+  return Promise.all(new Array(faker.number.int({ min: 10, max: 20 })).fill(0).map(async () => {
     const companyMock = generateMock(
       CompanyInput.omit({
         id: true,
       })
     );
     const name = faker.company.name();
-    await prisma.company.create({
+    const res = await prisma.company.create({
       data: {
         ...companyMock,
         name,
@@ -34,5 +34,6 @@ export const seedCompanies = async (
         organizationId: org.id,
       },
     });
-  });
+    return res
+  }));
 };

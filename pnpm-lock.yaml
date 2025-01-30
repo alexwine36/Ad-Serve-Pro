@@ -343,6 +343,9 @@ importers:
       '@faker-js/faker':
         specifier: ^9.3.0
         version: 9.3.0
+      '@repo/testing':
+        specifier: workspace:*
+        version: link:../testing
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -355,6 +358,9 @@ importers:
       '@types/react-dom':
         specifier: ^19.0.2
         version: 19.0.2(@types/react@19.0.7)
+      date-fns:
+        specifier: 4.1.0
+        version: 4.1.0
       tsx:
         specifier: ^4.19.2
         version: 4.19.2

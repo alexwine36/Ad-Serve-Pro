@@ -1,5 +1,6 @@
 import { PrismaClient } from '@repo/database';
 import { keys } from './keys';
+import { seedCompanysCampaigns } from './lib/campaign';
 import { seedCompanies } from './lib/company';
 import { getOrganization, seedMembers } from './lib/organization';
 import { generatePages } from './lib/page';
@@ -17,7 +18,8 @@ const prisma = new PrismaClient();
       prisma
     );
     await seedMembers(org, prisma);
-    await seedCompanies(org, prisma);
+    const companies = await seedCompanies(org, prisma);
+    const _campaigns = await seedCompanysCampaigns(companies, prisma);
     const _otherOrg = await getOrganization(
       {
         name: "Bob's Burgers",
