@@ -16,6 +16,7 @@ import { Ellipsis, Eye } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 import { CampaignDialog } from '../campaign-dialog';
+import { CampaignStatusBadge } from '../campaign-status-badge';
 import type { CampaignTypes } from '../campaign-types';
 
 export const CampaignTable: React.FC<CampaignTypes> = ({ companyId }) => {
@@ -51,30 +52,39 @@ export const CampaignTable: React.FC<CampaignTypes> = ({ companyId }) => {
         enableSorting: true,
       },
       {
-        accessorKey: 'slug',
-        header: 'Slug',
+        accessorKey: 'status',
+        header: 'Status',
         cell: ({ cell }) => {
-          const slug = cell.getValue<string>();
-          return <code>/{slug}</code>;
+          const status = cell.getValue<CampaignData["status"]>();
+          return <CampaignStatusBadge status={status} />;
         },
       },
       {
-        accessorKey: 'description',
-        header: 'Description',
+        accessorKey: 'budget',
+        header: 'Budget',
       },
-      {
-        accessorKey: 'website',
-        header: 'Website',
-      },
+      // {
+      //   accessorKey: 'website',
+      //   header: 'Website',
+      // },
 
+      // {
+      //   accessorKey: 'type',
+      //   header: 'Type',
+      // },
       {
-        accessorKey: 'type',
-        header: 'Type',
+        accessorKey: 'startDate',
+        enableSorting: true,
+        header: 'Start Date',
+        cell: ({ cell }) => {
+          const date = cell.getValue<Date>();
+          return date.toLocaleDateString();
+        },
       },
       {
-        accessorKey: 'createdAt',
+        accessorKey: 'endDate',
         enableSorting: true,
-        header: 'Created At',
+        header: 'End Date',
         cell: ({ cell }) => {
           const date = cell.getValue<Date>();
           return date.toLocaleDateString();

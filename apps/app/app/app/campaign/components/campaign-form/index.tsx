@@ -3,14 +3,18 @@
 import { trpc } from '@/utils/trpc';
 import { type CampaignData, CampaignInput } from '@repo/common-types';
 import {
+  DateInput,
   Form,
   FormInput,
+  SelectInput,
   zodResolver,
 } from '@repo/design-system/components/inputs';
 import { Button } from '@repo/design-system/components/ui/button';
 import { useToast } from '@repo/design-system/hooks/use-toast';
 import type React from 'react';
 import { useForm } from 'react-hook-form';
+import { capitalize, pipe, toLowerCase } from 'remeda';
+import { CampaignStatus } from '../../../../../../../packages/database';
 import type { CampaignTypes } from '../campaign-types';
 
 type CampaignFormProps = CampaignTypes & {
@@ -35,6 +39,9 @@ export const CampaignForm: React.FC<CampaignFormProps> = ({
     },
   });
 
+  const startDate = form.watch('startDate');
+  const endDate = form.watch('endDate');
+console.log('startDate', startDate);
   const handleSuccess = (data: CampaignData) => {
     toast({
       title: 'Success',
@@ -80,32 +87,45 @@ export const CampaignForm: React.FC<CampaignFormProps> = ({
             control={form.control}
             name="name"
           />
+          
           <FormInput
             className="min-w-72 flex-auto"
-            label="Slug"
+            label="Budget"
             control={form.control}
-            name="slug"
-            prefix={'/'}
+            name="budget"
           />
-          <FormInput
+          <SelectInput
             className="min-w-72 flex-auto"
-            label="Website"
+            label="Status"
             control={form.control}
-            name="website"
-          />
-          <FormInput
-            className="min-w-72 flex-auto"
-            label="Image"
-            control={form.control}
-            name="image"
+            name="status"
+            options={Object.values(CampaignStatus).map((status) => ({
+              value: status,
+              label: pipe(status, toLowerCase(), capitalize()),
+            }))}
           />
         </div>
-        <FormInput
-          type="textarea"
-          label="Description"
-          control={form.control}
-          name="description"
-        />
+        
+        <div className="flex w-full flex-wrap gap-4">
+          <DateInput
+            className="min-w-72 flex-auto"
+            label="Start Date"
+            control={form.control}
+            name="startDate"
+            disabledAfter={endDate}
+          />
+
+<DateInput
+disabledBefore={startDate}
+            className="min-w-72 flex-auto"
+            label="End Date"
+            control={form.control}
+            name="endDate"
+          />
+
+          </div>
+
+
         <div className="flex justify-end">
           <Button disabled={form.formState.isSubmitting} type="submit">
             Save

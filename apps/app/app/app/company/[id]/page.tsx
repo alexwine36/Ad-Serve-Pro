@@ -18,7 +18,7 @@ const CompanyPage = async ({ params }: { params: Promise<{ id: string }> }) => {
         page={company?.name}
         pages={[{ label: 'Companies', href: '/app/company' }]}
       />
-      <Container>
+      <Container className="flex flex-col gap-4">
         <CampaignCard companyId={company.id} />
         <CompanyContactCard companyId={company.id} />
       </Container>

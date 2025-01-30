@@ -1,7 +1,6 @@
-import { z } from "zod";
+import { CampaignUpdateInput } from '@repo/common-types';
+import type { z } from 'zod';
 
-export const CampaignUpdateSchema = z.object({
-    // Define your schema here
-})
+export const CampaignUpdateSchema = CampaignUpdateInput;
 
 export type CampaignUpdateSchema = z.infer<typeof CampaignUpdateSchema>;
