@@ -4,6 +4,7 @@ import { trpc } from '@/utils/trpc';
 import {
 type {{ dataType }},
 {{ inputType }},
+getSchemaDefaults,
 } from '@repo/common-types';
 import { useToast } from '@repo/design-system/hooks/use-toast';
 import type React from 'react';
@@ -33,6 +34,7 @@ export const {{ formName }}: React.FC<{{ formName }}Props> = ({
   const form = useForm<{{ inputType }}>({
     resolver: zodResolver({{ inputType }}),
     defaultValues: {
+    ...getSchemaDefaults({{ inputType }}),
     ...{{ propertyName }},
     },
     });

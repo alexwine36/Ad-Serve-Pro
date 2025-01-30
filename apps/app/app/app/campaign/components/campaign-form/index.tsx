@@ -1,7 +1,11 @@
 'use client';
 
 import { trpc } from '@/utils/trpc';
-import { type CampaignData, CampaignInput } from '@repo/common-types';
+import {
+  type CampaignData,
+  CampaignInput,
+  getSchemaDefaults,
+} from '@repo/common-types';
 import {
   DateInput,
   Form,
@@ -34,6 +38,7 @@ export const CampaignForm: React.FC<CampaignFormProps> = ({
   const form = useForm<CampaignInput>({
     resolver: zodResolver(CampaignInput),
     defaultValues: {
+      ...getSchemaDefaults(CampaignInput),
       companyId,
       ...campaign,
     },
@@ -41,7 +46,7 @@ export const CampaignForm: React.FC<CampaignFormProps> = ({
 
   const startDate = form.watch('startDate');
   const endDate = form.watch('endDate');
-console.log('startDate', startDate);
+
   const handleSuccess = (data: CampaignData) => {
     toast({
       title: 'Success',
@@ -87,7 +92,7 @@ console.log('startDate', startDate);
             control={form.control}
             name="name"
           />
-          
+
           <FormInput
             className="min-w-72 flex-auto"
             label="Budget"
@@ -105,7 +110,7 @@ console.log('startDate', startDate);
             }))}
           />
         </div>
-        
+
         <div className="flex w-full flex-wrap gap-4">
           <DateInput
             className="min-w-72 flex-auto"
@@ -115,16 +120,14 @@ console.log('startDate', startDate);
             disabledAfter={endDate}
           />
 
-<DateInput
-disabledBefore={startDate}
+          <DateInput
+            disabledBefore={startDate}
             className="min-w-72 flex-auto"
             label="End Date"
             control={form.control}
             name="endDate"
           />
-
-          </div>
-
+        </div>
 
         <div className="flex justify-end">
           <Button disabled={form.formState.isSubmitting} type="submit">

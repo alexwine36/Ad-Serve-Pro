@@ -19,7 +19,7 @@ export const CampaignCard: React.FC<CampaignTypes> = ({ companyId }) => {
       <CardHeader>
         <CardTitle>
           <div className="flex items-center gap-2">
-            Campaign
+            Campaigns
             <CampaignDialog
               companyId={companyId}
               open={open}

@@ -19,4 +19,17 @@ describe('GetSchemaDefaults', () => {
       hello: 'world',
     });
   });
+  test('should return internal defaults', () => {
+    const defaults = getSchemaDefaults(
+      z.object({
+        id: z.string().optional(),
+        hello: z.string().default('world'),
+        name: z.string().min(2).default(''),
+      })
+    );
+    expect(defaults).toEqual({
+      hello: 'world',
+      name: '',
+    });
+  });
 });
