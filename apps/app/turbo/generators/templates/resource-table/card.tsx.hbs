@@ -1,10 +1,10 @@
 'use client'
 
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
+Card,
+CardContent,
+CardHeader,
+CardTitle,
 } from '@repo/design-system/components/ui/card';
 import { {{ capitalizedName }}Dialog } from '../{{ pathName }}-dialog';
 import { {{ capitalizedName }}Table } from '../{{ pathName }}-table';
@@ -12,21 +12,23 @@ import React from 'react';
 
 
 export const {{ capitalizedName }}Card: React.FC = () => {
-    const [open, setOpen] = React.useState(false);
+const [open, setOpen] = React.useState(false);
 
-    return (
-        <Card>
-          <CardHeader>
-            <CardTitle>
-              <div className="flex items-center gap-2">
-                {{ capitalizedName }}
-                <{{ capitalizedName }}Dialog open={open} onOpenChange={setOpen} showTrigger />
-              </div>
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <{{ capitalizedName }}Table />
-          </CardContent>
-        </Card>
-    )
+return (
+<Card>
+  <CardHeader>
+    <CardTitle>
+      <div className="flex items-center gap-2">
+        {{ capitalizedName }}
+        {{#if includeMethods.create}}
+        <{{ capitalizedName }}Dialog open={open} onOpenChange={setOpen} showTrigger />
+        {{/if}}
+      </div>
+    </CardTitle>
+  </CardHeader>
+  <CardContent>
+    <{{ capitalizedName }}Table />
+  </CardContent>
+</Card>
+)
 }

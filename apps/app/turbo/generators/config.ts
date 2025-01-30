@@ -1,5 +1,5 @@
-import path from 'node:path';
 import type { PlopTypes } from '@turbo/gen';
+import path from 'node:path';
 // @ts-ignore
 import directoryPrompt from 'inquirer-directory';
 import { capitalize, pipe, toCamelCase, toKebabCase } from 'remeda';
@@ -49,6 +49,16 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         default: ({ name }: { name: string }) =>
           `${pipe(name, toCamelCase(), capitalize())}Input`,
       },
+      {
+        type: 'checkbox',
+        name: 'methods',
+        message: 'Select methods',
+        choices: [
+          { name: 'Create', value: 'create' },
+          { name: 'Update', value: 'update' },
+          { name: 'Delete', value: 'delete' },
+        ],
+      }
     ],
     actions: (rawData) => {
       const modData = rawData as TurboAnswers & {
@@ -56,7 +66,16 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         directory: string;
         dataType: string;
         inputType: string;
+        methods: ('create' | 'update' | 'delete')[];
       };
+
+      const includeMethods = {
+        create: modData.methods.includes('create'),
+        update: modData.methods.includes('update'),
+        delete: modData.methods.includes('delete'),
+        form: modData.methods.includes('create') || modData.methods.includes('update'),
+      }
+
       const basePath = `${modData?.turbo.paths.workspace}/${modData.directory}`;
       const templateBasePath = `${modData?.turbo.paths.workspace}/turbo/generators/templates/resource-table`;
       const propertyName = pipe(modData.name, toCamelCase());
@@ -70,21 +89,25 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         propertyName,
         capitalizedName,
         pathName,
+        includeMethods
       };
       console.log(modData);
       const actions: PlopTypes.Actions = [];
 
-      actions.push({
-        type: 'add',
-        templateFile: `${templateBasePath}/form.tsx.hbs`,
-        path: `${basePath}/components/${pathName}-form/index.tsx`,
-      });
+      if (includeMethods.form) {
+        actions.push({
+          type: 'add',
+          templateFile: `${templateBasePath}/form.tsx.hbs`,
+          path: `${basePath}/components/${pathName}-form/index.tsx`,
+        });
+  
+        actions.push({
+          type: 'add',
+          templateFile: `${templateBasePath}/dialog.tsx.hbs`,
+          path: `${basePath}/components/${pathName}-dialog/index.tsx`,
+        });
+      } 
 
-      actions.push({
-        type: 'add',
-        templateFile: `${templateBasePath}/dialog.tsx.hbs`,
-        path: `${basePath}/components/${pathName}-dialog/index.tsx`,
-      });
 
       actions.push({
         type: 'add',
