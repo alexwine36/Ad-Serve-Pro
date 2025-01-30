@@ -4,6 +4,8 @@ import publicProcedure from '../procedures/public-procedure';
 
 // Imports
 
+import { companyContactRouter } from './company-contact/_router';
+
 import { companyRouter } from './company/_router';
 
 import { memberRouter } from './member/_router';
@@ -25,6 +27,8 @@ export const appRouter = router({
       };
     }),
   // Handlers
+
+companyContact: companyContactRouter,
 
   company: companyRouter,
 

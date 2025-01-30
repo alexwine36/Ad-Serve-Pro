@@ -2,8 +2,8 @@
 
 import { trpc } from '@/utils/trpc';
 import {
-  type {{ dataType }},
-  {{ inputType }},
+  type CompanyContactData,
+  CompanyContactInput,
 } from '@repo/common-types';
 import { useToast } from '@repo/design-system/hooks/use-toast';
 import type React from 'react';
@@ -17,54 +17,54 @@ import { Button } from '@repo/design-system/components/ui/button';
 
 
 
-type {{ formName }}Props = {
-  onSuccess: (value: {{ dataType }}) => void;
-  {{ propertyName }}?: {{ dataType }};
+type CompanyContactFormProps = {
+  onSuccess: (value: CompanyContactData) => void;
+  companyContact?: CompanyContactData;
 };
 
-export const {{ formName }}: React.FC<{{ formName }}Props> = ({
-  {{ propertyName }},
+export const CompanyContactForm: React.FC<CompanyContactFormProps> = ({
+  companyContact,
   onSuccess,
 }) => {
   const { toast } = useToast();
 
   const utils = trpc.useUtils();
 
-  const form = useForm<{{ inputType }}>({
-    resolver: zodResolver({{ inputType }}),
+  const form = useForm<CompanyContactInput>({
+    resolver: zodResolver(CompanyContactInput),
     defaultValues: {
-      ...{{ propertyName }},
+      ...companyContact,
     },
   });
 
-  const handleSuccess = (data: {{ dataType }}) => {
+  const handleSuccess = (data: CompanyContactData) => {
     toast({
       title: 'Success',
-      description: {{ propertyName }} ? '{{capitalizedName}} saved' : '{{capitalizedName}} created',
+      description: companyContact ? 'CompanyContact saved' : 'CompanyContact created',
       variant: 'success',
     });
-    utils.{{ propertyName }}.getAll.invalidate();
+    utils.companyContact.getAll.invalidate();
     onSuccess(data);
   };
 
-  const { mutate: create } = trpc.{{ propertyName }}.create.useMutation({
+  const { mutate: create } = trpc.companyContact.create.useMutation({
     onSuccess: (d) => {
       handleSuccess(d);
     },
   });
 
-  const { mutate: update } = trpc.{{ propertyName }}.update.useMutation({
+  const { mutate: update } = trpc.companyContact.edit.useMutation({
     onSuccess: (d) => {
       handleSuccess(d);
     },
   });
 
-  const onSubmit = (data: {{ inputType }}) => {
+  const onSubmit = (data: CompanyContactInput) => {
     console.log(data);
-    if ({{ propertyName }}?.id) {
+    if (companyContact?.id) {
       // update
       update({
-        id: {{ propertyName }}.id,
+        id: companyContact.id,
         ...data,
       });
     } else {

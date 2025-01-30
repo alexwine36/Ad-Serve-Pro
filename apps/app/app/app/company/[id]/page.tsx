@@ -1,5 +1,7 @@
+import { Container } from "@repo/design-system/components/ui/container";
 import { trpcCaller } from "../../../../utils/trpc-server";
 import { Header } from "../../components/header";
+import { CompanyContactCard } from "./components/company-contact-card";
 
 const CompanyPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const caller = await trpcCaller();
@@ -10,13 +12,15 @@ const CompanyPage = async ({ params }: { params: Promise<{ id: string }> }) => {
     return <div>Company not found</div>;
   }
   return (
-    <div>
+    <>
       <Header
         page={company?.name}
         pages={[{ label: "Companies", href: "/app/company" }]}
       />
-      {/* <CompanyCard company={company} /> */}
-    </div>
+      <Container>
+        <CompanyContactCard companyId={company.id} />
+      </Container>
+    </>
   );
 };
 
