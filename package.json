@@ -13,6 +13,7 @@
     "db:up": "docker compose up -d",
     "dev": "turbo dev",
     "format": "ultracite format",
+    "gen:resource": "./scripts/generate-resource.sh",
     "lint": "ultracite lint",
     "lint:ci": "biome check --diagnostic-level=error",
     "migrate": "cd packages/database && npx prisma format && npx prisma generate && npx prisma db push",
@@ -28,8 +29,7 @@
     "test:ci": "turbo test -- --passWithNoTests",
     "typecheck": "turbo typecheck",
     "ui:add": "shadcn add -c packages/design-system",
-    "ui:update": "shadcn add --all --overwrite -c packages/design-system",
-    "gen:resource": "./scripts/generate-resource.sh"
+    "ui:update": "shadcn add --all --overwrite -c packages/design-system"
   },
   "devDependencies": {
     "@auto-it/first-time-contributor": "^11.3.0",
