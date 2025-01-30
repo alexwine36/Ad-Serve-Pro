@@ -16,11 +16,11 @@ export const companyGetOneHandler = async ({
     where: {
       OR: [
         {
-          id: input.id,
+          id: input.id || input.unknown,
           organizationId: session?.user.currentOrganizationId,
         },
         {
-          slug: input.slug,
+          slug: input.slug || input.unknown,
           organizationId: session?.user.currentOrganizationId,
         },
       ],

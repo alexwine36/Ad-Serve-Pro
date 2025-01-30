@@ -28,7 +28,8 @@
     "test:ci": "turbo test -- --passWithNoTests",
     "typecheck": "turbo typecheck",
     "ui:add": "shadcn add -c packages/design-system",
-    "ui:update": "shadcn add --all --overwrite -c packages/design-system"
+    "ui:update": "shadcn add --all --overwrite -c packages/design-system",
+    "gen:resource": "./scripts/generate-resource.sh"
   },
   "devDependencies": {
     "@auto-it/first-time-contributor": "^11.3.0",
