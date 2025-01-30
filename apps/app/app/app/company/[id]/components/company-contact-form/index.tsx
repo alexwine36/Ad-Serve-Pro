@@ -1,20 +1,20 @@
-"use client";
+'use client';
 
-import { trpc } from "@/utils/trpc";
+import { trpc } from '@/utils/trpc';
 import {
   type CompanyContactData,
   CompanyContactInput,
   getSchemaDefaults,
-} from "@repo/common-types";
+} from '@repo/common-types';
 import {
   Form,
   FormInput,
   zodResolver,
-} from "@repo/design-system/components/inputs";
-import { Button } from "@repo/design-system/components/ui/button";
-import { useToast } from "@repo/design-system/hooks/use-toast";
-import type React from "react";
-import { useForm } from "react-hook-form";
+} from '@repo/design-system/components/inputs';
+import { Button } from '@repo/design-system/components/ui/button';
+import { useToast } from '@repo/design-system/hooks/use-toast';
+import type React from 'react';
+import { useForm } from 'react-hook-form';
 
 type CompanyContactFormProps = {
   onSuccess: (value: CompanyContactData) => void;
@@ -41,11 +41,9 @@ export const CompanyContactForm: React.FC<CompanyContactFormProps> = ({
   });
   const handleSuccess = (data: CompanyContactData) => {
     toast({
-      title: "Success",
-      description: companyContact
-        ? "Contact saved"
-        : "Contact created",
-      variant: "success",
+      title: 'Success',
+      description: companyContact ? 'Contact saved' : 'Contact created',
+      variant: 'success',
     });
     utils.companyContact.getAll.invalidate();
     onSuccess(data);

@@ -1,5 +1,5 @@
-import type { PlopTypes } from '@turbo/gen';
 import path from 'node:path';
+import type { PlopTypes } from '@turbo/gen';
 // @ts-ignore
 import directoryPrompt from 'inquirer-directory';
 import { capitalize, pipe, toCamelCase, toKebabCase } from 'remeda';
@@ -58,7 +58,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
           { name: 'Update', value: 'update' },
           { name: 'Delete', value: 'delete' },
         ],
-      }
+      },
     ],
     actions: (rawData) => {
       const modData = rawData as TurboAnswers & {
@@ -73,8 +73,10 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         create: modData.methods.includes('create'),
         update: modData.methods.includes('update'),
         delete: modData.methods.includes('delete'),
-        form: modData.methods.includes('create') || modData.methods.includes('update'),
-      }
+        form:
+          modData.methods.includes('create') ||
+          modData.methods.includes('update'),
+      };
 
       const basePath = `${modData?.turbo.paths.workspace}/${modData.directory}`;
       const templateBasePath = `${modData?.turbo.paths.workspace}/turbo/generators/templates/resource-table`;
@@ -89,7 +91,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         propertyName,
         capitalizedName,
         pathName,
-        includeMethods
+        includeMethods,
       };
       console.log(modData);
       const actions: PlopTypes.Actions = [];
@@ -100,14 +102,13 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
           templateFile: `${templateBasePath}/form.tsx.hbs`,
           path: `${basePath}/components/${pathName}-form/index.tsx`,
         });
-  
+
         actions.push({
           type: 'add',
           templateFile: `${templateBasePath}/dialog.tsx.hbs`,
           path: `${basePath}/components/${pathName}-dialog/index.tsx`,
         });
-      } 
-
+      }
 
       actions.push({
         type: 'add',

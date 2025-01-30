@@ -4,8 +4,6 @@ import type { Company, PrismaClient } from '@repo/database';
 import { CampaignInput } from '../../common-types';
 import { getDateStatus, getToFromDate } from './utils';
 
-
-
 export const seedCampaigns = async (company: Company, prisma: PrismaClient) => {
   const campaigns = await prisma.campaign.findMany({
     where: {
@@ -27,18 +25,30 @@ export const seedCampaigns = async (company: Company, prisma: PrismaClient) => {
 
       const { from, to } = getToFromDate();
 
-      const dateStatus = getDateStatus(new Date(), {from, to});
-const baseStatus: CampaignInput["status"][] = ["CANCELLED", "PAUSED", "DRAFT"]
-        if (dateStatus === 'before') {
-            rawCampaignMock.status = faker.helpers.arrayElement([...baseStatus, "SCHEDULED"])
-        }
-        if (dateStatus === 'after') {
-            rawCampaignMock.status = faker.helpers.arrayElement([...baseStatus, "COMPLETED"])
-        }
-        if (dateStatus === 'between') {
-            rawCampaignMock.status = faker.helpers.arrayElement([...baseStatus, "ACTIVE"])
-        }
-      
+      const dateStatus = getDateStatus(new Date(), { from, to });
+      const baseStatus: CampaignInput['status'][] = [
+        'CANCELLED',
+        'PAUSED',
+        'DRAFT',
+      ];
+      if (dateStatus === 'before') {
+        rawCampaignMock.status = faker.helpers.arrayElement([
+          ...baseStatus,
+          'SCHEDULED',
+        ]);
+      }
+      if (dateStatus === 'after') {
+        rawCampaignMock.status = faker.helpers.arrayElement([
+          ...baseStatus,
+          'COMPLETED',
+        ]);
+      }
+      if (dateStatus === 'between') {
+        rawCampaignMock.status = faker.helpers.arrayElement([
+          ...baseStatus,
+          'ACTIVE',
+        ]);
+      }
 
       const campaignMock: CampaignInput = {
         ...rawCampaignMock,
@@ -61,7 +71,11 @@ const baseStatus: CampaignInput["status"][] = ["CANCELLED", "PAUSED", "DRAFT"]
   );
 };
 
-
-export const seedCompanysCampaigns = async (companies: Company[], prisma: PrismaClient) => {
-    return Promise.all(companies.map((company) => seedCampaigns(company, prisma)));
-}
+export const seedCompanysCampaigns = async (
+  companies: Company[],
+  prisma: PrismaClient
+) => {
+  return Promise.all(
+    companies.map((company) => seedCampaigns(company, prisma))
+  );
+};

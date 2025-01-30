@@ -15,25 +15,27 @@ export const seedCompanies = async (
   if (companies.length > 5) {
     return companies;
   }
-  return Promise.all(new Array(faker.number.int({ min: 10, max: 20 })).fill(0).map(async () => {
-    const companyMock = generateMock(
-      CompanyInput.omit({
-        id: true,
-      })
-    );
-    const name = faker.company.name();
-    const res = await prisma.company.create({
-      data: {
-        ...companyMock,
-        name,
-        slug: slugify(name),
-        social: companyMock.social || {},
+  return Promise.all(
+    new Array(faker.number.int({ min: 10, max: 20 })).fill(0).map(async () => {
+      const companyMock = generateMock(
+        CompanyInput.omit({
+          id: true,
+        })
+      );
+      const name = faker.company.name();
+      const res = await prisma.company.create({
+        data: {
+          ...companyMock,
+          name,
+          slug: slugify(name),
+          social: companyMock.social || {},
 
-        description: faker.company.catchPhrase(),
-        website: faker.internet.url(),
-        organizationId: org.id,
-      },
-    });
-    return res
-  }));
+          description: faker.company.catchPhrase(),
+          website: faker.internet.url(),
+          organizationId: org.id,
+        },
+      });
+      return res;
+    })
+  );
 };

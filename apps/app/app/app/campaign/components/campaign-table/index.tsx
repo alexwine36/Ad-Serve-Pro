@@ -55,7 +55,7 @@ export const CampaignTable: React.FC<CampaignTypes> = ({ companyId }) => {
         accessorKey: 'status',
         header: 'Status',
         cell: ({ cell }) => {
-          const status = cell.getValue<CampaignData["status"]>();
+          const status = cell.getValue<CampaignData['status']>();
           return <CampaignStatusBadge status={status} />;
         },
       },

@@ -28,7 +28,7 @@ export const appRouter = router({
     }),
   // Handlers
 
-campaign: campaignRouter,
+  campaign: campaignRouter,
 
   companyContact: companyContactRouter,
 

@@ -4,9 +4,11 @@ import { z } from 'zod';
 const BaseSchema = CompanyData.pick({
   id: true,
   slug: true,
-}).extend({
-  unknown: z.string().optional()
-}).partial();
+})
+  .extend({
+    unknown: z.string().optional(),
+  })
+  .partial();
 
 export const CompanyGetOneSchema = z.union([
   BaseSchema.required({

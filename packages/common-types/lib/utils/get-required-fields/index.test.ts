@@ -1,7 +1,7 @@
-import { z } from "zod";
-import { getRequiredFields } from ".";
+import { z } from 'zod';
+import { getRequiredFields } from '.';
 const Schema = z.object({
-  name: z.string().default(""),
+  name: z.string().default(''),
   age: z.number().optional(),
   address: z.string().nullable(),
   something: z.string().nullish(),
@@ -12,8 +12,8 @@ const Schema = z.object({
     something: z.string().optional(),
   }),
 });
-describe("GetRequiredFields", () => {
-  test("should return required fields", () => {
+describe('GetRequiredFields', () => {
+  test('should return required fields', () => {
     const fields = getRequiredFields(Schema);
 
     expect(fields.name).toBe(true);
@@ -27,7 +27,7 @@ describe("GetRequiredFields", () => {
 
     // expect()
   });
-  test("should return required fields for object with defaults", () => {
+  test('should return required fields for object with defaults', () => {
     const fields = getRequiredFields(
       z
         .object({
@@ -35,7 +35,7 @@ describe("GetRequiredFields", () => {
           age: z.number().optional(),
         })
         .default({
-          name: "John",
+          name: 'John',
         })
     );
 

@@ -1,7 +1,7 @@
 import type { CampaignData } from '@repo/common-types';
 import {
-    Badge,
-    type BadgeProps,
+  Badge,
+  type BadgeProps,
 } from '@repo/design-system/components/ui/badge';
 import { capitalize, pipe, toLowerCase } from 'remeda';
 
