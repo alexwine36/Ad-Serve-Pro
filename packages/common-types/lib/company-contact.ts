@@ -3,7 +3,7 @@ import { CompanyContactSchema } from "./generated";
 
 export const CompanyContactData = CompanyContactSchema.extend({
   // Update base types here
-  email: z.string().email(),
+  email: z.union([z.string().email(), z.literal("")]).nullish(),
   name: z.string().min(2),
 });
 
@@ -24,7 +24,7 @@ export const CompanyContactInput = CompanyContactUpdateInput.partial({
 }).default({
   // Define default values here
   name: "",
-  email: "",
+  email: undefined,
   companyId: "",
 });
 export type CompanyContactInput = z.infer<typeof CompanyContactInput>;
