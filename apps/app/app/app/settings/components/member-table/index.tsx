@@ -11,7 +11,6 @@ import {
   type BadgeProps,
 } from '@repo/design-system/components/ui/badge';
 import { Button } from '@repo/design-system/components/ui/button';
-import { Checkbox } from '@repo/design-system/components/ui/checkbox';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,6 +23,7 @@ import { useDataTable } from '@repo/design-system/hooks/use-datatable';
 import { Ellipsis } from 'lucide-react';
 import { useState } from 'react';
 import { capitalize, pipe, toLowerCase } from 'remeda';
+import { BooleanTableDisplay } from '../../../components/boolean-table-display';
 import { MemberDialog } from '../member-dialog';
 
 const RoleBadge = ({ role }: { role: MemberData['role'] }) => {
@@ -88,11 +88,7 @@ export const MemberTable = () => {
 
         cell: ({ cell }) => {
           const value = cell.getValue<boolean>();
-          return (
-            <div className="flex items-center justify-center">
-              <Checkbox checked={value} disabled />
-            </div>
-          );
+          return <BooleanTableDisplay value={value} />;
         },
       },
       {

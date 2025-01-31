@@ -1,4 +1,6 @@
 import { router } from '@/server/trpc';
+import { advertisementRouter } from './advertisement/_router';
+
 import { campaignRouter } from './campaign/_router';
 
 import { companyContactRouter } from './company-contact/_router';
@@ -27,6 +29,8 @@ export const appRouter = router({
       };
     }),
   // Handlers
+
+advertisement: advertisementRouter,
 
   campaign: campaignRouter,
 

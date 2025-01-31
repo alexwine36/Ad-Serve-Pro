@@ -1,4 +1,5 @@
 export * from './common';
+export * from './advertisement';
 export * from './campaign';
 export * from './company';
 export * from './company-contact';
