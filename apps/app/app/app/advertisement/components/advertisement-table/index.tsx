@@ -17,6 +17,8 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { BooleanTableDisplay } from '../../../components/boolean-table-display';
 import { AdvertisementDialog } from '../advertisement-dialog';
+import { AdvertisementSizeBadge } from '../advertisement-size-badge';
+import { AdvertisementTypeBadge } from '../advertisement-type-badge';
 import type { AdvertisementTypes } from '../advertisement-types';
 
 export const AdvertisementTable: React.FC<AdvertisementTypes> = ({
@@ -53,7 +55,14 @@ export const AdvertisementTable: React.FC<AdvertisementTypes> = ({
         header: 'Name',
         enableSorting: true,
       },
-
+      {
+        accessorKey: 'metadata.size',
+        header: 'Size',
+        cell: ({ cell }) => {
+          const size = cell.getValue<AdvertisementData['metadata']['size']>();
+          return <AdvertisementSizeBadge size={size} />;
+        },
+      },
       {
         accessorKey: 'content',
         header: 'Content',
@@ -79,6 +88,10 @@ export const AdvertisementTable: React.FC<AdvertisementTypes> = ({
       {
         accessorKey: 'type',
         header: 'Type',
+        cell: ({ cell }) => {
+          const type = cell.getValue<AdvertisementData['type']>();
+          return <AdvertisementTypeBadge type={type} />;
+        },
       },
       {
         accessorKey: 'createdAt',

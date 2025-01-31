@@ -21,7 +21,7 @@ export const AdvertisementCard: React.FC<AdvertisementTypes> = ({
       <CardHeader>
         <CardTitle>
           <div className="flex items-center gap-2">
-            Advertisements
+            Advertisement Inventory
             <AdvertisementDialog
               companyId={companyId}
               open={open}
