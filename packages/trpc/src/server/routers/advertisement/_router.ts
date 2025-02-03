@@ -1,24 +1,32 @@
 import authedProcedure from '@/server/procedures/authed-procedure';
-import { AdvertisementUpdateSchema } from './advertisement-update-schema'
-import { advertisementUpdateHandler } from './advertisement-update-handler'
-import { AdvertisementCreateSchema } from './advertisement-create-schema'
-import { advertisementCreateHandler } from './advertisement-create-handler'
-import { AdvertisementGetOneSchema } from './advertisement-get-one-schema'
-import { advertisementGetOneHandler } from './advertisement-get-one-handler'
-import { AdvertisementGetAllSchema } from './advertisement-get-all-schema'
-import { advertisementGetAllHandler } from './advertisement-get-all-handler'
 import { router } from '@/server/trpc';
+import { advertisementCreateHandler } from './advertisement-create-handler';
+import { AdvertisementCreateSchema } from './advertisement-create-schema';
+import { advertisementGetAllHandler } from './advertisement-get-all-handler';
+import { AdvertisementGetAllSchema } from './advertisement-get-all-schema';
+import { advertisementGetOneHandler } from './advertisement-get-one-handler';
+import { AdvertisementGetOneSchema } from './advertisement-get-one-schema';
+import { advertisementUpdateHandler } from './advertisement-update-handler';
+import { AdvertisementUpdateSchema } from './advertisement-update-schema';
 
 // Imports
 
 export const advertisementRouter = router({
-    // Handlers
+  // Handlers
 
-update: authedProcedure.input(AdvertisementUpdateSchema).mutation(advertisementUpdateHandler),
+  update: authedProcedure
+    .input(AdvertisementUpdateSchema)
+    .mutation(advertisementUpdateHandler),
 
-create: authedProcedure.input(AdvertisementCreateSchema).mutation(advertisementCreateHandler),
+  create: authedProcedure
+    .input(AdvertisementCreateSchema)
+    .mutation(advertisementCreateHandler),
 
-getOne: authedProcedure.input(AdvertisementGetOneSchema).query(advertisementGetOneHandler),
+  getOne: authedProcedure
+    .input(AdvertisementGetOneSchema)
+    .query(advertisementGetOneHandler),
 
-getAll: authedProcedure.input(AdvertisementGetAllSchema).query(advertisementGetAllHandler),
+  getAll: authedProcedure
+    .input(AdvertisementGetAllSchema)
+    .query(advertisementGetAllHandler),
 });

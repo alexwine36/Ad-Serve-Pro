@@ -30,7 +30,7 @@ export const appRouter = router({
     }),
   // Handlers
 
-advertisement: advertisementRouter,
+  advertisement: advertisementRouter,
 
   campaign: campaignRouter,
 

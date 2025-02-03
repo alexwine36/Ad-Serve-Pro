@@ -1,23 +1,26 @@
 import type { TRPCContextInnerWithSession } from '@/server/create-context';
-import type { AdvertisementGetOneSchema } from './advertisement-get-one-schema'
-import { z } from 'zod';
-import { AdvertisementData } from "@repo/common-types";
+import { AdvertisementData } from '@repo/common-types';
+import type { AdvertisementGetOneSchema } from './advertisement-get-one-schema';
 
 type AdvertisementGetOneOptions = {
-    ctx: TRPCContextInnerWithSession;
-    input: AdvertisementGetOneSchema;
-}
+  ctx: TRPCContextInnerWithSession;
+  input: AdvertisementGetOneSchema;
+};
 
-export const advertisementGetOneHandler = async ({ ctx, input }: AdvertisementGetOneOptions) => {
+export const advertisementGetOneHandler = async ({
+  ctx,
+  input,
+}: AdvertisementGetOneOptions) => {
+  const { prisma, session } = ctx;
 
-    const { prisma, session } = ctx;
-    
-    const res = await prisma.advertisement.findFirst({
-          where: {
-            id: input.id
-          }
-        });
-    return AdvertisementData.parse(res);
-}
+  const res = await prisma.advertisement.findFirst({
+    where: {
+      id: input.id,
+    },
+  });
+  return AdvertisementData.parse(res);
+};
 
-export type AdvertisementGetOneResponse = Awaited<ReturnType<typeof advertisementGetOneHandler>>;
+export type AdvertisementGetOneResponse = Awaited<
+  ReturnType<typeof advertisementGetOneHandler>
+>;
