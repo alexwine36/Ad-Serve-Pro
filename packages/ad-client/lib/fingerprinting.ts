@@ -1,14 +1,37 @@
 // Import a stable hashing function
+import { CacheEntry } from './cache';
 import { murmur3 } from './hash';
 
 export class BrowserFingerprint {
-  async generateFingerprint() {
-    const components = await this.gatherComponents();
+  fingerprintCache: CacheEntry<string | number>;
+  componentCache: CacheEntry<
+    Awaited<ReturnType<BrowserFingerprint['gatherComponents']>>
+  >;
+
+  constructor() {
+    this.fingerprintCache = new CacheEntry('fingerprint', () => {
+      return this.generateFingerprint();
+    });
+    this.componentCache = new CacheEntry('fingerprint-components', () => {
+      return this.gatherComponents();
+    });
+  }
+
+  getFingerprint() {
+    return this.fingerprintCache.get();
+  }
+
+  getComponents() {
+    return this.componentCache.get();
+  }
+
+  private async generateFingerprint() {
+    const components = await this.getComponents();
     // Create a stable hash of all components
     return murmur3(components);
   }
 
-  async gatherComponents() {
+  private async gatherComponents() {
     return {
       // Standard navigator properties
       userAgent: navigator.userAgent,
@@ -51,7 +74,7 @@ export class BrowserFingerprint {
     };
   }
 
-  getCanvasFingerprint() {
+  private getCanvasFingerprint() {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
 
@@ -73,7 +96,7 @@ export class BrowserFingerprint {
     return canvas.toDataURL();
   }
 
-  getAudioFingerprint() {
+  private getAudioFingerprint() {
     try {
       const audioContext = new (
         window.AudioContext || window.webkitAudioContext
@@ -104,7 +127,7 @@ export class BrowserFingerprint {
     }
   }
 
-  getWebGLFingerprint() {
+  private getWebGLFingerprint() {
     const canvas = document.createElement('canvas');
     let gl: WebGLRenderingContext | null;
     try {
@@ -125,7 +148,7 @@ export class BrowserFingerprint {
     };
   }
 
-  async detectFonts() {
+  private async detectFonts() {
     // List of fonts to test
     const fontList = [
       'Arial',
@@ -204,7 +227,7 @@ export class BrowserFingerprint {
     return blocked;
   }
 
-  getWebGLVendor() {
+  private getWebGLVendor() {
     try {
       const canvas = document.createElement('canvas');
       const gl = canvas.getContext('webgl');

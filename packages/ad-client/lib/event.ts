@@ -1,6 +1,6 @@
 import type { AnalyticsType } from '@repo/common-types';
 
-type EventConstructor = {
+export type EventConstructor = {
   type: AnalyticsType;
   adId: string;
   metadata?: Record<string, unknown>;

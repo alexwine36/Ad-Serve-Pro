@@ -6,6 +6,7 @@ export default defineConfig((options: Options) => ({
   entryPoints: {
     index: 'index.ts',
   },
+  minify: true,
   //   entryPoints: ['./src/**/*'],
   // banner: {
   //   js: "'use server'",

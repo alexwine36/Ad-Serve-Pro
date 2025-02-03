@@ -1,1 +1,1 @@
-// This is a placeholder file for the package ad client
+export * from './lib/analytics';

@@ -26,6 +26,16 @@
   },
   "overrides": [
     {
+      "include": ["packages/ad-client/**.test.ts"],
+      "linter": {
+        "rules": {
+          "complexity": {
+            "useLiteralKeys": "off"
+          }
+        }
+      }
+    },
+    {
       "include": ["packages/rich-text/**"],
       "linter": {
         "rules": {
