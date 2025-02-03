@@ -44,6 +44,9 @@ importers:
       ultracite:
         specifier: ^4.1.14
         version: 4.1.15
+      vitest:
+        specifier: ^2.1.8
+        version: 2.1.8(@types/node@22.10.5)(jsdom@25.0.1(bufferutil@4.0.9)(utf-8-validate@6.0.5))(terser@5.37.0)
 
   apps/app:
     dependencies:
@@ -175,6 +178,43 @@ importers:
         specifier: ^2.1.8
         version: 2.1.8(@types/node@22.10.5)(jsdom@25.0.1(bufferutil@4.0.9)(utf-8-validate@6.0.5))(terser@5.37.0)
 
+  packages/ad-client:
+    dependencies:
+      react:
+        specifier: ^19.0.0
+        version: 19.0.0
+      tsup:
+        specifier: ^8.3.5
+        version: 8.3.5(jiti@1.21.7)(postcss@8.5.1)(tsx@4.19.2)(typescript@5.7.3)(yaml@2.7.0)
+    devDependencies:
+      '@repo/common-types':
+        specifier: workspace:*
+        version: link:../common-types
+      '@repo/testing':
+        specifier: workspace:*
+        version: link:../testing
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@types/node':
+        specifier: 22.10.5
+        version: 22.10.5
+      '@types/react':
+        specifier: 19.0.2
+        version: 19.0.2
+      '@types/react-dom':
+        specifier: ^19.0.2
+        version: 19.0.3(@types/react@19.0.2)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.7.3
+      vitest:
+        specifier: ^2.1.8
+        version: 2.1.8(@types/node@22.10.5)(jsdom@25.0.1(bufferutil@4.0.9)(utf-8-validate@6.0.5))(terser@5.37.0)
+      vitest-canvas-mock:
+        specifier: ^0.3.3
+        version: 0.3.3(vitest@2.1.8(@types/node@22.10.5)(jsdom@25.0.1(bufferutil@4.0.9)(utf-8-validate@6.0.5))(terser@5.37.0))
+
   packages/auth:
     dependencies:
       '@auth/prisma-adapter':
@@ -236,7 +276,7 @@ importers:
         specifier: 4.1.0
         version: 4.1.0
       libphonenumber-js:
-        specifier: ^1.11.19
+        specifier: 1.11.19
         version: 1.11.19
       react:
         specifier: 19.0.0
@@ -362,7 +402,7 @@ importers:
         specifier: ^19.0.2
         version: 19.0.2(@types/react@19.0.7)
       date-fns:
-        specifier: 4.1.0
+        specifier: ^4.1.0
         version: 4.1.0
       tsx:
         specifier: ^4.19.2
@@ -524,7 +564,7 @@ importers:
         specifier: 0.56.0
         version: 0.56.0
       react-phone-number-input:
-        specifier: ^3.4.11
+        specifier: 3.4.11
         version: 3.4.11(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       react-resizable-panels:
         specifier: 2.1.7
@@ -4290,6 +4330,9 @@ packages:
     engines: {node: '>=4'}
     hasBin: true
 
+  cssfontparser@1.2.1:
+    resolution: {integrity: sha512-6tun4LoZnj7VN6YeegOVb67KBX/7JJsqvj+pv3ZA7F878/eN33AbGa5b/S/wXxS/tcp8nc40xRUrsPlxIyNUPg==}
+
   cssstyle@4.2.1:
     resolution: {integrity: sha512-9+vem03dMXG7gDmZ62uqmRiMRNtinIZ9ZyuF6BdxzfOD+FdN5hretzynkn0ReS2DO2GSw76RWHs0UmJPI2zUjw==}
     engines: {node: '>=18'}
@@ -5628,6 +5671,9 @@ packages:
     resolution: {integrity: sha512-qjdpeo2yKlYTH7nFdK0vbZWuTCesk4o63v5iVOlhMQPfuIZQfW/HI35SjfhA+4qpg36rnFSvUK5b1m+ckIblQQ==}
     engines: {node: '>= 0.6.0'}
 
+  jest-canvas-mock@2.5.2:
+    resolution: {integrity: sha512-vgnpPupjOL6+L5oJXzxTxFrlGEIbHdZqFU+LFNdtLxZ3lRDCl17FlTMM7IatoRQkrcyOTMlDinjUguqmQ6bR2A==}
+
   jest-worker@27.5.1:
     resolution: {integrity: sha512-7vuh85V5cdDofPyxn58nrPjBktZo0u9x1g8WtjQol+jZDaE+fhN+cIvTj11GndBnMnyfrUOG1sZQxCdjKh+DKg==}
     engines: {node: '>= 10.13.0'}
@@ -6167,6 +6213,9 @@ packages:
 
   module-details-from-path@1.0.3:
     resolution: {integrity: sha512-ySViT69/76t8VhE1xXHK6Ch4NcDd26gx0MzKXLO+F7NOtnqH68d9zF94nT8ZWSxXh8ELOERsnJO/sWt1xZYw5A==}
+
+  moo-color@1.0.3:
+    resolution: {integrity: sha512-i/+ZKXMDf6aqYtBhuOcej71YSlbjT3wCO/4H1j8rPvxDJEifdwgg5MaFyu6iYAT8GBZJg2z0dkgK4YMzvURALQ==}
 
   motion-dom@12.0.0:
     resolution: {integrity: sha512-CvYd15OeIR6kHgMdonCc1ihsaUG4MYh/wrkz8gZ3hBX/uamyZCXN9S9qJoYF03GqfTt7thTV/dxnHYX4+55vDg==}
@@ -8207,6 +8256,11 @@ packages:
         optional: true
       terser:
         optional: true
+
+  vitest-canvas-mock@0.3.3:
+    resolution: {integrity: sha512-3P968tYBpqYyzzOaVtqnmYjqbe13576/fkjbDEJSfQAkHtC5/UjuRHOhFEN/ZV5HVZIkaROBUWgazDKJ+Ibw+Q==}
+    peerDependencies:
+      vitest: '*'
 
   vitest@2.1.8:
     resolution: {integrity: sha512-1vBKTZskHw/aosXqQUlVWWlGUxSJR8YtiyZDJAFeW2kPAeX6S3Sool0mjspO+kXLuxVWlEDDowBAeqeAQefqLQ==}
@@ -11461,7 +11515,6 @@ snapshots:
   '@types/react-dom@19.0.3(@types/react@19.0.2)':
     dependencies:
       '@types/react': 19.0.2
-    optional: true
 
   '@types/react-dom@19.0.3(@types/react@19.0.7)':
     dependencies:
@@ -12298,6 +12351,8 @@ snapshots:
       '@scena/matrix': 1.1.1
 
   cssesc@3.0.0: {}
+
+  cssfontparser@1.2.1: {}
 
   cssstyle@4.2.1:
     dependencies:
@@ -13937,6 +13992,11 @@ snapshots:
 
   java-properties@1.0.2: {}
 
+  jest-canvas-mock@2.5.2:
+    dependencies:
+      cssfontparser: 1.2.1
+      moo-color: 1.0.3
+
   jest-worker@27.5.1:
     dependencies:
       '@types/node': 22.10.5
@@ -14728,6 +14788,10 @@ snapshots:
   mkdirp@2.1.6: {}
 
   module-details-from-path@1.0.3: {}
+
+  moo-color@1.0.3:
+    dependencies:
+      color-name: 1.1.4
 
   motion-dom@12.0.0:
     dependencies:
@@ -17149,6 +17213,11 @@ snapshots:
       '@types/node': 22.10.5
       fsevents: 2.3.3
       terser: 5.37.0
+
+  vitest-canvas-mock@0.3.3(vitest@2.1.8(@types/node@22.10.5)(jsdom@25.0.1(bufferutil@4.0.9)(utf-8-validate@6.0.5))(terser@5.37.0)):
+    dependencies:
+      jest-canvas-mock: 2.5.2
+      vitest: 2.1.8(@types/node@22.10.5)(jsdom@25.0.1(bufferutil@4.0.9)(utf-8-validate@6.0.5))(terser@5.37.0)
 
   vitest@2.1.8(@types/node@22.10.5)(jsdom@25.0.1(bufferutil@4.0.9)(utf-8-validate@6.0.5))(terser@5.37.0):
     dependencies:

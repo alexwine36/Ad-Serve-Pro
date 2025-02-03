@@ -1,0 +1,28 @@
+{
+  "name": "@repo/ad-client",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false",
+    "dev": "rm -rf dist && tsup --watch",
+    "build": "tsup",
+    "test": "NODE_ENV=test vitest run",
+    "test:watch": "NODE_ENV=test vitest watch"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "tsup": "^8.3.5"
+  },
+  "devDependencies": {
+    "@repo/common-types": "workspace:*",
+    "@repo/testing": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "22.10.5",
+    "@types/react": "19.0.2",
+    "@types/react-dom": "^19.0.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8",
+    "vitest-canvas-mock": "^0.3.3"
+  }
+}

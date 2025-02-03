@@ -1,4 +1,6 @@
 export * from './common';
+export * from './client';
+export * from './ad-analytics';
 export * from './advertisement';
 export * from './campaign';
 export * from './company';
