@@ -29,6 +29,9 @@
       "include": ["packages/ad-client/**/*.test.ts"],
       "linter": {
         "rules": {
+          "suspicious": {
+            "noExplicitAny": "off"
+          },
           "complexity": {
             "useLiteralKeys": "off"
           }
