@@ -1,13 +1,13 @@
 import type { AnalyticsType } from '@repo/common-types';
 
 export type EventConstructor = {
-  type: AnalyticsType;
+  type: AnalyticsType | 'PAGE_VIEW';
   adId: string;
   metadata?: Record<string, unknown>;
 };
 
 export class Event {
-  type: AnalyticsType;
+  type: EventConstructor['type'];
   referrer: string;
   pageUrl: string;
   viewportSize: { width: number; height: number };

@@ -19,6 +19,7 @@ interface HTMLElement {
 }
 
 interface Window {
+  Analytics: unknown;
   openDatabase?: unknown;
   webkitAudioContext?: unknown;
 }

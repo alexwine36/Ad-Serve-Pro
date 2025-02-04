@@ -7,10 +7,11 @@ import {
   it,
   vi,
 } from 'vitest';
-import { Analytics, type AnalyticsConfig } from './analytics';
+import { Analytics } from './analytics';
 import { Event as TrackingEvent } from './event';
 import { BrowserFingerprint } from './fingerprinting';
 import { LocationService } from './location';
+import type { AnalyticsConfig } from './types';
 
 vi.mock('./fingerprinting');
 vi.mock('./location');

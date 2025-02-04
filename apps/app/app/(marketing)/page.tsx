@@ -14,6 +14,11 @@ const IndexPage = () => {
   return (
     <>
       <Hero />
+      <ins
+        className="flex items-center justify-center"
+        data-ad-placement="top"
+        data-ad-size="largeBanner"
+      />
       <Sponsors />
       <About />
       <HowItWorks />

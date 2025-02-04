@@ -1,54 +1,58 @@
+import { keys } from '../keys';
+import { AdvertisementService } from './advertisement';
 import { type EventConstructor, Event as TrackingEvent } from './event';
 import { BrowserFingerprint } from './fingerprinting';
 import { LocationService } from './location';
 import type { LocationResponse } from './location-requests';
-
-// Configuration types
-export interface AnalyticsConfig {
-  organizationId: string;
-  endpoint?: string;
-  debug?: boolean;
-  cacheTimeout?: number;
-}
+import type { AnalyticsConfig } from './types';
 
 export class Analytics {
   config: Required<AnalyticsConfig>;
   private fingerprinter: BrowserFingerprint;
   private eventQueue: TrackingEvent[] = [];
   private locationService: LocationService;
+  private advertisementService: AdvertisementService;
 
   private worker?: Worker;
 
-  private static DEFAULT_CONFIG: Required<AnalyticsConfig> = {
+  static DEFAULT_CONFIG: Required<AnalyticsConfig> = {
     organizationId: '',
-    endpoint: '/api/analytics',
+    endpoint: keys.VERCEL_URL,
     debug: false,
     cacheTimeout: 24 * 60 * 60 * 1000, // 24 hours
   };
 
-  constructor(config: AnalyticsConfig) {
+  constructor(config: Partial<AnalyticsConfig>) {
+    // this.configureAds();
     this.config = { ...Analytics.DEFAULT_CONFIG, ...config };
     this.fingerprinter = new BrowserFingerprint();
-    this.initializeWorker();
-    this.detectAndPopulateAds();
-    this.setupEventListeners();
+    // this.initializeWorker();
+    this.advertisementService = new AdvertisementService(this.config);
     this.locationService = new LocationService();
+    this.setup();
+  }
+
+  setup() {
+    this.configureAds();
+    this.detectAndPopulateAds();
+
+    this.setupEventListeners();
   }
 
   // Initialize web worker for non-blocking computations
-  private initializeWorker() {
-    if (typeof Worker !== 'undefined') {
-      this.worker = new Worker(this.createWorkerBlob());
-      this.worker.onmessage = this.handleWorkerMessage.bind(this);
-    }
-  }
+  // private initializeWorker() {
+  //   if (typeof Worker !== 'undefined') {
+  //     this.worker = new Worker(this.createWorkerBlob());
+  //     this.worker.onmessage = this.handleWorkerMessage.bind(this);
+  //   }
+  // }
 
   // Create a worker blob for async processing
   private createWorkerBlob(): string {
     const workerCode = `
       onmessage = async function(e) {
         const { type, data } = e.data;
-        
+
         switch(type) {
           case 'process-events':
             // Simulate some processing
@@ -74,6 +78,11 @@ export class Analytics {
     if (type === 'processed-events') {
       this.sendEventsToServer(data);
     }
+  }
+
+  private configureAds() {
+    this.advertisementService.init();
+    this.detectAndPopulateAds();
   }
 
   // Detect and populate ad tags on the page
@@ -133,9 +142,26 @@ export class Analytics {
 
   // Set up global event listeners
   private setupEventListeners() {
+    import('url-change-event');
     // Flush events on page unload
     window.addEventListener('beforeunload', () => {
       this.flush();
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      requestIdleCallback(() => {
+        this.configureAds();
+      });
+    });
+
+    window.addEventListener('urlchangeevent', (e) => {
+      if (e.oldURL.pathname !== e.newURL?.pathname) {
+        this.track({
+          type: 'PAGE_VIEW',
+          adId: 'page-view',
+        });
+        this.configureAds();
+      }
     });
 
     // Flush every 10 seconds
@@ -182,6 +208,7 @@ export class Analytics {
       }),
       fingerprint: await this.getFingerprint(),
       location: await this.getLocation(),
+      components: await this.getComponents(),
     };
     this.debug('Events formatted', res);
     return res;
@@ -215,7 +242,11 @@ export class Analytics {
 
   // Flush events, using web worker if available
   flush() {
-    if (this.eventQueue.length === 0) return;
+    // this.debug('Config', this.config);
+    // this.debug('Events', this.eventQueue);
+    if (this.eventQueue.length === 0) {
+      return;
+    }
 
     if (this.worker) {
       // Use web worker for processing
