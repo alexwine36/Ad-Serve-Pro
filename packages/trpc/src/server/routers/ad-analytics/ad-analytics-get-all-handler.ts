@@ -1,6 +1,4 @@
-import { AdAnalyticsData } from '@repo/common-types';
 import type { TRPCContextInnerWithSession } from '@repo/trpc/src/server/create-context';
-import { z } from 'zod';
 import type { AdAnalyticsGetAllSchema } from './ad-analytics-get-all-schema';
 
 type AdAnalyticsGetAllOptions = {
@@ -19,12 +17,33 @@ export const adAnalyticsGetAllHandler = async ({
       ad: {
         companyId: input.companyId,
         company: {
-          organizationId: input.organizationId,
+          organizationId: session.user.currentOrganizationId,
+        },
+      },
+    },
+    include: {
+      client: true,
+      ad: {
+        select: {
+          id: true,
+          name: true,
+          company: {
+            select: {
+              id: true,
+              name: true,
+              organization: {
+                select: {
+                  id: true,
+                  name: true,
+                },
+              },
+            },
+          },
         },
       },
     },
   });
-  return z.array(AdAnalyticsData).parse(res);
+  return res;
 };
 
 export type AdAnalyticsGetAllResponse = Awaited<

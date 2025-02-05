@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const AdAnalyticsGetAllSchema = z.object({
   // Define your schema here
-  organizationId: z.string().optional(),
+  //   organizationId: z.string().optional(),
   companyId: z.string().optional(),
 });
 

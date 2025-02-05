@@ -10,22 +10,16 @@ import type React from 'react';
 import { AdAnalyticsTable } from '../ad-analytics-table';
 import type { AdAnalyticsTypes } from '../ad-analytics-types';
 
-export const AdAnalyticsCard: React.FC<AdAnalyticsTypes> = ({
-  companyId,
-  organizationId,
-}) => {
+export const AdAnalyticsCard: React.FC<AdAnalyticsTypes> = ({ companyId }) => {
   return (
     <Card>
       <CardHeader>
         <CardTitle>
-          <div className="flex items-center gap-2">AdAnalytics</div>
+          <div className="flex items-center gap-2">Ad Analytics</div>
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <AdAnalyticsTable
-          companyId={companyId}
-          organizationId={organizationId}
-        />
+        <AdAnalyticsTable companyId={companyId} />
       </CardContent>
     </Card>
   );

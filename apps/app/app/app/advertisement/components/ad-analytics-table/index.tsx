@@ -1,74 +1,77 @@
 'use client';
 
 import { trpc } from '@/utils/trpc';
+import { type AnalyticsType, formatDateRelative } from '@repo/common-types';
 import { DataTable } from '@repo/design-system/components/custom/data-table';
-import { Button } from '@repo/design-system/components/ui/button';
 import { useDataTable } from '@repo/design-system/hooks/use-datatable';
-import { Eye } from 'lucide-react';
-import Link from 'next/link';
+import { AdAnalyticsTypeBadge } from '../ad-analytics-type-badge';
 import type { AdAnalyticsTypes } from '../ad-analytics-types';
 
-export const AdAnalyticsTable: React.FC<AdAnalyticsTypes> = ({
-  companyId,
-  organizationId,
-}) => {
+export const AdAnalyticsTable: React.FC<AdAnalyticsTypes> = ({ companyId }) => {
   const { data } = trpc.adAnalytics.getAll.useQuery({
     companyId,
-    organizationId,
   });
 
+  console.log('data', data);
   const table = useDataTable({
     data: data || [],
 
     columns: [
+      // {
+      //   accessorKey: 'id',
+      //   header: '',
+      //   size: 40,
+      //   cell: ({ cell }) => {
+      //     const id = cell.getValue<string>();
+      //     return (
+      //       <Button variant={'ghost'} size={'icon'} asChild>
+      //         <Link href={`/companies/${id}`}>
+      //           <Eye />
+      //         </Link>
+      //       </Button>
+      //     );
+      //   },
+      // },
       {
-        accessorKey: 'id',
-        header: '',
-        size: 40,
+        accessorKey: 'ad.company.name',
+        header: 'Company',
+      },
+      {
+        accessorKey: 'ad.name',
+        header: 'Ad Name',
+      },
+      {
+        accessorKey: 'client.metadata.browser.name',
+        header: 'Browser',
+      },
+      {
+        accessorKey: 'client.metadata.os.name',
+        header: 'OS',
+      },
+      {
+        accessorKey: 'type',
+        header: 'Type',
+        enableSorting: true,
         cell: ({ cell }) => {
-          const id = cell.getValue<string>();
+          const type = cell.getValue<AnalyticsType>();
           return (
-            <Button variant={'ghost'} size={'icon'} asChild>
-              <Link href={`/companies/${id}`}>
-                <Eye />
-              </Link>
-            </Button>
+            <div className="flex justify-center space-x-2">
+              <AdAnalyticsTypeBadge type={type} />
+            </div>
           );
         },
       },
       {
-        accessorKey: 'name',
-        header: 'Name',
+        accessorKey: 'region',
+        header: 'Region',
+      },
+      {
+        accessorKey: 'timestamp',
         enableSorting: true,
-      },
-      {
-        accessorKey: 'slug',
-        header: 'Slug',
-        cell: ({ cell }) => {
-          const slug = cell.getValue<string>();
-          return <code>/{slug}</code>;
-        },
-      },
-      {
-        accessorKey: 'description',
-        header: 'Description',
-      },
-      {
-        accessorKey: 'website',
-        header: 'Website',
-      },
-
-      {
-        accessorKey: 'type',
-        header: 'Type',
-      },
-      {
-        accessorKey: 'createdAt',
-        enableSorting: true,
-        header: 'Created At',
+        header: 'Date',
         cell: ({ cell }) => {
           const date = cell.getValue<Date>();
-          return date.toLocaleDateString();
+          return formatDateRelative(date);
         },
       },
     ],

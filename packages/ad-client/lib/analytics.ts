@@ -3,6 +3,7 @@ import { pickBy } from 'remeda';
 import type { AnalyticsType } from '../../database';
 import { keys } from '../keys';
 import { AdvertisementService } from './advertisement';
+import { ClientMetadataService } from './client-metadata';
 import { type EventConstructor, Event as TrackingEvent } from './event';
 import { BrowserFingerprint } from './fingerprinting';
 import { LocationService } from './location';
@@ -25,6 +26,7 @@ export class Analytics {
     cacheTimeout: 24 * 60 * 60 * 1000, // 24 hours
   };
   analyticsEndpoint: string;
+  clientMetadataService: ClientMetadataService;
 
   constructor(config: Partial<AnalyticsConfig>) {
     // this.configureAds();
@@ -34,6 +36,7 @@ export class Analytics {
     };
     this.analyticsEndpoint = `http://${this.config.endpoint}/api/advertisement/analytics`;
     this.fingerprinter = new BrowserFingerprint();
+    this.clientMetadataService = new ClientMetadataService();
     // this.initializeWorker();
     this.advertisementService = new AdvertisementService(
       this.config,
@@ -213,18 +216,25 @@ export class Analytics {
       this.flush();
     }
   }
-  private getAdEvents(
+  private async getAdEvents(
     events: TrackingEvent[]
-  ): AdAnalyticsCreateSchema['events'] {
+  ): Promise<AdAnalyticsCreateSchema['events']> {
+    const location = await this.getLocation();
+    const components = await this.getComponents();
+    const { country, region, city } = location || {};
     return events
       .filter((event) => event.type !== 'PAGE_VIEW')
       .map((event) => {
         return {
           ...event,
           type: event.type as AnalyticsType,
+          country,
+          region,
+          city,
           metadata: {},
           viewportSize: `${event.viewportSize.width}x${event.viewportSize.height}`,
           screenSize: `${event.screenSize.width}x${event.screenSize.height}`,
+          connectionType: components.connection?.type,
         };
       });
   }
@@ -234,13 +244,14 @@ export class Analytics {
   ): Promise<AdAnalyticsCreateSchema> {
     const components = await this.getComponents();
     const res: AdAnalyticsCreateSchema = {
-      events: this.getAdEvents(events),
+      events: await this.getAdEvents(events),
       client: {
         fingerprint: await this.getFingerprint(),
         userAgent: components.userAgent,
         language: components.language,
         timezone: components.timezone,
         platform: components.platform,
+        metadata: await this.clientMetadataService.get(),
         // device: components.dev
       },
       // fingerprint: await this.getFingerprint(),

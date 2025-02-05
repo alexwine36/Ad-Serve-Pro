@@ -10,7 +10,7 @@ export const adAnalyticsCreateHandler = async ({
   ctx,
   input,
 }: AdAnalyticsCreateOptions) => {
-  const { prisma, session } = ctx;
+  const { prisma } = ctx;
 
   const client = await prisma.client.upsert({
     where: {

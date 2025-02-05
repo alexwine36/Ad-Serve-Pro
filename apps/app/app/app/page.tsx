@@ -1,4 +1,7 @@
+import { auth } from '@repo/auth/auth';
 import type { Metadata } from 'next';
+import { redirect } from 'next/navigation';
+import { AdAnalyticsCard } from './advertisement/components/ad-analytics-card';
 import { Header } from './components/header';
 const title = 'Acme Inc';
 const description = 'My application.';
@@ -7,7 +10,12 @@ export const metadata: Metadata = {
   description,
 };
 
-const App = () => {
+const App = async () => {
+  const session = await auth();
+  if (!session?.user.currentOrganizationId) {
+    redirect('/');
+  }
+
   return (
     <>
       <Header pages={[]} page="Dashboard" />
@@ -17,6 +25,7 @@ const App = () => {
           <div className="aspect-video rounded-xl bg-muted/50" />
           <div className="aspect-video rounded-xl bg-muted/50" />
         </div>
+        <AdAnalyticsCard />
         <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
       </div>
     </>

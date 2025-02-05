@@ -1,4 +1,6 @@
 import authedProcedure from '@repo/trpc/src/server/procedures/authed-procedure';
+import { AdAnalyticsStatsSchema } from './ad-analytics-stats-schema'
+import { adAnalyticsStatsHandler } from './ad-analytics-stats-handler'
 import { router } from '@repo/trpc/src/server/trpc';
 import { adAnalyticsCreateHandler } from './ad-analytics-create-handler';
 import { AdAnalyticsCreateSchema } from './ad-analytics-create-schema';
@@ -9,6 +11,8 @@ import { AdAnalyticsGetAllSchema } from './ad-analytics-get-all-schema';
 
 export const adAnalyticsRouter = router({
   // Handlers
+
+stats: authedProcedure.input(AdAnalyticsStatsSchema).query(adAnalyticsStatsHandler),
 
   create: authedProcedure
     .input(AdAnalyticsCreateSchema)
