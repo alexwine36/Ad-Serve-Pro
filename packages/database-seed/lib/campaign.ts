@@ -75,7 +75,8 @@ export const seedCompanysCampaigns = async (
   companies: Company[],
   prisma: PrismaClient
 ) => {
-  return Promise.all(
+  const res = await Promise.all(
     companies.map((company) => seedCampaigns(company, prisma))
   );
+  return res.flat();
 };

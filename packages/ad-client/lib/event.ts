@@ -27,13 +27,13 @@ export class Event {
     this.timestamp = Date.now();
   }
 
-  getScreenSize() {
+  private getScreenSize() {
     return {
       width: screen.width,
       height: screen.height,
     };
   }
-  getViewportSize() {
+  private getViewportSize() {
     return {
       width: window.innerWidth,
       height: window.innerHeight,

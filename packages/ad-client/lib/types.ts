@@ -7,6 +7,6 @@ export interface AnalyticsConfig {
 }
 
 export interface AdvertisementConfig
-  extends Pick<AnalyticsConfig, 'organizationId' | 'endpoint'> {
+  extends Required<Pick<AnalyticsConfig, 'organizationId' | 'endpoint'>> {
   path?: string;
 }

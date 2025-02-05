@@ -11,6 +11,7 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
+    "@repo/trpc": "workspace:*",
     "react": "19.0.0",
     "tsup": "8.3.5"
   },
@@ -22,6 +23,7 @@
     "@types/node": "^22.10.5",
     "@types/react": "^19.0.2",
     "@types/react-dom": "^19.0.2",
+    "remeda": "^2.20.1",
     "typescript": "^5.7.2",
     "url-change-event": "^0.1.7",
     "vitest": "^2.1.8",

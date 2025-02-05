@@ -186,6 +186,9 @@ importers:
 
   packages/ad-client:
     dependencies:
+      '@repo/trpc':
+        specifier: workspace:*
+        version: link:../trpc
       react:
         specifier: 19.0.0
         version: 19.0.0
@@ -214,6 +217,9 @@ importers:
       '@types/react-dom':
         specifier: ^19.0.2
         version: 19.0.3(@types/react@19.0.7)
+      remeda:
+        specifier: ^2.20.1
+        version: 2.20.1
       typescript:
         specifier: ^5.7.2
         version: 5.7.3
@@ -658,9 +664,6 @@ importers:
       next:
         specifier: ^15.1.5
         version: 15.1.5(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      next-public:
-        specifier: ^0.5.0
-        version: 0.5.0(@swc/helpers@0.5.15)
 
   packages/observability:
     dependencies:
@@ -7273,6 +7276,9 @@ packages:
   remeda@2.19.1:
     resolution: {integrity: sha512-IZ1NwntA2xwksQgn6zRFZB9lsVWW1GoRZZno3UIHE0tUh1B62ZSIhFIDIRssUfgqOBG2kL7g3GXx4e+CK59OPw==}
 
+  remeda@2.20.1:
+    resolution: {integrity: sha512-gsEsSmjE0CHkNp6xEsWsU/6JVNWq7rqw+ZfzNMbVV4YFIPtTj/i0FfxurTRI6Z9sAnQufU9de2Cb3xHsUTFTMA==}
+
   require-directory@2.1.1:
     resolution: {integrity: sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==}
     engines: {node: '>=0.10.0'}
@@ -8088,6 +8094,10 @@ packages:
 
   type-fest@4.32.0:
     resolution: {integrity: sha512-rfgpoi08xagF3JSdtJlCwMq9DGNDE0IMh3Mkpc1wUypg9vPi786AiqeBBKcqvIkq42azsBM85N490fyZjeUftw==}
+    engines: {node: '>=16'}
+
+  type-fest@4.33.0:
+    resolution: {integrity: sha512-s6zVrxuyKbbAsSAD5ZPTB77q4YIdRctkTbJ2/Dqlinwz+8ooH2gd+YA7VA6Pa93KML9GockVvoxjZ2vHP+mu8g==}
     engines: {node: '>=16'}
 
   type-is@1.6.18:
@@ -16056,6 +16066,10 @@ snapshots:
     dependencies:
       type-fest: 4.32.0
 
+  remeda@2.20.1:
+    dependencies:
+      type-fest: 4.33.0
+
   require-directory@2.1.1: {}
 
   require-from-string@2.0.2: {}
@@ -17055,6 +17069,8 @@ snapshots:
   type-fest@0.7.1: {}
 
   type-fest@4.32.0: {}
+
+  type-fest@4.33.0: {}
 
   type-is@1.6.18:
     dependencies:

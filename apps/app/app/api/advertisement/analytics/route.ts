@@ -1,11 +1,12 @@
 import type { NextRequest } from 'next/server';
-import { trpcCaller } from '../../../utils/trpc-server';
+import { trpcCaller } from '../../../../utils/trpc-server';
 
 // const content = require('@repo/ad-client/dist/index.js');
 async function handler(req: NextRequest) {
   const bodyReq = await req.json();
+  console.log('bodyReq', bodyReq);
   const caller = await trpcCaller();
-  const res = await caller.adServer.getAds({
+  const res = await caller.adAnalytics.create({
     ...bodyReq,
   });
   console.log('bodyReq', bodyReq);
@@ -15,4 +16,4 @@ async function handler(req: NextRequest) {
   //   return scriptContent;
 }
 
-export { handler as GET, handler as POST };
+export { handler as POST };

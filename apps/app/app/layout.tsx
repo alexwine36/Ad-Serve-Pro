@@ -18,7 +18,7 @@ const RootLayout = ({ children }: RootLayoutProperties) => (
       />
       <script
         id="ad-analytics"
-        data-org-id="GTM-5ZQZJZ"
+        data-org-id="cm6i8ljl000003r2hi500hi4s"
         data-debug="true"
         // data-endpoint="/api/analytics"
         src="/analytics/client.js"

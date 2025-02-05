@@ -1,3 +1,6 @@
+import type { AdAnalyticsCreateSchema } from '@repo/trpc';
+import { pickBy } from 'remeda';
+import type { AnalyticsType } from '../../database';
 import { keys } from '../keys';
 import { AdvertisementService } from './advertisement';
 import { type EventConstructor, Event as TrackingEvent } from './event';
@@ -5,7 +8,6 @@ import { BrowserFingerprint } from './fingerprinting';
 import { LocationService } from './location';
 import type { LocationResponse } from './location-requests';
 import type { AnalyticsConfig } from './types';
-
 export class Analytics {
   config: Required<AnalyticsConfig>;
   private fingerprinter: BrowserFingerprint;
@@ -17,19 +19,31 @@ export class Analytics {
 
   static DEFAULT_CONFIG: Required<AnalyticsConfig> = {
     organizationId: '',
-    endpoint: keys.VERCEL_URL,
+    endpoint: keys.VERCEL_URL || 'localhost:3000',
+
     debug: false,
     cacheTimeout: 24 * 60 * 60 * 1000, // 24 hours
   };
+  analyticsEndpoint: string;
 
   constructor(config: Partial<AnalyticsConfig>) {
     // this.configureAds();
-    this.config = { ...Analytics.DEFAULT_CONFIG, ...config };
+    this.config = {
+      ...Analytics.DEFAULT_CONFIG,
+      ...pickBy(config, (val, _key) => !!val),
+    };
+    this.analyticsEndpoint = `http://${this.config.endpoint}/api/advertisement/analytics`;
     this.fingerprinter = new BrowserFingerprint();
     // this.initializeWorker();
-    this.advertisementService = new AdvertisementService(this.config);
+    this.advertisementService = new AdvertisementService(
+      this.config,
+      this.detectAndPopulateAds.bind(this)
+    );
     this.locationService = new LocationService();
     this.setup();
+    console.log(Analytics.DEFAULT_CONFIG);
+    console.log('config', this.config);
+    // this.analyticsEndpoint =
   }
 
   setup() {
@@ -199,29 +213,64 @@ export class Analytics {
       this.flush();
     }
   }
-
+  private getAdEvents(
+    events: TrackingEvent[]
+  ): AdAnalyticsCreateSchema['events'] {
+    return events
+      .filter((event) => event.type !== 'PAGE_VIEW')
+      .map((event) => {
+        return {
+          ...event,
+          type: event.type as AnalyticsType,
+          metadata: {},
+          viewportSize: `${event.viewportSize.width}x${event.viewportSize.height}`,
+          screenSize: `${event.screenSize.width}x${event.screenSize.height}`,
+        };
+      });
+  }
   // Format events for sending
-  private async formatEvents(events: TrackingEvent[]) {
-    const res = {
-      events: events.map((event) => {
-        return { ...event };
-      }),
-      fingerprint: await this.getFingerprint(),
-      location: await this.getLocation(),
-      components: await this.getComponents(),
+  private async formatEvents(
+    events: TrackingEvent[]
+  ): Promise<AdAnalyticsCreateSchema> {
+    const components = await this.getComponents();
+    const res: AdAnalyticsCreateSchema = {
+      events: this.getAdEvents(events),
+      client: {
+        fingerprint: await this.getFingerprint(),
+        userAgent: components.userAgent,
+        language: components.language,
+        timezone: components.timezone,
+        platform: components.platform,
+        // device: components.dev
+      },
+      // fingerprint: await this.getFingerprint(),
+      // location: await this.getLocation(),
+      // components: await this.getComponents(),
     };
     this.debug('Events formatted', res);
     return res;
   }
 
-  async sendMetrics<T extends Blob>(url: string, data: T) {
-    if (navigator.sendBeacon) {
-      // Use sendBeacon for reliable delivery
-      navigator.sendBeacon(url, data);
-    } else {
+  async sendMetrics<T extends {}>(url: string, data: T) {
+    try {
+      if (navigator.sendBeacon) {
+        // Use sendBeacon for reliable delivery
+        const blob = new Blob([JSON.stringify(data)], {
+          type: 'application/json',
+        });
+        // Use sendBeacon for reliable delivery
+        navigator.sendBeacon(url, blob);
+      } else {
+        await fetch(url, {
+          method: 'POST',
+          body: JSON.stringify(data),
+          keepalive: true,
+        });
+      }
+    } catch (_e) {
       await fetch(url, {
         method: 'POST',
-        body: data,
+        body: JSON.stringify(data),
         keepalive: true,
       });
     }
@@ -231,12 +280,10 @@ export class Analytics {
   private async sendEventsToServer(events: TrackingEvent[]) {
     if (events.length === 0) return;
 
-    // Use sendBeacon for reliable delivery
-    const blob = new Blob([JSON.stringify(this.formatEvents(events))], {
-      type: 'application/json',
-    });
-
-    await this.sendMetrics(this.config.endpoint, blob);
+    await this.sendMetrics(
+      this.analyticsEndpoint,
+      await this.formatEvents(events)
+    );
     this.debug('Events sent', events);
   }
 
