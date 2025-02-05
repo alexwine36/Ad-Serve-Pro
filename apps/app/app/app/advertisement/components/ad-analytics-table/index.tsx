@@ -8,14 +8,13 @@ import { AdAnalyticsTypeBadge } from '../ad-analytics-type-badge';
 import type { AdAnalyticsTypes } from '../ad-analytics-types';
 
 export const AdAnalyticsTable: React.FC<AdAnalyticsTypes> = ({ companyId }) => {
-  const { data } = trpc.adAnalytics.getAll.useQuery({
+  const { data, isLoading } = trpc.adAnalytics.getAll.useQuery({
     companyId,
   });
 
-  console.log('data', data);
   const table = useDataTable({
     data: data || [],
-
+    loading: isLoading,
     columns: [
       // {
       //   accessorKey: 'id',
@@ -35,6 +34,7 @@ export const AdAnalyticsTable: React.FC<AdAnalyticsTypes> = ({ companyId }) => {
       {
         accessorKey: 'ad.company.name',
         header: 'Company',
+        enableHiding: true,
       },
       {
         accessorKey: 'ad.name',
@@ -52,6 +52,8 @@ export const AdAnalyticsTable: React.FC<AdAnalyticsTypes> = ({ companyId }) => {
         accessorKey: 'type',
         header: 'Type',
         enableSorting: true,
+        enableColumnFilter: true,
+        filterFn: 'arrIncludesSome',
         cell: ({ cell }) => {
           const type = cell.getValue<AnalyticsType>();
           return (

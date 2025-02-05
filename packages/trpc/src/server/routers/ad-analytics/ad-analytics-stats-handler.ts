@@ -1,9 +1,9 @@
 import type { Prisma } from '@repo/database';
-import type { TRPCContextInnerWithSession } from '@repo/trpc/src/server/create-context';
+import type { TRPCContextInner } from '@repo/trpc/src/server/create-context';
 import type { AdAnalyticsStatsSchema } from './ad-analytics-stats-schema';
 
 type AdAnalyticsStatsOptions = {
-  ctx: TRPCContextInnerWithSession;
+  ctx: TRPCContextInner;
   input: AdAnalyticsStatsSchema;
 };
 
@@ -17,11 +17,21 @@ export const adAnalyticsStatsHandler = async ({
   if (input.type) {
     where.type = input.type;
   }
-  if (input.companyId || input.organizationId) {
+  // if (!input.includeAll) {
+  //   where.ad = {
+  //     company: {
+  //       organizationId: session.user.currentOrganizationId,
+  //     }
+  //   }
+  // }
+  if (input.companyId || !input.includeAll) {
+    if (!session) {
+      throw new Error('Unauthorized');
+    }
     where.ad = {
       company: {
         id: input.companyId,
-        organizationId: input.organizationId,
+        organizationId: session.user.currentOrganizationId,
       },
     };
   }

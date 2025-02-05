@@ -21,7 +21,7 @@ import { useState } from 'react';
 import { CompanyDialog } from '../company-dialog';
 
 export const CompanyTable = () => {
-  const { data } = trpc.company.getAll.useQuery({});
+  const { data, isLoading } = trpc.company.getAll.useQuery({});
   const [rowAction, setRowAction] = useState<
     DataTableRowAction<CompanyData> | undefined
   >(undefined);
@@ -35,6 +35,7 @@ export const CompanyTable = () => {
   };
 
   const table = useDataTable({
+    loading: isLoading,
     data: data || [],
     enablePagination: true,
     columns: [
