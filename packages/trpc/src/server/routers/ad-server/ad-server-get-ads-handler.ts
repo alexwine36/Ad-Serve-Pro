@@ -1,5 +1,5 @@
-import type { TRPCContextInner } from '@/server/create-context';
 import { ADVERTISEMENT_SIZES, AdvertisementData } from '@repo/common-types';
+import type { TRPCContextInner } from '@repo/trpc/src/server/create-context';
 import { prop, sortBy } from 'remeda';
 import type { AdServerGetAdsSchema } from './ad-server-get-ads-schema';
 

@@ -1,4 +1,4 @@
-import { router } from '@/server/trpc';
+import { router } from '@repo/trpc/src/server/trpc';
 import publicProcedure from '../../procedures/public-procedure';
 import { adServerGetAdsHandler } from './ad-server-get-ads-handler';
 import { AdServerGetAdsSchema } from './ad-server-get-ads-schema';

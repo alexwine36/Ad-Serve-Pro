@@ -1,5 +1,5 @@
-import type { TRPCContextInnerWithSession } from '@/server/create-context';
 import { CampaignData } from '@repo/common-types';
+import type { TRPCContextInnerWithSession } from '@repo/trpc/src/server/create-context';
 import type { CampaignCreateSchema } from './campaign-create-schema';
 
 type CampaignCreateOptions = {

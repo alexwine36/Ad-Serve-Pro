@@ -1,32 +1,32 @@
-'use client'
+'use client';
 
 import {
-Card,
-CardContent,
-CardHeader,
-CardTitle,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
 } from '@repo/design-system/components/ui/card';
-import { AdAnalyticsDialog } from '../ad-analytics-dialog';
+import type React from 'react';
 import { AdAnalyticsTable } from '../ad-analytics-table';
-import { AdAnalyticsTypes } from '../ad-analytics-types';
-import React from 'react';
+import type { AdAnalyticsTypes } from '../ad-analytics-types';
 
-
-export const AdAnalyticsCard: React.FC<AdAnalyticsTypes> = () => {
-  const [open, setOpen] = React.useState(false);
-
+export const AdAnalyticsCard: React.FC<AdAnalyticsTypes> = ({
+  companyId,
+  organizationId,
+}) => {
   return (
-  <Card>
-    <CardHeader>
-      <CardTitle>
-        <div className="flex items-center gap-2">
-          AdAnalytics
-        </div>
-      </CardTitle>
-    </CardHeader>
-    <CardContent>
-      <AdAnalyticsTable />
-    </CardContent>
-  </Card>
-  )
-  }
+    <Card>
+      <CardHeader>
+        <CardTitle>
+          <div className="flex items-center gap-2">AdAnalytics</div>
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <AdAnalyticsTable
+          companyId={companyId}
+          organizationId={organizationId}
+        />
+      </CardContent>
+    </Card>
+  );
+};

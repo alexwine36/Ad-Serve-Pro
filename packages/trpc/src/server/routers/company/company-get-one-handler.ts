@@ -1,4 +1,4 @@
-import type { TRPCContextInnerWithSession } from '@/server/create-context';
+import type { TRPCContextInnerWithSession } from '@repo/trpc/src/server/create-context';
 import type { CompanyGetOneSchema } from './company-get-one-schema';
 
 type CompanyGetOneOptions = {

@@ -1,5 +1,5 @@
-import type { TRPCContextInnerWithSession } from '@/server/create-context';
 import { AdvertisementData } from '@repo/common-types';
+import type { TRPCContextInnerWithSession } from '@repo/trpc/src/server/create-context';
 import type { AdvertisementUpdateSchema } from './advertisement-update-schema';
 
 type AdvertisementUpdateOptions = {

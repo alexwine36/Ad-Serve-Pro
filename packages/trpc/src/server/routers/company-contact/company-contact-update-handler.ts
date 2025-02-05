@@ -1,5 +1,5 @@
-import type { TRPCContextInnerWithSession } from '@/server/create-context';
 import { CompanyContactData } from '@repo/common-types';
+import type { TRPCContextInnerWithSession } from '@repo/trpc/src/server/create-context';
 import type { CompanyContactUpdateSchema } from './company-contact-update-schema';
 
 type CompanyContactUpdateOptions = {

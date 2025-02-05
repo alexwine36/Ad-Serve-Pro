@@ -1,5 +1,4 @@
-import type { TRPCContextInnerWithSession } from '@/server/create-context';
-import { AdAnalyticsData } from '@repo/common-types';
+import type { TRPCContextInnerWithSession } from '@repo/trpc/src/server/create-context';
 import type { AdAnalyticsCreateSchema } from './ad-analytics-create-schema';
 
 type AdAnalyticsCreateOptions = {
@@ -25,13 +24,17 @@ export const adAnalyticsCreateHandler = async ({
     },
   });
   const res = await prisma.adAnalytics.createMany({
-    data: input.events.map((event) => ({
-      ...event,
-      clientId: client.id,
-    })),
+    data: input.events.map((event) => {
+      const { timestamp, ...rest } = event;
+      return {
+        timestamp: new Date(timestamp),
+        ...rest,
+        clientId: client.id,
+      };
+    }),
   });
 
-  return AdAnalyticsData.parse(res);
+  return res;
 };
 
 export type AdAnalyticsCreateResponse = Awaited<

@@ -22,6 +22,6 @@ export type AdAnalyticsUpdateInput = z.infer<typeof AdAnalyticsUpdateInput>;
 export const AdAnalyticsInput = AdAnalyticsUpdateInput.partial({
   id: true,
 }).extend({
-  timestamp: z.number().transform((val) => new Date(val)),
+  timestamp: z.number(),
 });
 export type AdAnalyticsInput = z.infer<typeof AdAnalyticsInput>;

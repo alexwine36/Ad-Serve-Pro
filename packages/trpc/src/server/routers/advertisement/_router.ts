@@ -1,5 +1,5 @@
-import authedProcedure from '@/server/procedures/authed-procedure';
-import { router } from '@/server/trpc';
+import authedProcedure from '@repo/trpc/src/server/procedures/authed-procedure';
+import { router } from '@repo/trpc/src/server/trpc';
 import { advertisementCreateHandler } from './advertisement-create-handler';
 import { AdvertisementCreateSchema } from './advertisement-create-schema';
 import { advertisementGetAllHandler } from './advertisement-get-all-handler';

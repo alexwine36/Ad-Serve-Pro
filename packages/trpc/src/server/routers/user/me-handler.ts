@@ -1,4 +1,4 @@
-import type { TRPCContextInner } from '@/server/create-context';
+import type { TRPCContextInner } from '@repo/trpc/src/server/create-context';
 import type { MeSchema } from './me-schema.ts';
 
 type MeOptions = {

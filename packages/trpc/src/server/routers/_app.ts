@@ -1,4 +1,4 @@
-import { router } from '@/server/trpc';
+import { router } from '@repo/trpc/src/server/trpc';
 import { adAnalyticsRouter } from './ad-analytics/_router';
 
 import { adServerRouter } from './ad-server/_router';
@@ -18,7 +18,7 @@ import { memberRouter } from './member/_router';
 
 import { userRouter } from './user/_router';
 
-import { organizationRouter } from '@/server/routers/organization/_router'; //'./organization/_router';
+import { organizationRouter } from './organization/_router'; //'./organization/_router';
 
 export const appRouter = router({
   hello: publicProcedure
@@ -34,9 +34,9 @@ export const appRouter = router({
     }),
   // Handlers
 
-adAnalytics: adAnalyticsRouter,
+  adAnalytics: adAnalyticsRouter,
 
-adServer: adServerRouter,
+  adServer: adServerRouter,
 
   advertisement: advertisementRouter,
 
