@@ -13,7 +13,7 @@
     "quill": "2.0.3",
     "quill-delta": "5.1.0",
     "react": "19.0.0",
-    "remeda": "2.19.1"
+    "remeda": "2.20.1"
   },
   "devDependencies": {
     "@repo/testing": "workspace:*",
