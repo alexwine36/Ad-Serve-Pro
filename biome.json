@@ -14,7 +14,8 @@
       "packages/collaboration/config.ts",
       "apps/docs/**/*.json",
       "apps/email/.react-email/**",
-      "packages/rich-text/types.ts"
+      "packages/rich-text/types.ts",
+      "apps/app/public/analytics/**"
     ]
   },
   "linter": {
