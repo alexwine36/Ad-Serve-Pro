@@ -16,6 +16,8 @@ import type { AnalyticsConfig } from './types';
 vi.mock('./fingerprinting');
 vi.mock('./location');
 vi.mock('./event');
+vi.mock('./advertisement');
+
 let spySendMetrics: MockInstance<
   <T extends Blob>(url: string, data: T) => Promise<void>
 >;
@@ -108,8 +110,7 @@ describe('Analytics', () => {
     const formattedEvents = await analytics['formatEvents'](events);
     console.log(formattedEvents);
     expect(formattedEvents).toHaveProperty('events');
-    expect(formattedEvents).toHaveProperty('fingerprint');
-    expect(formattedEvents).toHaveProperty('location');
+    expect(formattedEvents).toHaveProperty('client');
   });
 
   it('should send events to server', async () => {

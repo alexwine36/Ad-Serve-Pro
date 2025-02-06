@@ -232,9 +232,13 @@ export class Analytics {
           region,
           city,
           metadata: {},
-          viewportSize: `${event.viewportSize.width}x${event.viewportSize.height}`,
-          screenSize: `${event.screenSize.width}x${event.screenSize.height}`,
-          connectionType: components.connection?.type,
+          viewportSize: event.viewportSize
+            ? `${event.viewportSize.width}x${event.viewportSize.height}`
+            : undefined,
+          screenSize: event.screenSize
+            ? `${event.screenSize.width}x${event.screenSize.height}`
+            : undefined,
+          connectionType: components?.connection?.type,
         };
       });
   }
@@ -247,10 +251,10 @@ export class Analytics {
       events: await this.getAdEvents(events),
       client: {
         fingerprint: await this.getFingerprint(),
-        userAgent: components.userAgent,
-        language: components.language,
-        timezone: components.timezone,
-        platform: components.platform,
+        userAgent: components?.userAgent,
+        language: components?.language,
+        timezone: components?.timezone,
+        platform: components?.platform,
         metadata: await this.clientMetadataService.get(),
         // device: components.dev
       },
