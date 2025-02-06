@@ -20,7 +20,8 @@ export const {{ cronFunctionName }} = inngest.createFunction(
 id: '{{ eventId }}.cron',
 },
 {
-cron: "TZ=Europe/Paris 0 12 * * 5"
+// https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+cron: "TZ=US/Mountain 0 12 * * 5"
 },
 async ({ step, runId }) => {
 const data = []

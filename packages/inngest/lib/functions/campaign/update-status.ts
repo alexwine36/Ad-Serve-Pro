@@ -68,7 +68,7 @@ export const campaignUpdateStatusCronFunction = inngest.createFunction(
     id: 'campaign.update.status.cron',
   },
   {
-    cron: 'TZ=Europe/Paris 0 12 * * 5',
+    cron: 'TZ=US/Mountain 0 3 * * *',
   },
   async ({ step }) => {
     const data = await step.run('get campaigns', async () => {
