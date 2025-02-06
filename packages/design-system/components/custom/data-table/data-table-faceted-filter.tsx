@@ -53,7 +53,9 @@ export function DataTableFacetedFilter<TData, TValue>({
       <PopoverTrigger asChild>
         <Button variant="outline" size="sm" className="h-8 border-dashed">
           <PlusCircle className="size-4" />
-          {header && flexRender(column?.columnDef.header, header.getContext())}
+          {header
+            ? flexRender(column?.columnDef.header, header.getContext())
+            : title}
 
           {selectedValues?.size > 0 && (
             <>

@@ -17,6 +17,18 @@ export const adAnalyticsStatsHandler = async ({
   if (input.type) {
     where.type = input.type;
   }
+  if (input.startDate) {
+    where.timestamp = {
+      gte: input.startDate,
+    };
+  }
+  if (input.endDate) {
+    const prev = typeof where.timestamp === 'object' ? where.timestamp : {};
+    where.timestamp = {
+      ...prev,
+      lte: input.endDate,
+    };
+  }
   // if (!input.includeAll) {
   //   where.ad = {
   //     company: {

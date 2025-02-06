@@ -48,8 +48,8 @@ export const AdAnalyticsTable: React.FC<AdAnalyticsTypes> = ({ companyId }) => {
       {
         accessorKey: 'country',
         header: 'Country',
-        // enableColumnFilter: true,
-        // filterFn: 'arrIncludesSome',
+        enableColumnFilter: true,
+        filterFn: 'arrIncludesSome',
         enableHiding: true,
         hidden: true,
       },
