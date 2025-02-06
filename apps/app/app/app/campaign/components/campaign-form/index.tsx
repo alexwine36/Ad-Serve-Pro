@@ -4,6 +4,8 @@ import { trpc } from '@/utils/trpc';
 import {
   type CampaignData,
   CampaignInput,
+  CampaignStatusInput,
+  campaignStatusToCampaignStatusInput,
   getSchemaDefaults,
 } from '@repo/common-types';
 import {
@@ -18,7 +20,6 @@ import { useToast } from '@repo/design-system/hooks/use-toast';
 import type React from 'react';
 import { useForm } from 'react-hook-form';
 import { capitalize, pipe, toLowerCase } from 'remeda';
-import { CampaignStatus } from '../../../../../../../packages/database';
 import type { CampaignTypes } from '../campaign-types';
 
 type CampaignFormProps = CampaignTypes & {
@@ -34,13 +35,18 @@ export const CampaignForm: React.FC<CampaignFormProps> = ({
   const { toast } = useToast();
 
   const utils = trpc.useUtils();
-
+  const defaultVals = {
+    ...getSchemaDefaults(CampaignInput),
+    companyId,
+    ...campaign,
+  };
   const form = useForm<CampaignInput>({
     resolver: zodResolver(CampaignInput),
     defaultValues: {
-      ...getSchemaDefaults(CampaignInput),
-      companyId,
-      ...campaign,
+      ...defaultVals,
+      status: campaignStatusToCampaignStatusInput(
+        defaultVals.status || 'DRAFT'
+      ),
     },
   });
 
@@ -104,7 +110,7 @@ export const CampaignForm: React.FC<CampaignFormProps> = ({
             label="Status"
             control={form.control}
             name="status"
-            options={Object.values(CampaignStatus).map((status) => ({
+            options={CampaignStatusInput.options.map((status) => ({
               value: status,
               label: pipe(status, toLowerCase(), capitalize()),
             }))}

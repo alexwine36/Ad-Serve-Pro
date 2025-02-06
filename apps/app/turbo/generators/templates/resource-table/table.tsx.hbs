@@ -22,7 +22,7 @@ import type { {{ dataType }} } from '@repo/common-types';
 import { {{ capitalizedName }}Types } from '../{{ pathName }}-types';
 
 export const {{ capitalizedName }}Table: React.FC<{{ capitalizedName }}Types> = () => {
-  const { data } = trpc.{{ propertyName }}.getAll.useQuery({});
+  const { data, isLoading } = trpc.{{ propertyName }}.getAll.useQuery({});
   const [rowAction, setRowAction] = useState< DataTableRowAction<{{ dataType }}> | undefined
     >(undefined);
 
@@ -42,7 +42,7 @@ export const {{ capitalizedName }}Table: React.FC<{{ capitalizedName }}Types> = 
 
     const table = useDataTable({
     data: data || [],
-
+    loading: isLoading,
     columns: [
     {
     accessorKey: 'id',

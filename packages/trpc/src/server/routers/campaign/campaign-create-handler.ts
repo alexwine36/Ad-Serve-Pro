@@ -1,4 +1,4 @@
-import { CampaignData } from '@repo/common-types';
+import { CampaignData, formatCampaignInput } from '@repo/common-types';
 import type { TRPCContextInnerWithSession } from '@repo/trpc/src/server/create-context';
 import type { CampaignCreateSchema } from './campaign-create-schema';
 
@@ -14,7 +14,7 @@ export const campaignCreateHandler = async ({
   const { prisma, session } = ctx;
 
   const res = await prisma.campaign.create({
-    data: { ...input },
+    data: { ...formatCampaignInput(input) },
   });
   return CampaignData.parse(res);
 };

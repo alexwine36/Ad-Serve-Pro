@@ -23,11 +23,75 @@ export const CampaignData = CampaignSchema.extend({
 });
 
 export type CampaignData = z.infer<typeof CampaignData>;
+const removedInputs = CampaignStatus.exclude([
+  'ACTIVE',
+  'SCHEDULED',
+  'COMPLETED',
+]).options;
+export const CampaignStatusInput = z.enum(['READY', ...removedInputs]);
+
+export type CampaignStatusInput = z.infer<typeof CampaignStatusInput>;
+
+export const campaignStatusToCampaignStatusInput = (
+  status: CampaignStatus
+): CampaignStatusInput => {
+  // biome-ignore lint/style/useDefaultSwitchClause: Keeping for better notifications about missing cases
+  switch (status) {
+    case 'DRAFT':
+      return 'DRAFT';
+    case 'SCHEDULED':
+      return 'READY';
+    case 'ACTIVE':
+      return 'READY';
+    case 'COMPLETED':
+      return 'READY';
+    case 'PAUSED':
+      return 'PAUSED';
+    case 'CANCELLED':
+      return 'CANCELLED';
+  }
+};
+
+export type FormatCampaignPickedTypes = Pick<
+  CampaignInput,
+  'startDate' | 'endDate' | 'status'
+>;
+
+export const formatCampaignInput = <T extends FormatCampaignPickedTypes>(
+  input: T
+): T & {
+  status: CampaignStatus;
+} => {
+  let status: CampaignStatus = CampaignStatus.enum.DRAFT;
+  if (input.status === 'READY') {
+    if (input.startDate && input.endDate) {
+      if (
+        new Date(input.startDate) < new Date() &&
+        new Date(input.endDate) > new Date()
+      ) {
+        status = CampaignStatus.enum.ACTIVE;
+      } else if (new Date(input.startDate) > new Date()) {
+        status = CampaignStatus.enum.SCHEDULED;
+      } else {
+        status = CampaignStatus.enum.COMPLETED;
+      }
+    }
+  } else {
+    status = input.status;
+  }
+  return {
+    ...input,
+    status,
+  };
+};
 
 export const CampaignUpdateInput = CampaignData.omit({
   createdAt: true,
   updatedAt: true,
+  status: true,
   // organizationId: true,
+}).extend({
+  status: CampaignStatusInput.default('DRAFT'),
 });
 
 export type CampaignUpdateInput = z.infer<typeof CampaignUpdateInput>;
@@ -35,14 +99,5 @@ export type CampaignUpdateInput = z.infer<typeof CampaignUpdateInput>;
 export const CampaignInput = CampaignUpdateInput.partial({
   id: true,
 });
-// .default({
-//   // Define default values here
-//   name: '',
-//   startDate: getStartOfDate(new Date()),
-//   endDate: add(getStartOfDate(new Date()), { months: 1 }),
-//   status: 'DRAFT',
-//   companyId: '',
-//   targeting: {},
-//   budget: 0,
-// });
+
 export type CampaignInput = z.infer<typeof CampaignInput>;

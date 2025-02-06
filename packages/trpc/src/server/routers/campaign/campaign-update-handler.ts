@@ -1,4 +1,4 @@
-import { CampaignData } from '@repo/common-types';
+import { CampaignData, formatCampaignInput } from '@repo/common-types';
 import type { TRPCContextInnerWithSession } from '@repo/trpc/src/server/create-context';
 import type { CampaignUpdateSchema } from './campaign-update-schema';
 
@@ -17,7 +17,7 @@ export const campaignUpdateHandler = async ({
     where: {
       id: input.id,
     },
-    data: { ...input },
+    data: { ...formatCampaignInput(input) },
   });
   return CampaignData.parse(res);
 };
