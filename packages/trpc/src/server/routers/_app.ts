@@ -1,4 +1,6 @@
 import { router } from '@repo/trpc/src/server/trpc';
+import { statRouter } from './stat/_router';
+
 import { adAnalyticsRouter } from './ad-analytics/_router';
 
 import { adServerRouter } from './ad-server/_router';
@@ -33,6 +35,8 @@ export const appRouter = router({
       };
     }),
   // Handlers
+
+  stat: statRouter,
 
   adAnalytics: adAnalyticsRouter,
 

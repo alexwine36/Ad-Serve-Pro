@@ -1,5 +1,6 @@
 // Exports
 
+export * from './stat/handlers';
 export * from './ad-analytics/handlers';
 export * from './ad-server/handlers';
 export * from './advertisement/handlers';

@@ -1,13 +1,10 @@
 import { auth } from '@repo/auth/auth';
-import {
-  getComparisonDateRanges,
-  percentageChangeDisplay,
-} from '@repo/common-types';
+import { percentageChangeDisplay } from '@repo/common-types';
 import {
   BanCard,
   type BanCardProps,
 } from '@repo/design-system/components/custom/ban-card';
-import { Users } from 'lucide-react';
+import { PointerIcon, Users } from 'lucide-react';
 import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import { trpcCaller } from '../../utils/trpc-server';
@@ -26,24 +23,45 @@ const App = async () => {
     redirect('/');
   }
   const caller = await trpcCaller();
-  const comparisonDates = getComparisonDateRanges();
-  const curAnalytics = await caller.adAnalytics.stats({
-    ...comparisonDates.current,
+
+  const impressions = await caller.stat.adAnalyticsComparison({
+    type: 'IMPRESSION',
   });
-  const prevAnalytics = await caller.adAnalytics.stats({
-    ...comparisonDates.previous,
+
+  const clicks = await caller.stat.adAnalyticsComparison({
+    type: 'CLICK',
   });
-  console.log({ curAnalytics, prevAnalytics });
+
   const stats: BanCardProps[] = [
     {
       title: 'Impressions',
-      description: `${percentageChangeDisplay(prevAnalytics, curAnalytics, {
-        prefix: true,
-      })} from last month`,
-      value: curAnalytics,
+      description: `${percentageChangeDisplay(
+        impressions.previous,
+        impressions.current,
+        {
+          prefix: true,
+        }
+      )} from last month`,
+      value: impressions.current,
       prefix: '+',
       icon: (
         <Users
+          style={{
+            width: '1em',
+            height: '1em',
+          }}
+        />
+      ),
+    },
+    {
+      title: 'Clicks',
+      description: `${percentageChangeDisplay(clicks.previous, clicks.current, {
+        prefix: true,
+      })} from last month`,
+      value: clicks.current,
+      prefix: '+',
+      icon: (
+        <PointerIcon
           style={{
             width: '1em',
             height: '1em',
