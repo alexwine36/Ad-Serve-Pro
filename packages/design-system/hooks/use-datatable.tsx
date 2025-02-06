@@ -3,24 +3,63 @@ import { useMemo, useState } from "react";
 import type { DataTableProps, UseDataTableReturn } from "@repo/design-system/components/custom/data-table/types";
 import { Checkbox } from "@repo/design-system/components/ui/checkbox";
 
-import type {
-  ColumnFiltersState,
-  RowSelectionState,
-  SortingState,
-  VisibilityState,
+import {
+  getCoreRowModel,
+  getFacetedRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+  type ColumnFiltersState,
+  type RowSelectionState,
+  type SortingState,
+  type VisibilityState,
 } from '@tanstack/react-table';
+import { getFacetedUniqueValues } from "../components/custom/data-table/utils/get-faceted-values";
 
 export const useDataTable = <TData, TValue>({
   columns: initColumns,
   data,
   selectable,
   enablePagination,
+  loading,
+  hideToolbar = false,
+  displayIfEmpty = false,
 }: DataTableProps<TData, TValue>): UseDataTableReturn<TData, TValue> => {
+
+ const defaultVisibility = initColumns.reduce<VisibilityState>((acc, column) => {
+    if ("accessorKey" in column && typeof column.accessorKey === "string") {
+      const id = column.id || column.accessorKey.split(".").join("_");
+      if (column.hidden) {
+        acc[id] = !column.hidden
+      }
+    }
+    
+    return acc;
+  }, {});
 
  const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(defaultVisibility);
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
+
+// useEffect(() => {
+//     if (initColumns) {
+//       const defaultColumnVisibility = initColumns.reduce<{
+//         [key: string]: boolean;
+//       }>((acc, column) => {
+//         console.log(column.id, column.hidden)
+//         if (column.hidden && column.id) {
+//           acc[column.id] = !column.hidden;
+//         }
+    
+//         return acc;
+//       }, {});
+//       setColumnVisibility(defaultColumnVisibility);
+//     }
+  
+// }, [initColumns])
+
 
   const columns = useMemo(() => {
     if (selectable) {
@@ -54,6 +93,7 @@ export const useDataTable = <TData, TValue>({
         ...initColumns,
       ];
     }
+    
     return initColumns;
   }, [initColumns, selectable]);
 
@@ -63,19 +103,53 @@ export const useDataTable = <TData, TValue>({
   }, [data, rowSelection]);
 
 
-  return {
-    columns,
+  const table = useReactTable({
     data,
-    enablePagination: enablePagination || false,
+    columns,
+    onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getFacetedRowModel: getFacetedRowModel(),
+    getFacetedUniqueValues: getFacetedUniqueValues(),
+
+    onColumnVisibilityChange: setColumnVisibility,
+    onRowSelectionChange: setRowSelection,
+    state: {
+      sorting,
+      columnFilters,
+      columnVisibility,
+      rowSelection,
+    },
+    ...(enablePagination
+      ? {
+          getPaginationRowModel: getPaginationRowModel(),
+        }
+      : {}),
+  });
+
+  return {
+    // table,
+    // columns,
+    // // data,
+    // enablePagination: enablePagination || false,
+    // selectable: selectable || false,
+    // sorting,
+    // setSorting,
+    // columnFilters,
+    // setColumnFilters,
+    // columnVisibility,
+    // setColumnVisibility,
+    // rowSelection,
+    // setRowSelection,
+    hideToolbar,
+    displayIfEmpty,
+    loading: loading || false,
+    selectedRows,
+    table,
+    columns,
     selectable: selectable || false,
-    sorting,
-    setSorting,
-    columnFilters,
-    setColumnFilters,
-    columnVisibility,
-    setColumnVisibility,
-    rowSelection,
-    setRowSelection,
-    selectedRows
+    enablePagination: enablePagination || false,
   };
 };

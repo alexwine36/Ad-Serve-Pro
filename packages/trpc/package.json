@@ -3,15 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "tsup",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
-    "dev": "rm -rf dist && tsup --watch",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
-  "files": ["dist/**"],
   "dependencies": {
     "@repo/auth": "workspace:*",
     "@tanstack/react-query": "5.64.2",
@@ -20,7 +14,7 @@
     "@trpc/react-query": "11.0.0-rc.708",
     "next": "15.1.5",
     "react": "19.0.0",
-    "remeda": "2.19.1",
+    "remeda": "2.20.1",
     "superjson": "2.2.2",
     "zod": "3.24.1"
   },

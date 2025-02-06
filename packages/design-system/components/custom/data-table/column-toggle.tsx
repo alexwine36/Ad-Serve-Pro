@@ -12,13 +12,13 @@ import {
 } from '@repo/design-system/components/ui/dropdown-menu';
 import type { Table } from '@tanstack/react-table';
 
-interface DataTableViewOptionsProps<TData> {
+interface DataTableColumnViewOptionsProps<TData> {
   table: Table<TData>;
 }
 
-export function DataTableViewOptions<TData>({
+export function DataTableColumnViewOptions<TData>({
   table,
-}: DataTableViewOptionsProps<TData>) {
+}: DataTableColumnViewOptionsProps<TData>) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

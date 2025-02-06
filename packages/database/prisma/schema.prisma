@@ -266,6 +266,8 @@ model Client {
 
   // Relations
   analytics AdAnalytics[]
+  // Custom data
+  metadata  Json?
 }
 
 model AdAnalytics {

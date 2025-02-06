@@ -1,4 +1,4 @@
-import type { TRPCContextInnerWithSession } from '@/server/create-context';
+import type { TRPCContextInnerWithSession } from '@repo/trpc/src/server/create-context';
 import type { MemberCreateSchema } from './member-create-schema';
 
 type MemberCreateOptions = {

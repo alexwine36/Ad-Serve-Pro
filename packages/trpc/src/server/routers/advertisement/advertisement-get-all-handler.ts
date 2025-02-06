@@ -1,5 +1,5 @@
-import type { TRPCContextInnerWithSession } from '@/server/create-context';
 import { AdvertisementData } from '@repo/common-types';
+import type { TRPCContextInnerWithSession } from '@repo/trpc/src/server/create-context';
 import { z } from 'zod';
 import type { AdvertisementGetAllSchema } from './advertisement-get-all-schema';
 

@@ -14,6 +14,7 @@
     "date-fns": "4.1.0",
     "libphonenumber-js": "1.11.19",
     "react": "19.0.0",
+    "ua-parser-js": "2.0.1",
     "zod": "3.24.1"
   },
   "devDependencies": {
@@ -21,7 +22,7 @@
     "@types/node": "^22.10.5",
     "@types/react": "^19.0.2",
     "@types/react-dom": "^19.0.2",
-    "remeda": "^2.19.1",
+    "remeda": "^2.20.1",
     "tsup": "^8.3.5",
     "typescript": "^5.7.2",
     "vitest": "^2.1.8"

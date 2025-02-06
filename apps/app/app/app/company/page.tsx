@@ -19,6 +19,9 @@ const CompanyPage = async () => {
   const caller = await trpcCaller();
 
   const companies = await caller.company.getAll({});
+  const impressions = await caller.adAnalytics.stats({
+    type: 'IMPRESSION',
+  });
 
   const stats: BanCardProps[] = [
     {
@@ -37,9 +40,9 @@ const CompanyPage = async () => {
       description: '+20.1% from last month',
     },
     {
-      title: 'Subscriptions',
+      title: 'Impressions',
       description: '+180.1% from last month',
-      value: 231,
+      value: impressions,
       prefix: '+',
       icon: (
         <Users

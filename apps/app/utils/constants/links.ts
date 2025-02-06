@@ -7,20 +7,20 @@ import {
   BriefcaseBusiness,
   LayoutDashboard,
   LifeBuoyIcon,
-  type LucideProps,
   SendIcon,
   Settings2Icon,
 } from 'lucide-react';
-import type { ForwardRefExoticComponent, RefAttributes } from 'react';
 import { mapValues } from 'remeda';
 
 type SidebarLink = {
   title: string;
   url: string;
   isActive?: boolean;
-  icon?: ForwardRefExoticComponent<
-    Omit<LucideProps, 'ref'> & RefAttributes<SVGSVGElement>
-  >;
+  // biome-ignore lint/suspicious/noExplicitAny: TODO: fix this type
+  icon?: any;
+  // ForwardRefExoticComponent<
+  //   Omit<LucideProps, 'ref'> & RefAttributes<SVGSVGElement>
+  // >;
   items?: SidebarLink[];
   permissions?: MemberRole[];
 };
