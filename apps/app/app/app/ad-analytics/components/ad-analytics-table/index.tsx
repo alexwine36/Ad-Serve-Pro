@@ -16,37 +16,54 @@ export const AdAnalyticsTable: React.FC<AdAnalyticsTypes> = ({ companyId }) => {
     data: data || [],
     loading: isLoading,
     columns: [
-      // {
-      //   accessorKey: 'id',
-      //   header: '',
-      //   size: 40,
-      //   cell: ({ cell }) => {
-      //     const id = cell.getValue<string>();
-      //     return (
-      //       <Button variant={'ghost'} size={'icon'} asChild>
-      //         <Link href={`/companies/${id}`}>
-      //           <Eye />
-      //         </Link>
-      //       </Button>
-      //     );
-      //   },
-      // },
-      {
-        accessorKey: 'ad.company.name',
-        header: 'Company',
-        enableHiding: true,
-      },
+      ...(companyId
+        ? []
+        : [
+            {
+              accessorKey: 'ad.company.name',
+              header: 'Company',
+              enableHiding: true,
+              enableColumnFilter: true,
+              // biome-ignore lint/suspicious/noExplicitAny: FilterFn not exported
+              filterFn: 'arrIncludesSome' as any,
+            },
+          ]),
       {
         accessorKey: 'ad.name',
         header: 'Ad Name',
       },
+
+      {
+        accessorKey: 'region',
+        header: 'Region',
+        enableColumnFilter: true,
+        filterFn: 'arrIncludesSome',
+      },
+      {
+        accessorKey: 'city',
+        header: 'City',
+        enableColumnFilter: true,
+        filterFn: 'arrIncludesSome',
+      },
+      {
+        accessorKey: 'country',
+        header: 'Country',
+        // enableColumnFilter: true,
+        // filterFn: 'arrIncludesSome',
+        enableHiding: true,
+        hidden: true,
+      },
       {
         accessorKey: 'client.metadata.browser.name',
         header: 'Browser',
+        enableHiding: true,
+        hidden: true,
       },
       {
         accessorKey: 'client.metadata.os.name',
         header: 'OS',
+        enableHiding: true,
+        hidden: true,
       },
       {
         accessorKey: 'type',
@@ -63,10 +80,7 @@ export const AdAnalyticsTable: React.FC<AdAnalyticsTypes> = ({ companyId }) => {
           );
         },
       },
-      {
-        accessorKey: 'region',
-        header: 'Region',
-      },
+
       {
         accessorKey: 'timestamp',
         enableSorting: true,

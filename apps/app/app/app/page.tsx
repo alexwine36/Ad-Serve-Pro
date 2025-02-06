@@ -1,7 +1,7 @@
 import { auth } from '@repo/auth/auth';
 import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
-import { AdAnalyticsCard } from './advertisement/components/ad-analytics-card';
+import { AdAnalyticsCard } from './ad-analytics/components/ad-analytics-card';
 import { Header } from './components/header';
 const title = 'Acme Inc';
 const description = 'My application.';

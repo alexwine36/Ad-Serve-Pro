@@ -1,6 +1,4 @@
 'use client';
-
-import { flexRender } from '@tanstack/react-table';
 import { Check, ChevronsUpDown, Settings2 } from 'lucide-react';
 import * as React from 'react';
 
@@ -66,7 +64,7 @@ export function DataTableViewOptions<TData>({
           <CommandList>
             <CommandEmpty>No columns found.</CommandEmpty>
             <CommandGroup>
-              {viewColumns.map(({ column, header }) => {
+              {viewColumns.map(({ column }) => {
                 return (
                   <CommandItem
                     key={column.id}
@@ -75,13 +73,8 @@ export function DataTableViewOptions<TData>({
                     }
                   >
                     <span className="truncate">
-                      {/* {} */}
-                      {header
-                        ? flexRender(
-                            column.columnDef.header,
-                            header.getContext()
-                          )
-                        : toSentenceCase(column.id)}
+                      {column.columnDef.header?.toString() ||
+                        toSentenceCase(column.id)}
                     </span>
                     <Check
                       className={cn(

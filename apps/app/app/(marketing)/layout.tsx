@@ -7,11 +7,21 @@ type MarketingLayoutProps = {
 };
 const MarketingLayout = ({ children }: MarketingLayoutProps) => {
   return (
-    <div className="max-w-screen">
-      <Navbar />
-      {children}
-      <ScrollToTop />
-    </div>
+    <>
+      <script
+        id="ad-analytics"
+        data-org-id="cm6i8ljl000003r2hi500hi4s"
+        data-debug="true"
+        // data-endpoint="/api/analytics"
+        src="/analytics/client.js"
+        type="module"
+      />
+      <div className="max-w-screen">
+        <Navbar />
+        {children}
+        <ScrollToTop />
+      </div>
+    </>
   );
 };
 
