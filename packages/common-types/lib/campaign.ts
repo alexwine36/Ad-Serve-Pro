@@ -2,6 +2,10 @@ import { add } from 'date-fns';
 import { z } from 'zod';
 import { CampaignSchema, CampaignStatusSchema } from './generated';
 import { getStartOfDate } from './utils/get-normalized-date';
+
+export const CampaignStatus = CampaignStatusSchema;
+export type CampaignStatus = z.infer<typeof CampaignStatus>;
+
 export const CampaignTargeting = z.object({
   pathIncludes: z.string().optional(),
 });
@@ -15,7 +19,7 @@ export const CampaignData = CampaignSchema.extend({
   endDate: z
     .date()
     .default(() => add(getStartOfDate(new Date()), { months: 1 })),
-  status: CampaignStatusSchema.default('DRAFT'),
+  status: CampaignStatus.default('DRAFT'),
 });
 
 export type CampaignData = z.infer<typeof CampaignData>;

@@ -1,7 +1,6 @@
 import typography from '@tailwindcss/typography';
 import type { Config } from 'tailwindcss';
 import animate from 'tailwindcss-animate';
-import defaultColors from 'tailwindcss/colors';
 import defaultTheme from 'tailwindcss/defaultTheme';
 import typographyConfig from './typography.config';
 
@@ -42,7 +41,6 @@ export const config: Config = {
     },
     extend: {
       colors: {
-        ...defaultColors,
         border: 'hsl(var(--border) / <alpha-value>)',
         input: 'hsl(var(--input) / <alpha-value>)',
         ring: 'hsl(var(--ring) / <alpha-value>)',

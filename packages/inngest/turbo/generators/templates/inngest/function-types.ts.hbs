@@ -1,0 +1,13 @@
+import type { LiteralZodEventSchema } from 'inngest';
+import { z } from 'zod';
+
+export const eventKey = '{{ eventKey }}' as const;
+
+export const {{ eventType }} = z.object({
+name: z.literal(eventKey),
+data: z.object({
+sample: z.string().optional(),
+})
+}) satisfies LiteralZodEventSchema;
+
+export type {{ eventType }} = z.infer<typeof {{ eventType }}>;

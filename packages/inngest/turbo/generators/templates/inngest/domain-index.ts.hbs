@@ -1,0 +1,10 @@
+import {
+
+{{ functionName }},
+{{#if cron}}{{ cronFunctionName }},{{/if}}
+} from './{{ handlerPathName }}';
+
+export const {{ indexExports.functions }} = [
+// FunctionArray
+{{ functionName }},{{#if cron}}{{ cronFunctionName }},{{/if}}
+];
