@@ -1,5 +1,5 @@
-import type { PlopTypes } from '@turbo/gen';
 import fs from 'node:fs';
+import type { PlopTypes } from '@turbo/gen';
 // @ts-ignore
 import directoryPrompt from 'inquirer-directory';
 import { capitalize, pipe, toCamelCase, toKebabCase } from 'remeda';
