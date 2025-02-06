@@ -1,16 +1,20 @@
 import authedProcedure from '@repo/trpc/src/server/procedures/authed-procedure';
-import { StatAdAnalyticsComparisonSchema } from './stat-ad-analytics-comparison-schema'
-import { statAdAnalyticsComparisonHandler } from './stat-ad-analytics-comparison-handler'
-import { StatAdAnalyticsSchema } from './stat-ad-analytics-schema'
-import { statAdAnalyticsHandler } from './stat-ad-analytics-handler'
 import { router } from '@repo/trpc/src/server/trpc';
+import { statAdAnalyticsComparisonHandler } from './stat-ad-analytics-comparison-handler';
+import { StatAdAnalyticsComparisonSchema } from './stat-ad-analytics-comparison-schema';
+import { statAdAnalyticsHandler } from './stat-ad-analytics-handler';
+import { StatAdAnalyticsSchema } from './stat-ad-analytics-schema';
 
 // Imports
 
 export const statRouter = router({
-// Handlers
+  // Handlers
 
-adAnalyticsComparison: authedProcedure.input(StatAdAnalyticsComparisonSchema).query(statAdAnalyticsComparisonHandler),
+  adAnalyticsComparison: authedProcedure
+    .input(StatAdAnalyticsComparisonSchema)
+    .query(statAdAnalyticsComparisonHandler),
 
-adAnalytics: authedProcedure.input(StatAdAnalyticsSchema).query(statAdAnalyticsHandler),
+  adAnalytics: authedProcedure
+    .input(StatAdAnalyticsSchema)
+    .query(statAdAnalyticsHandler),
 });
