@@ -56,6 +56,7 @@ jobs:
       # Here's the first place where next-bundle-analysis' own script is used
       # This step pulls the raw bundle stats for the current bundle
       - name: Analyze bundle
+        working-directory: ./
         run: pnpm analyze:ci
 
       - name: Upload bundle
