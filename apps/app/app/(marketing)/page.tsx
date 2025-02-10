@@ -11,7 +11,7 @@ import { Sponsors } from './components/sponsors';
 import { Team } from './components/team';
 import { Testimonials } from './components/testimonials';
 
-export async function getStats() {
+async function getStats() {
   try {
     const userCount = await database.user.count();
     const companyCount = await database.company.count();
