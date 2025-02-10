@@ -1,4 +1,5 @@
 // import pilot from '../assets/pilot.png';
+import { COMPANY_NAME } from '../../../utils/constants';
 import { Statistics, type StatisticsProps } from './statistics';
 
 type AboutProps = {
@@ -21,7 +22,7 @@ export const About: React.FC<AboutProps> = ({ stats }) => {
                 <span className="bg-gradient-to-b from-primary/60 to-primary bg-clip-text text-transparent">
                   About{' '}
                 </span>
-                Company
+                {COMPANY_NAME}
               </h2>
               <p className="mt-4 text-muted-foreground text-xl">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
