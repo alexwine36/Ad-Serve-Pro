@@ -40,7 +40,8 @@ const badgeVariants = cva(
         destructiveOutline:
           "border-background bg-background/15 text-destructive-foreground hover:bg-destructive/80",
         outline: "text-foreground",
-        muted: "border-transparent bg-muted text-muted-foreground hover:bg-muted/80"
+        muted: "border-transparent bg-muted text-muted-foreground hover:bg-muted/80",
+        dumb: "rounded-t-none rounded-b-none"
       },
       outlineColor: {
         default: "",

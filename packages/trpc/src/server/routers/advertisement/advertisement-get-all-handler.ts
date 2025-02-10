@@ -1,6 +1,5 @@
-import { AdvertisementData } from '@repo/common-types';
+import { formatAdvertisementWithCampaignCount } from '@repo/common-types';
 import type { TRPCContextInnerWithSession } from '@repo/trpc/src/server/create-context';
-import { z } from 'zod';
 import type { AdvertisementGetAllSchema } from './advertisement-get-all-schema';
 
 type AdvertisementGetAllOptions = {
@@ -19,7 +18,11 @@ export const advertisementGetAllHandler = async ({
       companyId: input.companyId,
     },
   });
-  return z.array(AdvertisementData).parse(res);
+  return Promise.all(
+    res.map(async (advertisment) => {
+      return await formatAdvertisementWithCampaignCount(advertisment, prisma);
+    })
+  );
 };
 
 export type AdvertisementGetAllResponse = Awaited<

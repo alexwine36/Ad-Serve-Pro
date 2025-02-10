@@ -6,6 +6,7 @@ export * from './client-metadata';
 export * from './common';
 export * from './company';
 export * from './company-contact';
+export * from './formatters';
 export * from './member';
 export * from './organization';
 export * from './stats';

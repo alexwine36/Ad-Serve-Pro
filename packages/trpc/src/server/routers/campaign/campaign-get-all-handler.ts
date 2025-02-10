@@ -1,6 +1,5 @@
-import { CampaignData } from '@repo/common-types';
+import { campaignSelectFields, formatCampaignQuery } from '@repo/common-types';
 import type { TRPCContextInnerWithSession } from '@repo/trpc/src/server/create-context';
-import { z } from 'zod';
 import type { CampaignGetAllSchema } from './campaign-get-all-schema';
 
 type CampaignGetAllOptions = {
@@ -22,8 +21,10 @@ export const campaignGetAllHandler = async ({
 
       companyId: input.companyId,
     },
+    include: campaignSelectFields.include,
   });
-  return z.array(CampaignData).parse(res);
+
+  return res.map((campaign) => formatCampaignQuery(campaign));
 };
 
 export type CampaignGetAllResponse = Awaited<

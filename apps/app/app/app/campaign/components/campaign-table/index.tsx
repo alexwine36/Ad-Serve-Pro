@@ -20,7 +20,7 @@ import { CampaignStatusBadge } from '../campaign-status-badge';
 import type { CampaignTypes } from '../campaign-types';
 
 export const CampaignTable: React.FC<CampaignTypes> = ({ companyId }) => {
-  const { data } = trpc.campaign.getAll.useQuery({
+  const { data, isLoading } = trpc.campaign.getAll.useQuery({
     companyId,
   });
   const [rowAction, setRowAction] = useState<
@@ -29,7 +29,7 @@ export const CampaignTable: React.FC<CampaignTypes> = ({ companyId }) => {
 
   const table = useDataTable({
     data: data || [],
-
+    loading: isLoading,
     columns: [
       {
         accessorKey: 'id',
@@ -62,6 +62,10 @@ export const CampaignTable: React.FC<CampaignTypes> = ({ companyId }) => {
       {
         accessorKey: 'budget',
         header: 'Budget',
+      },
+      {
+        accessorKey: 'adCount',
+        header: 'Ads',
       },
       // {
       //   accessorKey: 'website',

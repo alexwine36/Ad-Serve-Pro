@@ -1,7 +1,10 @@
 'use client';
 
 import { trpc } from '@/utils/trpc';
-import type { AdvertisementData } from '@repo/common-types';
+import type {
+  AdvertisementCampaignCounts,
+  AdvertisementData,
+} from '@repo/common-types';
 import type { DataTableRowAction } from '@repo/design-system/components/custom/data-table';
 import { DataTable } from '@repo/design-system/components/custom/data-table';
 import { Button } from '@repo/design-system/components/ui/button';
@@ -20,20 +23,24 @@ import { AdvertisementDialog } from '../advertisement-dialog';
 import { AdvertisementSizeBadge } from '../advertisement-size-badge';
 import { AdvertisementTypeBadge } from '../advertisement-type-badge';
 import type { AdvertisementTypes } from '../advertisement-types';
+import { AdvertisementCampaignCountsDisplay } from '../advertisment-campaign-counts-display';
 
 export const AdvertisementTable: React.FC<AdvertisementTypes> = ({
   companyId,
 }) => {
-  const { data } = trpc.advertisement.getAll.useQuery({
+  const { data, isLoading } = trpc.advertisement.getAll.useQuery({
     companyId,
   });
+
   const [rowAction, setRowAction] = useState<
     DataTableRowAction<AdvertisementData> | undefined
   >(undefined);
 
+  console.log(data);
+
   const table = useDataTable({
     data: data || [],
-
+    loading: isLoading,
     columns: [
       {
         accessorKey: 'id',
@@ -100,6 +107,14 @@ export const AdvertisementTable: React.FC<AdvertisementTypes> = ({
         cell: ({ cell }) => {
           const date = cell.getValue<Date>();
           return date.toLocaleDateString();
+        },
+      },
+      {
+        accessorKey: 'campaignCounts',
+        header: 'Active Campaigns',
+        cell: ({ cell }) => {
+          const count = cell.getValue<AdvertisementCampaignCounts>();
+          return <AdvertisementCampaignCountsDisplay campaignCounts={count} />;
         },
       },
       {
