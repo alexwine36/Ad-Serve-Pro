@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "analyze": "turbo analyze",
+    "analyze:ci": "turbo analyze:ci",
     "build": "turbo build",
     "bump-deps": "npx npm-check-updates --deep -u -x react-day-picker && pnpm install",
     "clean": "pnpm clean:modules && pnpm clean:main",
@@ -49,5 +50,11 @@
   "engines": {
     "node": ">=18"
   },
-  "packageManager": "pnpm@9.15.2"
+  "packageManager": "pnpm@9.15.2",
+  "nextBundleAnalysis": {
+    "budget": 358400,
+    "budgetPercentIncreaseRed": 20,
+    "minimumChangeThreshold": 0,
+    "showDetails": true
+  }
 }

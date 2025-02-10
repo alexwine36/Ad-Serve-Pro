@@ -4,6 +4,10 @@
   "ui": "tui",
   "envMode": "loose",
   "tasks": {
+    "analyze:ci": {
+      "dependsOn": ["build"],
+      "outputs": [".next/analyze/**"]
+    },
     "build": {
       "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**", ".basehub/**", "dist/**"]
