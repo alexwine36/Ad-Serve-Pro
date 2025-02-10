@@ -1,7 +1,11 @@
 // import pilot from '../assets/pilot.png';
-import { Statistics } from './statistics';
+import { Statistics, type StatisticsProps } from './statistics';
 
-export const About = () => {
+type AboutProps = {
+  stats: StatisticsProps;
+};
+
+export const About: React.FC<AboutProps> = ({ stats }) => {
   return (
     <section id="about" className="container py-24 sm:py-32">
       <div className="rounded-lg border bg-muted/50 py-12">
@@ -28,7 +32,7 @@ export const About = () => {
               </p>
             </div>
 
-            <Statistics />
+            <Statistics {...stats} />
           </div>
         </div>
       </div>
