@@ -50,7 +50,7 @@ export const AdvertisementTable: React.FC<AdvertisementTypes> = ({
           const id = cell.getValue<string>();
           return (
             <Button variant={'ghost'} size={'icon'} asChild>
-              <Link href={`/companies/${id}`}>
+              <Link href={`/app/company/${companyId}/advertisement/${id}`}>
                 <Eye />
               </Link>
             </Button>

@@ -18,6 +18,9 @@ export const advertisementGetOneHandler = async ({
       id: input.id,
     },
   });
+  if (!res) {
+    return null;
+  }
   return AdvertisementData.parse(res);
 };
 
