@@ -12,13 +12,13 @@ type RootLayoutProperties = {
 const RootLayout = ({ children }: RootLayoutProperties) => (
   <html lang="en" className={fonts} suppressHydrationWarning>
     <head>
-      <link
+      {/* <link
         href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css"
         rel="stylesheet"
-      />
+      /> */}
       <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" />
     </head>
-    <body>
+    <body className="max-w-screen overflow-x-hidden">
       <Providers>{children}</Providers>
     </body>
   </html>
