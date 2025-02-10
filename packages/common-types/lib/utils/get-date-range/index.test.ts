@@ -7,7 +7,8 @@ describe('getDateRange', () => {
     const endDate = new Date();
     const startDate = subDays(endDate, 30);
     const result = getDateRange();
-    expect(result).toEqual({ startDate, endDate });
+    expect(result.endDate.getTime()).toBeCloseTo(endDate.getTime());
+    expect(result.startDate.getTime()).toBeCloseTo(startDate.getTime());
   });
 
   it('should return the correct date range for custom parameters', () => {
