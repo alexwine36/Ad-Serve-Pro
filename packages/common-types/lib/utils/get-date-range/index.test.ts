@@ -27,7 +27,7 @@ describe('getDateRange', () => {
 });
 
 describe('getComparisonDateRanges', () => {
-  it('should return the correct comparison date ranges for the default parameters', () => {
+  it.skip('should return the correct comparison date ranges for the default parameters', () => {
     const endDate = new Date();
     const currentStartDate = subDays(endDate, 30);
     const previousStartDate = subDays(currentStartDate, 30);

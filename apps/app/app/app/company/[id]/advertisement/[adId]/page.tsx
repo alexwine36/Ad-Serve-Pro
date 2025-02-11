@@ -2,6 +2,7 @@ import { Container } from '@repo/design-system/components/ui/container';
 import { redirect } from 'next/navigation';
 import { trpcCaller } from '../../../../../../utils/trpc-server';
 import { AdvertisementContent } from '../../../../advertisement/components/advertisement-content';
+import { AdvertisementDialog } from '../../../../advertisement/components/advertisement-dialog';
 import { Header } from '../../../../components/header';
 
 const AdvertisementPage = async ({
@@ -11,7 +12,7 @@ const AdvertisementPage = async ({
   const { adId, id } = await params;
   const advertisement = await caller.advertisement.getOne({ id: adId });
   const company = await caller.company.getOne({ unknown: id });
-  if (!advertisement) {
+  if (!advertisement || !company) {
     return redirect('/app/company');
   }
   return (
@@ -25,7 +26,13 @@ const AdvertisementPage = async ({
         ]}
       />
       <Container className="flex flex-col gap-4">
-        <AdvertisementContent {...advertisement} />
+        <AdvertisementContent {...advertisement}>
+          <AdvertisementDialog
+            companyId={company.id}
+            advertisement={advertisement}
+            showTrigger
+          />
+        </AdvertisementContent>
         {/* <AdvertisementCard advertisementId={advertisement.id} />
         <CampaignCard advertisementId={advertisement.id} />
         <CompanyContactCard advertisementId={advertisement.id} /> */}

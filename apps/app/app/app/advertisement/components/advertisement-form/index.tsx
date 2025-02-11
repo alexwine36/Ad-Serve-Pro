@@ -2,6 +2,7 @@
 
 import { trpc } from '@/utils/trpc';
 import {
+  ADVERTISEMENT_SIZES,
   type AdvertisementData,
   AdvertisementInput,
   getSchemaDefaults,
@@ -107,6 +108,17 @@ export const AdvertisementForm: React.FC<AdvertisementFormProps> = ({
             options={Object.values(AdType).map((status) => ({
               value: status,
               label: pipe(status, toLowerCase(), capitalize()),
+            }))}
+          />
+
+          <SelectInput
+            className="min-w-72 flex-auto"
+            label="Size"
+            control={form.control}
+            name="metadata.size"
+            options={Object.entries(ADVERTISEMENT_SIZES).map(([val, size]) => ({
+              label: size.name,
+              value: val,
             }))}
           />
 
