@@ -94,7 +94,7 @@ export const useDataTable = <TData, TValue>({
       ];
     }
     
-    return initColumns;
+    return initColumns.filter((col) => !col.remove);
   }, [initColumns, selectable]);
 
 

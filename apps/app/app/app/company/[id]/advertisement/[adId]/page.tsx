@@ -3,6 +3,8 @@ import { redirect } from 'next/navigation';
 import { trpcCaller } from '../../../../../../utils/trpc-server';
 import { AdvertisementContent } from '../../../../advertisement/components/advertisement-content';
 import { AdvertisementDialog } from '../../../../advertisement/components/advertisement-dialog';
+import { CampaignAdCard } from '../../../../campaign-ad/components/campaign-ad-card';
+import { CampaignTable } from '../../../../campaign/components/campaign-table';
 import { Header } from '../../../../components/header';
 
 const AdvertisementPage = async ({
@@ -33,6 +35,9 @@ const AdvertisementPage = async ({
             showTrigger
           />
         </AdvertisementContent>
+        <CampaignAdCard source="ADVERTISEMENT" advertisementId={adId} />
+        <CampaignTable companyId={company.id} />
+
         {/* <AdvertisementCard advertisementId={advertisement.id} />
         <CampaignCard advertisementId={advertisement.id} />
         <CompanyContactCard advertisementId={advertisement.id} /> */}

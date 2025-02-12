@@ -28,6 +28,7 @@ export const formatAdvertisementWithCampaignCount = async <
     where: {
       ads: {
         some: {
+          isActive: true,
           ad: {
             id: advertisment.id,
           },

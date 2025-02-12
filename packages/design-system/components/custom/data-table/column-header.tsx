@@ -44,6 +44,7 @@ export function DataTableColumnHeader<TData, TValue>({
         className={cn(
           'flex items-center space-x-2',
           column.columnDef.numeric && 'justify-end',
+          column.columnDef.center && 'justify-center',
           filterable && 'justify-between',
           className
         )}
@@ -59,7 +60,7 @@ export function DataTableColumnHeader<TData, TValue>({
                 <span>
                   {flexRender(column.columnDef.header, header.getContext())}
                 </span>
-                {/* eslint-disable-next-line no-nested-ternary -- It's fine for now */}
+
                 {column.getIsSorted() === 'desc' ? (
                   <ArrowDownIcon className="ml-2 h-4 w-4" />
                 ) : column.getIsSorted() === 'asc' ? (
@@ -118,7 +119,15 @@ export function DataTableColumnHeader<TData, TValue>({
   }
 
   return (
-    <div className={cn(className)}>
+    <div
+      className={cn(
+        'flex items-center space-x-2',
+        column.columnDef.numeric && 'justify-end',
+        column.columnDef.center && 'justify-center',
+        filterable && 'justify-between',
+        className
+      )}
+    >
       {flexRender(column.columnDef.header, header.getContext())}
     </div>
   );
