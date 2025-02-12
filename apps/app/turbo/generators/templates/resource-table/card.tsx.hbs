@@ -12,7 +12,7 @@ import { {{ capitalizedName }}Types } from '../{{ pathName }}-types';
 import React from 'react';
 
 
-export const {{ capitalizedName }}Card: React.FC<{{ capitalizedName }}Types> = () => {
+export const {{ capitalizedName }}Card: React.FC<{{ capitalizedName }}Types> = (props) => {
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -22,13 +22,13 @@ export const {{ capitalizedName }}Card: React.FC<{{ capitalizedName }}Types> = (
         <div className="flex items-center gap-2">
           {{ capitalizedName }}
           {{#if includeMethods.create}}
-          <{{ capitalizedName }}Dialog open={open} onOpenChange={setOpen} showTrigger />
+          <{{ capitalizedName }}Dialog open={open} onOpenChange={setOpen} showTrigger {...props} />
           {{/if}}
         </div>
       </CardTitle>
     </CardHeader>
     <CardContent>
-      <{{ capitalizedName }}Table />
+      <{{ capitalizedName }}Table {...props} />
     </CardContent>
   </Card>
   )

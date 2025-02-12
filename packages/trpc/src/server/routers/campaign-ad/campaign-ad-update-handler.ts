@@ -1,3 +1,7 @@
+import {
+  campaignAdSelectFields,
+  formatCampaignAdData,
+} from '@repo/common-types';
 import type { TRPCContextInnerWithSession } from '@repo/trpc/src/server/create-context';
 import type { CampaignAdUpdateSchema } from './campaign-ad-update-schema';
 
@@ -17,8 +21,9 @@ export const campaignAdUpdateHandler = async ({
       id: input.id,
     },
     data: { ...input },
+    ...campaignAdSelectFields,
   });
-  return res;
+  return formatCampaignAdData(res);
 };
 
 export type CampaignAdUpdateResponse = Awaited<

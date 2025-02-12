@@ -12,7 +12,7 @@
     "db:push": "turbo run db:push",
     "db:seed": "turbo run db:seed",
     "db:up": "docker compose up",
-    "dev": "turbo dev",
+    "dev": "infisical run --env=dev -- turbo dev",
     "format": "ultracite format",
     "gen:resource": "./scripts/generate-resource.sh",
     "lint": "ultracite lint",

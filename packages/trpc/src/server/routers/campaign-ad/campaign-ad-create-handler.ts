@@ -1,4 +1,7 @@
-import { CampaignAdData } from '@repo/common-types';
+import {
+  campaignAdSelectFields,
+  formatCampaignAdData,
+} from '@repo/common-types';
 import type { TRPCContextInnerWithSession } from '@repo/trpc/src/server/create-context';
 import type { CampaignAdCreateSchema } from './campaign-ad-create-schema';
 
@@ -15,8 +18,9 @@ export const campaignAdCreateHandler = async ({
 
   const res = await prisma.campaignAd.create({
     data: { ...input },
+    ...campaignAdSelectFields,
   });
-  return CampaignAdData.parse(res);
+  return formatCampaignAdData(res);
 };
 
 export type CampaignAdCreateResponse = Awaited<

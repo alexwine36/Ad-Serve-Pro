@@ -27,24 +27,41 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
       const targetPath = `${modData?.turbo.paths.workspace}/lib`;
       const templatePath = `${modData?.turbo.paths.workspace}/turbo/generators/templates`;
       const filePath = pipe(modData.name, toKebabCase());
+      const propertyName = pipe(modData.name, toCamelCase());
       const className = pipe(modData.name, toCamelCase(), capitalize());
       const data = {
         ...modData,
+        propertyName,
         filePath,
         className,
       };
       const actions: PlopTypes.ActionType[] = [];
 
+      // Common Types
       actions.push({
         type: 'add',
         templateFile: `${templatePath}/schema.ts.hbs`,
         path: `${targetPath}/${filePath}.ts`,
       });
+
       actions.push({
         type: 'append',
         template: `export * from './{{filePath}}';`,
         pattern: ';',
         path: `${targetPath}/index.ts`,
+      });
+
+      // Formatters
+      actions.push({
+        type: 'add',
+        templateFile: `${templatePath}/formatter.ts.hbs`,
+        path: `${targetPath}/formatters/${filePath}/index.ts`,
+      });
+      actions.push({
+        type: 'append',
+        template: `export * from './{{filePath}}';`,
+        pattern: ';',
+        path: `${targetPath}/formatters/index.ts`,
       });
 
       return actions.map((action) => {

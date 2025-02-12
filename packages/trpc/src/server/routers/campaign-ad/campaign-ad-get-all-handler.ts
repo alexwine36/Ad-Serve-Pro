@@ -1,6 +1,8 @@
-import { CampaignAdData } from '@repo/common-types';
+import {
+  campaignAdSelectFields,
+  formatCampaignAdData,
+} from '@repo/common-types';
 import type { TRPCContextInnerWithSession } from '@repo/trpc/src/server/create-context';
-import { z } from 'zod';
 import type { CampaignAdGetAllSchema } from './campaign-ad-get-all-schema';
 
 type CampaignAdGetAllOptions = {
@@ -54,12 +56,9 @@ export const campaignAdGetAllHandler = async ({
         id: input.advertisementId,
       },
     },
-    include: {
-      ad: true,
-      campaign: true,
-    },
+    ...campaignAdSelectFields,
   });
-  return z.array(CampaignAdData).parse(res);
+  return res.map(formatCampaignAdData);
 };
 
 export type CampaignAdGetAllResponse = Awaited<

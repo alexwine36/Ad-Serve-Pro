@@ -1,5 +1,5 @@
-import path from 'node:path';
 import type { PlopTypes } from '@turbo/gen';
+import path from 'node:path';
 // @ts-ignore
 import directoryPrompt from 'inquirer-directory';
 import { capitalize, pipe, toCamelCase, toKebabCase } from 'remeda';
@@ -191,26 +191,45 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
     //   .replace(modData?.turbo.paths.workspace, '@')
     //   .replace('.ts', '');
 
+    const getSchemaContent = () => {
+      switch (rawData.name) {
+        case 'update':
+          return `${handleBaseType}UpdateInput`;
+        case 'create':
+          return `${handleBaseType}Input`;
+        default:
+          return undefined;
+      }
+    };
+
     const getHandlerContent = () => {
       switch (rawData.name) {
         case 'get all':
-          return `await prisma.${prismaTable}.findMany();`;
+          return `await prisma.${prismaTable}.findMany({
+          where: {
+            ...input
+          },
+          ...${prismaTable}SelectFields
+          });`;
         case 'get one':
           return `await prisma.${prismaTable}.findFirst({
           where: {
             id: input.id
-          }
+          },
+          ...${prismaTable}SelectFields
         });`;
         case 'create':
           return `await prisma.${prismaTable}.create({
-          data: {...input}
+          data: {...input},
+          ...${prismaTable}SelectFields
         });`;
         case 'update':
           return `await prisma.${prismaTable}.update({
           where: {
             id: input.id
           },
-          data: {...input}
+          data: {...input},
+          ...${prismaTable}SelectFields
         });`;
         case 'delete':
           return `await prisma.${prismaTable}.delete({
@@ -222,21 +241,20 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
           return '[];';
       }
     };
-    const handleDataType = `${pipe(
-      rawData.router,
-      toCamelCase(),
-      capitalize()
-    )}Data`;
+
+    const handleBaseType = pipe(rawData.router, toCamelCase(), capitalize());
+
+    const handleDataType = `${handleBaseType}Data`;
     const getHandlerReturnType = () => {
       switch (rawData.name) {
         case 'get all':
-          return `z.array(${handleDataType}).parse(res)`;
+          return `res.map(format${handleDataType})`;
         case 'get one':
-          return `${handleDataType}.parse(res)`;
+          return `format${handleDataType}(res)`;
         case 'create':
-          return `${handleDataType}.parse(res)`;
+          return `format${handleDataType}(res)`;
         case 'update':
-          return `${handleDataType}.parse(res)`;
+          return `format${handleDataType}(res)`;
 
         default:
           return '';
@@ -252,6 +270,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
       // routerPath,
       handlerContent: getHandlerContent(),
       handlerReturnType: getHandlerReturnType(),
+      schemaContent: getSchemaContent(),
       handleDataType,
       prismaTable,
       baseHandlerFile,

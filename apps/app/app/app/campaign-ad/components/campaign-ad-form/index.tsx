@@ -7,6 +7,7 @@ import {
   getSchemaDefaults,
 } from '@repo/common-types';
 import {
+  CheckboxInput,
   Form,
   FormInput,
   zodResolver,
@@ -79,36 +80,18 @@ export const CampaignAdForm: React.FC<CampaignAdFormProps> = ({
         <div className="flex w-full flex-wrap gap-4">
           <FormInput
             className="min-w-72 flex-auto"
-            label="Name"
+            label="Weight"
             control={form.control}
-            name="name"
+            name="weight"
           />
-          <FormInput
+          <CheckboxInput
             className="min-w-72 flex-auto"
-            label="Slug"
+            label="Active"
             control={form.control}
-            name="slug"
-            prefix={'/'}
-          />
-          <FormInput
-            className="min-w-72 flex-auto"
-            label="Website"
-            control={form.control}
-            name="website"
-          />
-          <FormInput
-            className="min-w-72 flex-auto"
-            label="Image"
-            control={form.control}
-            name="image"
+            name="isActive"
           />
         </div>
-        <FormInput
-          type="textarea"
-          label="Description"
-          control={form.control}
-          name="description"
-        />
+
         <div className="flex justify-end">
           <Button disabled={form.formState.isSubmitting} type="submit">
             Save

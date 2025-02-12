@@ -1,7 +1,15 @@
 import { z } from "zod";
+{{#if schemaContent}}
+import { {{ schemaContent }} } from "@repo/common-types";
+{{/if}}
 
-export const {{ schemaName }} = z.object({
-    // Define your schema here
+export const {{ schemaName }} =
+{{#if schemaContent}}
+{{ schemaContent }};
+{{else}}
+z.object({
+// Define your schema here
 })
+{{/if}}
 
 export type {{ schemaName }} = z.infer<typeof {{ schemaName }}>;

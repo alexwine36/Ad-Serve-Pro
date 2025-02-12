@@ -1,5 +1,5 @@
-import path from 'node:path';
 import type { PlopTypes } from '@turbo/gen';
+import path from 'node:path';
 // @ts-ignore
 import directoryPrompt from 'inquirer-directory';
 import { capitalize, pipe, toCamelCase, toKebabCase } from 'remeda';
@@ -114,6 +114,12 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         type: 'add',
         templateFile: `${templateBasePath}/table.tsx.hbs`,
         path: `${basePath}/components/${pathName}-table/index.tsx`,
+      });
+
+      actions.push({
+        type: 'add',
+        templateFile: `${templateBasePath}/columns.tsx.hbs`,
+        path: `${basePath}/components/${pathName}-table/columns.tsx`,
       });
 
       actions.push({
