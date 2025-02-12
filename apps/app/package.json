@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "analyze": "ANALYZE=true pnpm build",
-    "analyze:ci": "nextjs-bundle-analysis report",
+    "analyze:ci": "pnpm i && nextjs-bundle-analysis report",
     "build": "next build",
     "clean": "git clean -xdf .cache .next .turbo dist node_modules",
     "dev": "next dev -p 3000 --turbopack",
