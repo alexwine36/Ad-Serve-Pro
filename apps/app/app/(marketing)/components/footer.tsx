@@ -1,7 +1,8 @@
+import { Text } from '@repo/design-system/components/custom/typography';
+import packageDef from '../../../package.json';
 import { LogoIcon } from '../../../src/components/logo-icon';
 import { COMPANY_NAME } from '../../../utils/constants';
 import { MarketingLinks } from '../../../utils/constants/marketing-links';
-
 export const Footer = () => {
   return (
     <footer id="footer">
@@ -17,6 +18,7 @@ export const Footer = () => {
             <LogoIcon />
             {COMPANY_NAME}
           </a>
+          <Text variant={'muted'}>Version: {packageDef.version}</Text>
         </div>
         <div className="flex w-full flex-wrap justify-between">
           {MarketingLinks.footerLinks.map(({ label, items }) => {

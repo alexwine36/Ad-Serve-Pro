@@ -14,7 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@repo/design-system/components/ui/dropdown-menu';
-import { cn } from '@repo/design-system/lib/utils';
+import { cn, toSentenceCase } from '@repo/design-system/lib/utils';
 import { flexRender } from '@tanstack/react-table';
 import type { Column, Header } from './types';
 
@@ -36,14 +36,18 @@ export function DataTableColumnHeader<TData, TValue>({
     enableHiding: hideable,
     enableColumnFilter: filterable,
   } = column.columnDef;
-  const facets = column.getFacetedUniqueValues();
+  let facets = new Map<unknown, number>();
+  if (column.getCanFilter()) {
+    facets = column?.getFacetedUniqueValues();
+  }
 
   if ((hideable || sortable || filterable) && column.getCanSort()) {
     return (
       <div
         className={cn(
           'flex items-center space-x-2',
-          column.columnDef.numeric && 'justify-end',
+          column.columnDef.meta?.numeric && 'justify-end',
+          column.columnDef.center && 'justify-center',
           filterable && 'justify-between',
           className
         )}
@@ -59,7 +63,7 @@ export function DataTableColumnHeader<TData, TValue>({
                 <span>
                   {flexRender(column.columnDef.header, header.getContext())}
                 </span>
-                {/* eslint-disable-next-line no-nested-ternary -- It's fine for now */}
+
                 {column.getIsSorted() === 'desc' ? (
                   <ArrowDownIcon className="ml-2 h-4 w-4" />
                 ) : column.getIsSorted() === 'asc' ? (
@@ -110,7 +114,11 @@ export function DataTableColumnHeader<TData, TValue>({
         {filterable ? (
           <Filter
             column={column}
-            facets={Array.from(facets, ([name, value]) => ({ name, value }))}
+            facets={Array.from(facets, ([value, count]) => ({
+              value,
+              label: toSentenceCase(String(value)),
+              count,
+            }))}
           />
         ) : null}
       </div>
@@ -118,7 +126,15 @@ export function DataTableColumnHeader<TData, TValue>({
   }
 
   return (
-    <div className={cn(className)}>
+    <div
+      className={cn(
+        'flex items-center space-x-2',
+        column.columnDef.meta?.numeric && 'justify-end',
+        column.columnDef.center && 'justify-center',
+        filterable && 'justify-between',
+        className
+      )}
+    >
       {flexRender(column.columnDef.header, header.getContext())}
     </div>
   );
@@ -129,31 +145,32 @@ function Filter<TData, TValue>({
   facets,
 }: {
   facets: {
-    name: string;
-    value: number;
+    label: string;
+    value: unknown;
+    count: number;
   }[];
   column: Column<TData, TValue>;
 }) {
   const columnFilterValue = column.getFilterValue();
 
-  const isChecked = (name: string) => {
+  const isChecked = (value: unknown) => {
     let checked = false;
     if (Array.isArray(columnFilterValue)) {
-      checked = columnFilterValue.includes(name);
+      checked = columnFilterValue.includes(value);
     }
 
     return checked;
   };
 
-  const handleCheck = (name: string) => {
+  const handleCheck = (value: unknown) => {
     if (Array.isArray(columnFilterValue)) {
-      if (columnFilterValue.includes(name)) {
-        column.setFilterValue(columnFilterValue.filter((n) => n !== name));
+      if (columnFilterValue.includes(value)) {
+        column.setFilterValue(columnFilterValue.filter((n) => n !== value));
       } else {
-        column.setFilterValue([...columnFilterValue, name]);
+        column.setFilterValue([...columnFilterValue, value]);
       }
     } else {
-      column.setFilterValue([name]);
+      column.setFilterValue([value]);
     }
   };
   return (
@@ -171,15 +188,15 @@ function Filter<TData, TValue>({
         {facets.map((facet) => (
           <DropdownMenuCheckboxItem
             // checked={showStatusBar}
-            key={facet.name}
-            checked={isChecked(facet.name)}
+            key={facet.label}
+            checked={isChecked(facet.value)}
             // onCheckedChange={setShowStatusBar}
             onCheckedChange={() => {
               // column.setFilterValue([facet.value]);
-              handleCheck(facet.name);
+              handleCheck(facet.value);
             }}
           >
-            {facet.name}
+            {facet.label}
           </DropdownMenuCheckboxItem>
 
           // <DropdownMenuItem className="flex space-x-2" key={facet.value}>

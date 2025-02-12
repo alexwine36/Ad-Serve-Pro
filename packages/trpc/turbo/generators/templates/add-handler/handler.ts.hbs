@@ -2,7 +2,9 @@ import type { TRPCContextInnerWithSession } from '@repo/trpc/src/server/create-c
 import type { {{ schemaName }} } from './{{ baseHandlerFile }}-schema'
 import { z } from 'zod';
 {{#if handlerReturnType}}
-import { {{ handleDataType }} } from "@repo/common-types";
+import { format{{ handleDataType }},
+{{ prismaTable }}SelectFields
+ } from "@repo/common-types";
 {{/if}}
 
 type {{ handlerOptions }} = {

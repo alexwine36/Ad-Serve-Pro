@@ -17,11 +17,13 @@ import Link from 'next/link';
 import { trpc } from '@/utils/trpc';
 import { {{ capitalizedName }}Dialog } from '../{{ pathName }}-dialog';
 import type { DataTableRowAction } from '@repo/design-system/components/custom/data-table';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import type { {{ dataType }} } from '@repo/common-types';
 import { {{ capitalizedName }}Types } from '../{{ pathName }}-types';
+import { getColumns } from './columns';
 
-export const {{ capitalizedName }}Table: React.FC<{{ capitalizedName }}Types> = () => {
+
+export const {{ capitalizedName }}Table: React.FC<{{ capitalizedName }}Types> = (props) => {
   const { data, isLoading } = trpc.{{ propertyName }}.getAll.useQuery({});
   const [rowAction, setRowAction] = useState< DataTableRowAction<{{ dataType }}> | undefined
     >(undefined);
@@ -39,114 +41,31 @@ export const {{ capitalizedName }}Table: React.FC<{{ capitalizedName }}Types> = 
     };
     {{/if}}
 
-
+    const columns = useMemo(() => getColumns({ setRowAction }), []);
     const table = useDataTable({
     data: data || [],
     loading: isLoading,
-    columns: [
-    {
-    accessorKey: 'id',
-    header: '',
-    size: 40,
-    cell: ({ cell }) => {
-    const id = cell.getValue<string>();
-      return (
-      <Button variant={'ghost'} size={'icon'} asChild>
-        <Link href={`/companies/${id}`}>
-        <Eye />
-        </Link>
-      </Button>
-      );
-      },
-      },
-      {
-      accessorKey: 'name',
-      header: 'Name',
-      enableSorting: true,
-      },
-      {
-      accessorKey: 'slug',
-      header: 'Slug',
-      cell: ({ cell }) => {
-      const slug = cell.getValue<string>();
-        return <code>/{slug}</code>;
-        },
-        },
-        {
-        accessorKey: 'description',
-        header: 'Description',
-        },
-        {
-        accessorKey: 'website',
-        header: 'Website',
-        },
+    columns
+    });
 
-        {
-        accessorKey: 'type',
-        header: 'Type',
-        },
-        {
-        accessorKey: 'createdAt',
-        enableSorting: true,
-        header: 'Created At',
-        cell: ({ cell }) => {
-        const date = cell.getValue<Date>();
-          return date.toLocaleDateString();
-          },
-          },
-          {
-          id: 'actions',
-          header: '',
-          size: 40,
-          cell: ({ row }) => {
-
-          return (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button aria-label="Open menu" variant="ghost" className="flex size-8 p-0 data-[state=open]:bg-muted">
-                <Ellipsis className="size-4" aria-hidden="true" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-40">
-              {{#if includeMethods.update}}
-              <DropdownMenuItem onSelect={()=> setRowAction({ row, type: 'update' })}
-                >
-                Edit
-              </DropdownMenuItem>
-              {{/if}}
-              {{#if includeMethods.delete}}
-              <DropdownMenuItem onSelect={()=> setRowAction({ row, type: 'delete' })}
-                >
-                Delete
-
-              </DropdownMenuItem>
-
-              {{/if}}
-            </DropdownMenuContent>
-          </DropdownMenu>
-          );
-          },
-          },
-          ],
-          });
-
-          return (
-          <>
-            <DataTable {...table} />
-            <{{ capitalizedName }}Dialog {{ propertyName }}={rowAction?.row?.original} open={rowAction?.type==='update'
-              } onOpenChange={(isOpen)=> {
-              if (!isOpen) {
-              setRowAction(undefined);
-              }
-              }}
-              />
-              {{#if includeMethods.delete}}
-              <DeleteDialog label="{{ propertyName }}" handleDelete={handleDelete} data={rowAction?.row?.original ?
-                [rowAction.row.original] : []} open={rowAction?.type==='delete' } onOpenChange={()=>
-                setRowAction(undefined)}
-                onSuccess={() => rowAction?.row.toggleSelected(false)}
-                />
-                {{/if}}
-          </>
-          );
-          };
+    return (
+    <>
+      <DataTable {...table} />
+      <{{ capitalizedName }}Dialog {{ propertyName }}={rowAction?.row?.original} open={rowAction?.type==='update' }
+        onOpenChange={(isOpen)=> {
+        if (!isOpen) {
+        setRowAction(undefined);
+        }
+        }}
+        {...props}
+        />
+        {{#if includeMethods.delete}}
+        <DeleteDialog label="{{ propertyName }}" handleDelete={handleDelete} data={rowAction?.row?.original ?
+          [rowAction.row.original] : []} open={rowAction?.type==='delete' } onOpenChange={()=>
+          setRowAction(undefined)}
+          onSuccess={() => rowAction?.row.toggleSelected(false)}
+          />
+          {{/if}}
+    </>
+    );
+    };

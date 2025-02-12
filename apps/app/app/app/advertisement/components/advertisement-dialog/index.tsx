@@ -33,7 +33,7 @@ export const AdvertisementDialog: React.FC<AdvertisementDialogProps> = ({
     <Dialog open={open} onOpenChange={onOpenChange}>
       {showTrigger ? (
         <DialogTrigger asChild>
-          <Button variant="outline" size="icon">
+          <Button variant="ghost" size="icon">
             {advertisement ? <Edit /> : <PlusIcon />}
           </Button>
         </DialogTrigger>

@@ -26,7 +26,8 @@ extends React.ComponentPropsWithoutRef<typeof Dialog>, {{ capitalizedName }}Type
     {{ propertyName }},
     open,
     onOpenChange,
-    showTrigger
+    showTrigger,
+    ...props
     }) => {
 
     return (
@@ -50,7 +51,7 @@ extends React.ComponentPropsWithoutRef<typeof Dialog>, {{ capitalizedName }}Type
           </DialogDescription>
         </DialogHeader>
 
-        <{{ capitalizedName }}Form {{ propertyName }}={ {{ propertyName }} } onSuccess={()=> {
+        <{{ capitalizedName }}Form {{ propertyName }}={ {{ propertyName }} } {...props} onSuccess={()=> {
           onOpenChange?.(false);
           }}
           />

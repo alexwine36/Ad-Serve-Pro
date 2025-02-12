@@ -1,4 +1,5 @@
 export * from './ad-analytics';
+export * from './campaign-ad';
 export * from './advertisement';
 export * from './campaign';
 export * from './client';

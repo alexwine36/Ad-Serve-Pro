@@ -129,8 +129,9 @@ export function DataTableToolbar<TData, TValue>({
       </div>
       <div className="flex items-center gap-2">
         {children}
+
         <DataTableViewOptions
-          hidden={displayIfEmpty && !viewColumns.length}
+          hidden={!displayIfEmpty && !viewColumns.length}
           viewColumns={viewColumns}
         />
       </div>

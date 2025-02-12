@@ -5,12 +5,15 @@ import type {
   Row,
   Table,
 } from '@tanstack/react-table';
+import { z } from 'zod';
 import type { DataTableConfig } from './config';
 
-export type ColumnDef<TData, TValue> = OrigColumnDef<TData, TValue> & {
+export type ColumnDef<TData> = OrigColumnDef<TData> & {
   //   sortable?: boolean;
-  numeric?: boolean;
+  // numeric?: boolean;
+  center?: boolean;
   hidden?: boolean;
+  remove?: boolean;
 
   //   hideable?: boolean;
 };
@@ -19,7 +22,7 @@ export type Column<TData, TValue> = Omit<
   OrigColumn<TData, TValue>,
   'columnDef'
 > & {
-  columnDef: ColumnDef<TData, TValue>;
+  columnDef: ColumnDef<TData>;
 };
 
 export type Header<TData, TValue> = Omit<
@@ -30,7 +33,7 @@ export type Header<TData, TValue> = Omit<
 };
 
 export interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
+  columns: ColumnDef<TData>[];
   data: TData[];
   enablePagination?: boolean;
   selectable?: boolean;
@@ -66,9 +69,13 @@ export type DataTableComponentProps<TData, TValue> = Omit<
   'selectedRows' | 'hideToolbar' | 'displayIfEmpty'
 >;
 
+export const DataTableRowActionType = z.enum(['update', 'delete']);
+
+export type DataTableRowActionType = z.infer<typeof DataTableRowActionType>;
+
 export type DataTableRowAction<TData> = {
   row: Row<TData>;
-  type: 'update' | 'delete';
+  type: DataTableRowActionType;
 };
 
 export type StringKeyOf<TData> = Extract<keyof TData, string>;

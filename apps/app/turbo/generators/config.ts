@@ -118,6 +118,12 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
 
       actions.push({
         type: 'add',
+        templateFile: `${templateBasePath}/columns.tsx.hbs`,
+        path: `${basePath}/components/${pathName}-table/columns.tsx`,
+      });
+
+      actions.push({
+        type: 'add',
         templateFile: `${templateBasePath}/types.ts.hbs`,
         path: `${basePath}/components/${pathName}-types/index.ts`,
       });

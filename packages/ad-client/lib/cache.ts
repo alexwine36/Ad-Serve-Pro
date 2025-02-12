@@ -1,7 +1,7 @@
 export class CacheEntry<T> {
   data?: T;
   timestamp?: number;
-  cacheTimeout: number = 24 * 60 * 60 * 1000;
+  cacheTimeout: number = 24 * 60 * 60 * 1000; // 24 hours
   key: string;
   getData: () => Promise<T>;
 

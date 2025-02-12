@@ -1,0 +1,49 @@
+import { Container } from '@repo/design-system/components/ui/container';
+import { redirect } from 'next/navigation';
+import { trpcCaller } from '../../../../../../utils/trpc-server';
+import { AdvertisementContent } from '../../../../advertisement/components/advertisement-content';
+import { AdvertisementDialog } from '../../../../advertisement/components/advertisement-dialog';
+import { CampaignAdCard } from '../../../../campaign-ad/components/campaign-ad-card';
+import { CampaignTable } from '../../../../campaign/components/campaign-table';
+import { Header } from '../../../../components/header';
+
+const AdvertisementPage = async ({
+  params,
+}: { params: Promise<{ adId: string; id: string }> }) => {
+  const caller = await trpcCaller();
+  const { adId, id } = await params;
+  const advertisement = await caller.advertisement.getOne({ id: adId });
+  const company = await caller.company.getOne({ unknown: id });
+  if (!advertisement || !company) {
+    return redirect('/app/company');
+  }
+  return (
+    <>
+      <Header
+        page={`${advertisement?.name} Advertisement`}
+        pages={[
+          { label: 'Companies', href: '/app/company' },
+          { label: company?.name || '', href: `/app/company/${id}` },
+          //   { label: 'Advertisements', href: `/app/company/${id}/advertisement` },
+        ]}
+      />
+      <Container className="flex flex-col gap-4">
+        <AdvertisementContent {...advertisement}>
+          <AdvertisementDialog
+            companyId={company.id}
+            advertisement={advertisement}
+            showTrigger
+          />
+        </AdvertisementContent>
+        <CampaignAdCard source="ADVERTISEMENT" advertisementId={adId} />
+        <CampaignTable companyId={company.id} />
+
+        {/* <AdvertisementCard advertisementId={advertisement.id} />
+        <CampaignCard advertisementId={advertisement.id} />
+        <CompanyContactCard advertisementId={advertisement.id} /> */}
+      </Container>
+    </>
+  );
+};
+
+export default AdvertisementPage;
