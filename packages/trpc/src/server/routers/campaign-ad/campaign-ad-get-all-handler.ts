@@ -2,6 +2,7 @@ import {
   campaignAdSelectFields,
   formatCampaignAdData,
 } from '@repo/common-types';
+import type { Prisma } from '@repo/database';
 import type { TRPCContextInnerWithSession } from '@repo/trpc/src/server/create-context';
 import type { CampaignAdGetAllSchema } from './campaign-ad-get-all-schema';
 
@@ -15,6 +16,8 @@ export const campaignAdGetAllHandler = async ({
   input,
 }: CampaignAdGetAllOptions) => {
   const { prisma, session } = ctx;
+
+  let campaignAdData: Prisma.CampaignAdCreateManyInput[] = [];
 
   if (input.source === 'ADVERTISEMENT') {
     const ad = await prisma.advertisement.findFirst({
@@ -35,16 +38,48 @@ export const campaignAdGetAllHandler = async ({
         },
       },
     });
-    const _createCampaignAds = await prisma.campaignAd.createMany({
-      data: campaigns.map((campaign) => ({
-        adId: ad.id,
-        campaignId: campaign.id,
-        isActive: false,
-        weight: 1,
-      })),
+    campaignAdData = campaigns.map((campaign) => ({
+      adId: ad.id,
+      campaignId: campaign.id,
+      isActive: false,
+      weight: 1,
+    }));
+    // console.log(campaigns);
+  }
+
+  if (input.source === 'CAMPAIGN') {
+    const campaign = await prisma.campaign.findFirst({
+      where: {
+        id: input.campaignId,
+      },
+    });
+    if (!campaign) {
+      throw new Error('Campaign not found');
+    }
+    const advertisements = await prisma.advertisement.findMany({
+      where: {
+        companyId: campaign.companyId,
+        campaigns: {
+          none: {
+            campaignId: campaign.id,
+          },
+        },
+      },
+    });
+    campaignAdData = advertisements.map((ad) => ({
+      adId: ad.id,
+      campaignId: campaign.id,
+      isActive: false,
+      weight: 1,
+    }));
+  }
+
+  if (campaignAdData.length > 0) {
+    console.log('TO BE ADDED', campaignAdData.length);
+    await prisma.campaignAd.createMany({
+      data: campaignAdData,
       skipDuplicates: true,
     });
-    // console.log(campaigns);
   }
 
   const res = await prisma.campaignAd.findMany({

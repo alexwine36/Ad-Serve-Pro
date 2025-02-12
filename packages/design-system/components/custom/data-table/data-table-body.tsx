@@ -6,6 +6,7 @@ import {
   TableCell,
   TableRow,
 } from '@repo/design-system/components/ui/table';
+import { cn } from '../../../lib/utils';
 import { Skeleton } from '../../ui/skeleton';
 
 export const DataTableBody = <TData, TValue>({
@@ -42,6 +43,9 @@ export const DataTableBody = <TData, TValue>({
             {row.getVisibleCells().map((cell) => (
               <TableCell
                 key={cell.id}
+                className={cn({
+                  'text-right': cell.column.columnDef.meta?.numeric,
+                })}
                 style={{
                   maxWidth: cell.column.columnDef.maxSize,
                 }}

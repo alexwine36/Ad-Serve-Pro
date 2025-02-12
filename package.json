@@ -6,6 +6,7 @@
     "analyze:ci": "turbo analyze:ci",
     "build": "turbo build",
     "bump-deps": "npx npm-check-updates --deep -u -x react-day-picker && pnpm install",
+    "change": "pnpm changeset",
     "clean": "pnpm clean:modules && pnpm clean:main",
     "clean:main": "git clean -xdf .turbo node_modules",
     "clean:modules": "turbo clean",

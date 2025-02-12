@@ -6,6 +6,7 @@ import { Checkbox } from "@repo/design-system/components/ui/checkbox";
 import {
   getCoreRowModel,
   getFacetedRowModel,
+  getFacetedUniqueValues,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
@@ -13,9 +14,9 @@ import {
   type ColumnFiltersState,
   type RowSelectionState,
   type SortingState,
-  type VisibilityState,
+  type VisibilityState
 } from '@tanstack/react-table';
-import { getFacetedUniqueValues } from "../components/custom/data-table/utils/get-faceted-values";
+// import { getFacetedUniqueValues } from "../components/custom/data-table/utils/get-faceted-values";
 
 export const useDataTable = <TData, TValue>({
   columns: initColumns,

@@ -10,7 +10,7 @@ import type { DataTableConfig } from './config';
 
 export type ColumnDef<TData> = OrigColumnDef<TData> & {
   //   sortable?: boolean;
-  numeric?: boolean;
+  // numeric?: boolean;
   center?: boolean;
   hidden?: boolean;
   remove?: boolean;

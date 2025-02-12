@@ -5,12 +5,8 @@ declare module '@tanstack/react-table' {
     headerClassName?: string;
     cellClassName?: string;
     label?: string;
+    numeric?: boolean;
   }
-
-  // interface FilterFns {
-  //   inDateRange?: FilterFn<any>;
-  //   arrSome?: FilterFn<any>;
-  // }
 
   // https://github.com/TanStack/table/discussions/4554
   interface ColumnFiltersOptions<TData extends RowData> {

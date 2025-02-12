@@ -19,7 +19,7 @@ export const CampaignAdCard: React.FC<CampaignAdTypes> = (props) => {
       <CardHeader>
         <CardTitle>
           <div className="flex items-center gap-2">
-            {props.source === 'ADVERTISEMENT' ? 'Advertisements' : 'Campaigns'}
+            {props.source === 'ADVERTISEMENT' ? 'Campaigns' : 'Advertisements'}
             <CampaignAdDialog
               open={open}
               onOpenChange={setOpen}
