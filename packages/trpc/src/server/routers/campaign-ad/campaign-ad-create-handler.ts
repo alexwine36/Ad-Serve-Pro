@@ -1,21 +1,24 @@
+import { CampaignAdData } from '@repo/common-types';
 import type { TRPCContextInnerWithSession } from '@repo/trpc/src/server/create-context';
-import type { CampaignAdCreateSchema } from './campaign-ad-create-schema'
-import { z } from 'zod';
-import { CampaignAdData } from "@repo/common-types";
+import type { CampaignAdCreateSchema } from './campaign-ad-create-schema';
 
 type CampaignAdCreateOptions = {
-    ctx: TRPCContextInnerWithSession;
-    input: CampaignAdCreateSchema;
-}
+  ctx: TRPCContextInnerWithSession;
+  input: CampaignAdCreateSchema;
+};
 
-export const campaignAdCreateHandler = async ({ ctx, input }: CampaignAdCreateOptions) => {
+export const campaignAdCreateHandler = async ({
+  ctx,
+  input,
+}: CampaignAdCreateOptions) => {
+  const { prisma, session } = ctx;
 
-    const { prisma, session } = ctx;
-    
-    const res = await prisma.campaignAd.create({
-          data: {...input}
-        });
-    return CampaignAdData.parse(res);
-}
+  const res = await prisma.campaignAd.create({
+    data: { ...input },
+  });
+  return CampaignAdData.parse(res);
+};
 
-export type CampaignAdCreateResponse = Awaited<ReturnType<typeof campaignAdCreateHandler>>;
+export type CampaignAdCreateResponse = Awaited<
+  ReturnType<typeof campaignAdCreateHandler>
+>;
