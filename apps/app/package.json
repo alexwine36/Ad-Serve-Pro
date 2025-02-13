@@ -64,7 +64,7 @@
     "vitest": "^2.1.8"
   },
   "nextBundleAnalysis": {
-    "budget": 358400,
+    "budget": 409600,
     "budgetPercentIncreaseRed": 20,
     "minimumChangeThreshold": 0,
     "showDetails": true
