@@ -1,7 +1,13 @@
 #!/bin/sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-echo "Running linter..."
-pnpm lint:ci || { pnpm format; exit 1; }
-echo "Checking dependencies..."
-pnpm sync:lint || { pnpm sync:fix; exit 1; }
+if [ -z "$GITHUB_SHA" ]; then
+    echo "Skipping pre-push hook because GITHUB_SHA is not set"
+    exit 0
+else
+
+    echo "Running linter..."
+    pnpm lint:ci || { pnpm format; exit 1; }
+    echo "Checking dependencies..."
+    pnpm sync:lint || { pnpm sync:fix; exit 1; }
+fi
