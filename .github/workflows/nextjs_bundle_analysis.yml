@@ -22,6 +22,8 @@ defaults:
     # change this if your nextjs app does not live at the root of the repo
     working-directory: ./apps/app
 
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
 permissions:
   contents: read # for checkout repository
   actions: read # for fetching base branch bundle stats
@@ -64,7 +66,11 @@ jobs:
       # This step pulls the raw bundle stats for the current bundle
       - name: Analyze bundle
         working-directory: ./
-        run: pnpm analyze:ci
+        run: | 
+          pnpm build
+          pnpm install
+          pnpm analyze:ci
+
 
       - name: Upload bundle
         uses: actions/upload-artifact@v4
