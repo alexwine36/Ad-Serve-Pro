@@ -125,6 +125,7 @@ model Organization {
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
   pageAnalytics PageAnalytics[]
+  adAnalytics   AdAnalytics[]
 }
 
 enum MemberRole {
@@ -251,6 +252,8 @@ model CampaignAd {
   weight     Int           @default(1) // For A/B testing
   isActive   Boolean       @default(true)
 
+  adAnalytics AdAnalytics[]
+
   @@unique([campaignId, adId])
 }
 
@@ -278,8 +281,12 @@ model AdAnalytics {
   type      AnalyticsType
   client    Client        @relation(fields: [clientId], references: [id])
   clientId  String
-  ad        Advertisement @relation(fields: [adId], references: [id])
-  adId      String
+
+  campaignAd   CampaignAd @relation(fields: [campaignAdId], references: [id])
+  campaignAdId String
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
 
   // Location data
   country String?
@@ -297,7 +304,9 @@ model AdAnalytics {
   referrer  String?
 
   // Custom data
-  metadata Json?
+  metadata        Json?
+  Advertisement   Advertisement? @relation(fields: [advertisementId], references: [id])
+  advertisementId String?
 }
 
 model PageAnalytics {

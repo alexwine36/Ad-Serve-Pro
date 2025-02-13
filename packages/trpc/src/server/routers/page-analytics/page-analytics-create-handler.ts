@@ -1,8 +1,8 @@
-import type { TRPCContextInnerWithSession } from '@repo/trpc/src/server/create-context';
+import type { TRPCContextInner } from '@repo/trpc/src/server/create-context';
 import type { PageAnalyticsCreateSchema } from './page-analytics-create-schema';
 
 type PageAnalyticsCreateOptions = {
-  ctx: TRPCContextInnerWithSession;
+  ctx: TRPCContextInner;
   input: PageAnalyticsCreateSchema;
 };
 

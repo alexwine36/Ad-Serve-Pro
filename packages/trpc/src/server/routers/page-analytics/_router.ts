@@ -1,5 +1,6 @@
 import authedProcedure from '@repo/trpc/src/server/procedures/authed-procedure';
 import { router } from '@repo/trpc/src/server/trpc';
+import publicProcedure from '../../procedures/public-procedure';
 import { pageAnalyticsCreateHandler } from './page-analytics-create-handler';
 import { PageAnalyticsCreateSchema } from './page-analytics-create-schema';
 import { pageAnalyticsGetAllHandler } from './page-analytics-get-all-handler';
@@ -10,7 +11,7 @@ import { PageAnalyticsGetAllSchema } from './page-analytics-get-all-schema';
 export const pageAnalyticsRouter = router({
   // Handlers
 
-  create: authedProcedure
+  create: publicProcedure
     .input(PageAnalyticsCreateSchema)
     .mutation(pageAnalyticsCreateHandler),
 

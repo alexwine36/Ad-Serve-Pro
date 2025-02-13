@@ -1,8 +1,8 @@
-import type { TRPCContextInnerWithSession } from '@repo/trpc/src/server/create-context';
+import type { TRPCContextInner } from '@repo/trpc/src/server/create-context';
 import type { AdAnalyticsCreateSchema } from './ad-analytics-create-schema';
 
 type AdAnalyticsCreateOptions = {
-  ctx: TRPCContextInnerWithSession;
+  ctx: TRPCContextInner;
   input: AdAnalyticsCreateSchema;
 };
 
@@ -25,10 +25,11 @@ export const adAnalyticsCreateHandler = async ({
   });
   const res = await prisma.adAnalytics.createMany({
     data: input.events.map((event) => {
-      const { timestamp, ...rest } = event;
+      const { timestamp, adId: campaignAdId, ...rest } = event;
       return {
         timestamp: new Date(timestamp),
         ...rest,
+        campaignAdId,
         clientId: client.id,
       };
     }),

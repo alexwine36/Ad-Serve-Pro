@@ -24,10 +24,10 @@ export type AdvertisementAnalyticsInput = z.infer<
 export const parseDataToHandlers = (data: AdvertisementAnalyticsInput) => {
   return data.events.reduce(
     (acc, event) => {
-      if ('adId' in event) {
-        acc.ad.push(event);
-      } else {
+      if (event.type === 'PAGE_VIEW') {
         acc.page.push(event);
+      } else {
+        acc.ad.push(event);
       }
       return acc;
     },
