@@ -1,5 +1,5 @@
 import { Prisma } from '@repo/database';
-import type { PageAnalyticsData } from '../../page-analytics';
+import { PageAnalyticsData } from '../../page-analytics';
 
 export const pageAnalyticsSelectFields =
   Prisma.validator<Prisma.PageAnalyticsDefaultArgs>()({
@@ -14,6 +14,6 @@ export const formatPageAnalyticsData = (
   pageAnalytics: PageAnalyticsWithData
 ): PageAnalyticsData => {
   return {
-    ...pageAnalytics,
+    ...PageAnalyticsData.parse(pageAnalytics),
   };
 };

@@ -1,22 +1,20 @@
 import { Prisma } from '@repo/database';
-import type { {{ className }}Data } from '../../{{ filePath }}';
+import { {{ className }}Data } from '../../{{ filePath }}';
 
 export const {{ propertyName }}SelectFields =
-  Prisma.validator<Prisma.{{ className }}DefaultArgs>()({
-    include: {
+Prisma.validator<Prisma.{{ className }}DefaultArgs>()({
+  include: {
 
-    },
+  },
   });
 
-type {{ className }}WithData = Prisma.{{ className }}GetPayload<
-  typeof {{ propertyName }}SelectFields
->;
+  type {{ className }}WithData = Prisma.{{ className }}GetPayload< typeof {{ propertyName }}SelectFields>;
 
-export const format{{ className }}Data = (
-  {{ propertyName }}: {{ className }}WithData
-): {{ className }}Data => {
-  return {
-    ...{{ propertyName }},
-    
-  };
-};
+    export const format{{ className }}Data = (
+    {{ propertyName }}: {{ className }}WithData
+    ): {{ className }}Data => {
+    return {
+    ...{{ className }}Data.parse({{ propertyName }}),
+
+    };
+    };
