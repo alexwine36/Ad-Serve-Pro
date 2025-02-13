@@ -1,4 +1,7 @@
-import { CompanyData } from '@repo/common-types';
+import {
+  extendedCompanySelectFields,
+  formatExtendedCompanyData,
+} from '@repo/common-types';
 import type { TRPCContextInnerWithSession } from '@repo/trpc/src/server/create-context';
 import type { CompanyGetAllSchema } from './company-get-all-schema';
 
@@ -17,9 +20,10 @@ export const companyGetAllHandler = async ({
     where: {
       organizationId: session?.user.currentOrganizationId,
     },
+    ...extendedCompanySelectFields,
   });
 
-  return res.map((company) => CompanyData.parse(company));
+  return res.map(formatExtendedCompanyData);
 };
 
 export type CompanyGetAllResponse = Awaited<

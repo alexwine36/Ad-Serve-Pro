@@ -15,8 +15,10 @@ function handler(req: Request) {
     router: appRouter,
     // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     createContext: createContext as any,
-    onError({ error }) {
+    onError({ error, path, input }) {
       console.error('TRPC error', error);
+      console.log('path', path);
+      console.log('input', input);
     },
     // createContext: (req, res) => {
     //   createContext},

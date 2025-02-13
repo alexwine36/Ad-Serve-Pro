@@ -1,16 +1,16 @@
 import type { TRPCContextInner } from '@repo/trpc/src/server/create-context';
-import type { AdAnalyticsCreateSchema } from './ad-analytics-create-schema';
+import type { PageAnalyticsCreateSchema } from './page-analytics-create-schema';
 
-type AdAnalyticsCreateOptions = {
+type PageAnalyticsCreateOptions = {
   ctx: TRPCContextInner;
-  input: AdAnalyticsCreateSchema;
+  input: PageAnalyticsCreateSchema;
 };
 
-export const adAnalyticsCreateHandler = async ({
+export const pageAnalyticsCreateHandler = async ({
   ctx,
   input,
-}: AdAnalyticsCreateOptions) => {
-  const { prisma } = ctx;
+}: PageAnalyticsCreateOptions) => {
+  const { prisma, session } = ctx;
 
   const client = await prisma.client.upsert({
     where: {
@@ -23,21 +23,20 @@ export const adAnalyticsCreateHandler = async ({
       ...input.client,
     },
   });
-  const res = await prisma.adAnalytics.createMany({
+
+  const res = await prisma.pageAnalytics.createMany({
     data: input.events.map((event) => {
-      const { timestamp, adId: campaignAdId, ...rest } = event;
+      const { timestamp, ...rest } = event;
       return {
         timestamp: new Date(timestamp),
         ...rest,
-        campaignAdId,
         clientId: client.id,
       };
     }),
   });
-
   return res;
 };
 
-export type AdAnalyticsCreateResponse = Awaited<
-  ReturnType<typeof adAnalyticsCreateHandler>
+export type PageAnalyticsCreateResponse = Awaited<
+  ReturnType<typeof pageAnalyticsCreateHandler>
 >;

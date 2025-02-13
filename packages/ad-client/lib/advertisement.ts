@@ -40,7 +40,7 @@ class Advertisment {
       getAd().then((ad) => {
         console.log('Ad', ad);
         if (ad && !this.getAttributes().adId) {
-          this.element.setAttribute('data-ad-id', ad.id);
+          this.element.setAttribute('data-ad-id', ad.adId);
           const size = ad.dimensions;
           const childAd = document.createElement('div');
           childAd.style.width = `${size.width}px`;

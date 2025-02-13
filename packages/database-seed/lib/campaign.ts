@@ -30,6 +30,8 @@ export const seedCampaigns = async (company: Company, prisma: PrismaClient) => {
         CampaignInput.extend({
           status: CampaignStatus,
         }).omit({
+          companyId: true,
+          organizationId: true,
           id: true,
         })
       );
@@ -67,9 +69,12 @@ export const seedCampaigns = async (company: Company, prisma: PrismaClient) => {
           faker.commerce.productAdjective(),
           faker.commerce.product(),
         ].join(' '),
-        companyId: company.id,
+
         startDate: from,
         endDate: to,
+        companyId: company.id,
+
+        organizationId: company.organizationId,
       };
 
       const res = await prisma.campaign.create({

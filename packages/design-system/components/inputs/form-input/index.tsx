@@ -1,5 +1,6 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import type { ReactNode } from 'react';
 import type {
   ControllerRenderProps,
@@ -7,7 +8,11 @@ import type {
   FieldValues,
   UseControllerProps,
 } from 'react-hook-form';
-import { PhoneInput } from '../../custom/phone-input';
+
+const PhoneInput = dynamic(() =>
+  import('../../custom/phone-input').then((mod) => mod.PhoneInput)
+);
+
 import {
   FormControl,
   FormDescription,

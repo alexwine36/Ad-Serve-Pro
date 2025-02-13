@@ -1,3 +1,7 @@
+import {
+  extendedAdAnalyticsSelectFields,
+  formatExtendedAdAnalyticsData,
+} from '@repo/common-types';
 import type { TRPCContextInnerWithSession } from '@repo/trpc/src/server/create-context';
 import type { AdAnalyticsGetAllSchema } from './ad-analytics-get-all-schema';
 
@@ -14,36 +18,15 @@ export const adAnalyticsGetAllHandler = async ({
 
   const res = await prisma.adAnalytics.findMany({
     where: {
-      ad: {
+      organizationId: session.user.currentOrganizationId,
+      campaignAd: {
         companyId: input.companyId,
-        company: {
-          organizationId: session.user.currentOrganizationId,
-        },
       },
     },
-    include: {
-      client: true,
-      ad: {
-        select: {
-          id: true,
-          name: true,
-          company: {
-            select: {
-              id: true,
-              name: true,
-              organization: {
-                select: {
-                  id: true,
-                  name: true,
-                },
-              },
-            },
-          },
-        },
-      },
-    },
+    include: extendedAdAnalyticsSelectFields.include,
   });
-  return res;
+
+  return res.map((r) => formatExtendedAdAnalyticsData(r));
 };
 
 export type AdAnalyticsGetAllResponse = Awaited<

@@ -54,6 +54,7 @@ export const AdvertisementForm: React.FC<AdvertisementFormProps> = ({
       variant: 'success',
     });
     utils.advertisement.getAll.invalidate();
+    utils.advertisement.getOne.invalidate();
     onSuccess(data);
   };
 

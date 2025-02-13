@@ -31,6 +31,8 @@ export const seedAdvertisements = async (
       const rawAdvertisementMock = generateMock(
         AdvertisementInput.omit({
           id: true,
+          companyId: true,
+          organizationId: true,
         })
       );
 
@@ -48,6 +50,7 @@ export const seedAdvertisements = async (
           size: adSize,
         },
         companyId: company.id,
+        organizationId: company.organizationId,
       };
 
       const res = await db.advertisement.create({

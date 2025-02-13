@@ -122,8 +122,13 @@ model Organization {
 
   companies Company[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  pageAnalytics  PageAnalytics[]
+  adAnalytics    AdAnalytics[]
+  campaignAds    CampaignAd[]
+  advertisements Advertisement[]
+  campaigns      Campaign[]
 }
 
 enum MemberRole {
@@ -180,6 +185,7 @@ model Company {
 
   campaigns      Campaign[]
   advertisements Advertisement[]
+  campaignAds    CampaignAd[]
 }
 
 model CompanyContact {
@@ -217,6 +223,9 @@ model Advertisement {
   companyId String
   company   Company @relation(fields: [companyId], references: [id])
 
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+
   // Relations
   campaigns CampaignAd[]
   analytics AdAnalytics[]
@@ -234,8 +243,12 @@ model Campaign {
   targeting Json // Store targeting criteria
 
   // Relations
-  company   Company             @relation(fields: [companyId], references: [id])
+  company   Company @relation(fields: [companyId], references: [id])
   companyId String
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+
   ads       CampaignAd[]
   analytics CampaignAnalytics[]
 }
@@ -249,6 +262,14 @@ model CampaignAd {
   adId       String
   weight     Int           @default(1) // For A/B testing
   isActive   Boolean       @default(true)
+
+  adAnalytics AdAnalytics[]
+
+  companyId String
+  company   Company @relation(fields: [companyId], references: [id])
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
 
   @@unique([campaignId, adId])
 }
@@ -265,9 +286,10 @@ model Client {
   device      String?
 
   // Relations
-  analytics AdAnalytics[]
+  analytics     AdAnalytics[]
+  pageAnalytics PageAnalytics[]
   // Custom data
-  metadata  Json?
+  metadata      Json?
 }
 
 model AdAnalytics {
@@ -276,8 +298,44 @@ model AdAnalytics {
   type      AnalyticsType
   client    Client        @relation(fields: [clientId], references: [id])
   clientId  String
-  ad        Advertisement @relation(fields: [adId], references: [id])
-  adId      String
+
+  campaignAd   CampaignAd @relation(fields: [campaignAdId], references: [id])
+  campaignAdId String
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+
+  // Location data
+  country String?
+  region  String?
+  city    String?
+
+  // Technical data
+  viewportSize   String?
+  screenSize     String?
+  connectionType String?
+
+  // Session data
+  sessionId String?
+  pageUrl   String?
+  referrer  String?
+
+  // Custom data
+  metadata        Json?
+  Advertisement   Advertisement? @relation(fields: [advertisementId], references: [id])
+  advertisementId String?
+}
+
+model PageAnalytics {
+  id        String            @id @default(cuid())
+  timestamp DateTime          @default(now())
+  type      PageAnalyticsType
+
+  client   Client @relation(fields: [clientId], references: [id])
+  clientId String
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
 
   // Location data
   country String?
@@ -333,6 +391,12 @@ enum AnalyticsType {
   IMPRESSION
   CLICK
   CONVERSION
+  LOAD
+}
+
+enum PageAnalyticsType {
+  // CLICK
+  PAGE_VIEW
 }
 
 // #endregion

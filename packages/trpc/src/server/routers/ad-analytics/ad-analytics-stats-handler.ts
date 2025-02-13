@@ -40,10 +40,12 @@ export const adAnalyticsStatsHandler = async ({
     if (!session) {
       throw new Error('Unauthorized');
     }
-    where.ad = {
-      company: {
-        id: input.companyId,
-        organizationId: session.user.currentOrganizationId,
+    where.campaignAd = {
+      ad: {
+        company: {
+          id: input.companyId,
+          organizationId: session.user.currentOrganizationId,
+        },
       },
     };
   }

@@ -11,8 +11,13 @@ import {
   DialogTrigger,
 } from '@repo/design-system/components/ui/dialog';
 import { Edit, PlusIcon } from 'lucide-react';
+// import { CompanyContactForm } from '../company-contact-form';
+import dynamic from 'next/dynamic';
 import type React from 'react';
-import { CompanyContactForm } from '../company-contact-form';
+
+const CompanyContactForm = dynamic(() =>
+  import('../company-contact-form').then((mod) => mod.CompanyContactForm)
+);
 
 export interface CompanyContactDialogProps
   extends React.ComponentPropsWithoutRef<typeof Dialog> {
