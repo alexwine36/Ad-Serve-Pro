@@ -13,6 +13,7 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
+    "@prisma/client": "6.1.0",
     "@radix-ui/react-icons": "1.3.2",
     "@repo/ad-client": "workspace:*",
     "@repo/auth": "workspace:*",
