@@ -1,7 +1,7 @@
-import type { AnalyticsType } from '@repo/common-types';
+import type { AnalyticsType, PageAnalyticsType } from '@repo/common-types';
 
 export type EventConstructor = {
-  type: AnalyticsType | 'PAGE_VIEW';
+  type: AnalyticsType | PageAnalyticsType;
   adId: string;
   metadata?: Record<string, unknown>;
 };

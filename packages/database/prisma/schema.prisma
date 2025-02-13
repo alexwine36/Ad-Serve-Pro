@@ -122,8 +122,9 @@ model Organization {
 
   companies Company[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  pageAnalytics PageAnalytics[]
 }
 
 enum MemberRole {
@@ -265,9 +266,10 @@ model Client {
   device      String?
 
   // Relations
-  analytics AdAnalytics[]
+  analytics     AdAnalytics[]
+  pageAnalytics PageAnalytics[]
   // Custom data
-  metadata  Json?
+  metadata      Json?
 }
 
 model AdAnalytics {
@@ -278,6 +280,36 @@ model AdAnalytics {
   clientId  String
   ad        Advertisement @relation(fields: [adId], references: [id])
   adId      String
+
+  // Location data
+  country String?
+  region  String?
+  city    String?
+
+  // Technical data
+  viewportSize   String?
+  screenSize     String?
+  connectionType String?
+
+  // Session data
+  sessionId String?
+  pageUrl   String?
+  referrer  String?
+
+  // Custom data
+  metadata Json?
+}
+
+model PageAnalytics {
+  id        String            @id @default(cuid())
+  timestamp DateTime          @default(now())
+  type      PageAnalyticsType
+
+  client   Client @relation(fields: [clientId], references: [id])
+  clientId String
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
 
   // Location data
   country String?
@@ -333,6 +365,12 @@ enum AnalyticsType {
   IMPRESSION
   CLICK
   CONVERSION
+  LOAD
+}
+
+enum PageAnalyticsType {
+  // CLICK
+  PAGE_VIEW
 }
 
 // #endregion

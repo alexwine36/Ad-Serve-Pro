@@ -1,5 +1,8 @@
-import type { AdAnalyticsCreateSchema } from '@repo/trpc';
 import { pickBy } from 'remeda';
+import type {
+  AdvertisementAnalyticsEventInput,
+  AdvertisementAnalyticsInput,
+} from '../../common-types';
 import type { AnalyticsType } from '../../database';
 import { keys } from '../keys';
 import { AdvertisementService } from './advertisement';
@@ -9,6 +12,7 @@ import { BrowserFingerprint } from './fingerprinting';
 import { LocationService } from './location';
 import type { LocationResponse } from './location-requests';
 import type { AnalyticsConfig } from './types';
+
 export class Analytics {
   config: Required<AnalyticsConfig>;
   private fingerprinter: BrowserFingerprint;
@@ -146,6 +150,11 @@ export class Analytics {
       { threshold: 0.5 }
     ); // 50% visibility
 
+    this.track({
+      type: 'LOAD',
+      adId: adId,
+    });
+
     // Track clicks
     tag.addEventListener('click', () => {
       this.track({
@@ -218,36 +227,39 @@ export class Analytics {
   }
   private async getAdEvents(
     events: TrackingEvent[]
-  ): Promise<AdAnalyticsCreateSchema['events']> {
+  ): Promise<AdvertisementAnalyticsEventInput[]> {
     const location = await this.getLocation();
     const components = await this.getComponents();
     const { country, region, city } = location || {};
-    return events
-      .filter((event) => event.type !== 'PAGE_VIEW')
-      .map((event) => {
-        return {
-          ...event,
-          type: event.type as AnalyticsType,
-          country,
-          region,
-          city,
-          metadata: {},
-          viewportSize: event.viewportSize
-            ? `${event.viewportSize.width}x${event.viewportSize.height}`
-            : undefined,
-          screenSize: event.screenSize
-            ? `${event.screenSize.width}x${event.screenSize.height}`
-            : undefined,
-          connectionType: components?.connection?.type,
-        };
-      });
+    return (
+      events
+        // .filter((event) => event.type !== 'PAGE_VIEW')
+        .map((event) => {
+          return {
+            ...event,
+            organizationId: this.config.organizationId,
+            type: event.type as AnalyticsType,
+            country,
+            region,
+            city,
+            metadata: {},
+            viewportSize: event.viewportSize
+              ? `${event.viewportSize.width}x${event.viewportSize.height}`
+              : undefined,
+            screenSize: event.screenSize
+              ? `${event.screenSize.width}x${event.screenSize.height}`
+              : undefined,
+            connectionType: components?.connection?.type,
+          };
+        })
+    );
   }
   // Format events for sending
   private async formatEvents(
     events: TrackingEvent[]
-  ): Promise<AdAnalyticsCreateSchema> {
+  ): Promise<AdvertisementAnalyticsInput> {
     const components = await this.getComponents();
-    const res: AdAnalyticsCreateSchema = {
+    const res: AdvertisementAnalyticsInput = {
       events: await this.getAdEvents(events),
       client: {
         fingerprint: await this.getFingerprint(),

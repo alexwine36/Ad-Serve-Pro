@@ -21,6 +21,7 @@ export type AdAnalyticsUpdateInput = z.infer<typeof AdAnalyticsUpdateInput>;
 
 export const AdAnalyticsInput = AdAnalyticsUpdateInput.partial({
   id: true,
+  clientId: true,
 }).extend({
   timestamp: z.number(),
 });

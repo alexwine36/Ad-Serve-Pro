@@ -1,4 +1,6 @@
 import { router } from '@repo/trpc/src/server/trpc';
+import { pageAnalyticsRouter } from './page-analytics/_router';
+
 import { campaignAdRouter } from './campaign-ad/_router';
 
 import { statRouter } from './stat/_router';
@@ -37,6 +39,8 @@ export const appRouter = router({
       };
     }),
   // Handlers
+
+pageAnalytics: pageAnalyticsRouter,
 
   campaignAd: campaignAdRouter,
 
