@@ -60,8 +60,26 @@ export const CompanyTable = () => {
         enableSorting: true,
       },
       {
+        accessorKey: 'activeCampaignAds',
+        header: 'Active Ads',
+        meta: {
+          numeric: true,
+        },
+        enableSorting: true,
+      },
+      {
+        enableHiding: true,
+        accessorKey: 'activeCampaigns',
+        header: 'Active Campaigns',
+        hidden: true,
+        meta: {
+          numeric: true,
+        },
+      },
+      {
         accessorKey: 'slug',
         header: 'Slug',
+        hidden: true,
         cell: ({ cell }) => {
           const slug = cell.getValue<string>();
           return <code>/{slug}</code>;
@@ -74,11 +92,13 @@ export const CompanyTable = () => {
       {
         accessorKey: 'website',
         header: 'Website',
+        hidden: true,
       },
 
       {
         accessorKey: 'type',
         header: 'Type',
+        hidden: true,
       },
       {
         accessorKey: 'createdAt',
