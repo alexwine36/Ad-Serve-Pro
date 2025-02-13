@@ -1,21 +1,22 @@
 import { auth } from '@repo/auth/auth';
-import { percentageChangeDisplay } from '@repo/common-types';
-import {
-  BanCard,
-  type BanCardProps,
-} from '@repo/design-system/components/custom/ban-card';
-import { PointerIcon, Users } from 'lucide-react';
+import { Hourglass, PointerIcon, Users } from 'lucide-react';
 import type { Metadata } from 'next';
+import dynamic from 'next/dynamic';
 import { redirect } from 'next/navigation';
 import { trpcCaller } from '../../utils/trpc-server';
 import { AdAnalyticsCard } from './ad-analytics/components/ad-analytics-card';
 import { Header } from './components/header';
+import type { StatsCardProps } from './components/stats-card';
 const title = 'Acme Inc';
 const description = 'My application.';
 export const metadata: Metadata = {
   title,
   description,
 };
+
+const StatsCard = dynamic(() =>
+  import('./components/stats-card').then((mod) => mod.StatsCard)
+);
 
 const App = async () => {
   const session = await auth();
@@ -32,18 +33,15 @@ const App = async () => {
     type: 'CLICK',
   });
 
-  const stats: BanCardProps[] = [
+  const loads = await caller.stat.adAnalyticsComparison({
+    type: 'LOAD',
+  });
+
+  const stats: StatsCardProps[] = [
     {
       title: 'Impressions',
-      description: `${percentageChangeDisplay(
-        impressions.previous,
-        impressions.current,
-        {
-          prefix: true,
-        }
-      )} from last month`,
-      value: impressions.current,
-      prefix: '+',
+      previous: impressions.previous,
+      current: impressions.current,
       icon: (
         <Users
           style={{
@@ -55,13 +53,23 @@ const App = async () => {
     },
     {
       title: 'Clicks',
-      description: `${percentageChangeDisplay(clicks.previous, clicks.current, {
-        prefix: true,
-      })} from last month`,
-      value: clicks.current,
-      prefix: '+',
+      previous: clicks.previous,
+      current: clicks.current,
       icon: (
         <PointerIcon
+          style={{
+            width: '1em',
+            height: '1em',
+          }}
+        />
+      ),
+    },
+    {
+      title: 'Loads',
+      previous: loads.previous,
+      current: loads.current,
+      icon: (
+        <Hourglass
           style={{
             width: '1em',
             height: '1em',
@@ -82,7 +90,7 @@ const App = async () => {
         </div> */}
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {stats.map((stat, idx) => (
-            <BanCard key={idx} {...stat} />
+            <StatsCard key={idx} {...stat} />
           ))}
         </div>
         <AdAnalyticsCard />
