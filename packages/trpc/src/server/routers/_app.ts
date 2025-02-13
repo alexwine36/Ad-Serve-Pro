@@ -40,7 +40,7 @@ export const appRouter = router({
     }),
   // Handlers
 
-pageAnalytics: pageAnalyticsRouter,
+  pageAnalytics: pageAnalyticsRouter,
 
   campaignAd: campaignAdRouter,
 

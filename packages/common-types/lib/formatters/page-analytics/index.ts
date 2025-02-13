@@ -3,9 +3,7 @@ import type { PageAnalyticsData } from '../../page-analytics';
 
 export const pageAnalyticsSelectFields =
   Prisma.validator<Prisma.PageAnalyticsDefaultArgs>()({
-    include: {
-
-    },
+    include: {},
   });
 
 type PageAnalyticsWithData = Prisma.PageAnalyticsGetPayload<
@@ -17,6 +15,5 @@ export const formatPageAnalyticsData = (
 ): PageAnalyticsData => {
   return {
     ...pageAnalytics,
-    
   };
 };
