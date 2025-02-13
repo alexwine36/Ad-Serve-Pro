@@ -2,9 +2,7 @@ import { Container } from '@repo/design-system/components/ui/container';
 import { redirect } from 'next/navigation';
 import { trpcCaller } from '../../../../../../utils/trpc-server';
 import { AdvertisementContent } from '../../../../advertisement/components/advertisement-content';
-import { AdvertisementDialog } from '../../../../advertisement/components/advertisement-dialog';
 import { CampaignAdCard } from '../../../../campaign-ad/components/campaign-ad-card';
-import { CampaignTable } from '../../../../campaign/components/campaign-table';
 import { Header } from '../../../../components/header';
 
 const AdvertisementPage = async ({
@@ -28,15 +26,8 @@ const AdvertisementPage = async ({
         ]}
       />
       <Container className="flex flex-col gap-4">
-        <AdvertisementContent {...advertisement}>
-          <AdvertisementDialog
-            companyId={company.id}
-            advertisement={advertisement}
-            showTrigger
-          />
-        </AdvertisementContent>
+        <AdvertisementContent {...advertisement} editable />
         <CampaignAdCard source="ADVERTISEMENT" advertisementId={adId} />
-        <CampaignTable companyId={company.id} />
 
         {/* <AdvertisementCard advertisementId={advertisement.id} />
         <CampaignCard advertisementId={advertisement.id} />

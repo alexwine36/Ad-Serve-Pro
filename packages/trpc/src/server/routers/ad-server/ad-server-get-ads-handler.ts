@@ -12,7 +12,7 @@ export const adServerGetAdsHandler = async ({
   input,
 }: AdServerGetAdsOptions) => {
   const { prisma } = ctx;
-  console.log('INPUT', input);
+
   const res = await prisma.campaignAd.findMany({
     where: {
       campaign: {
@@ -29,7 +29,6 @@ export const adServerGetAdsHandler = async ({
 
     ...adServerSelectFields,
   });
-  console.log('RES', res);
 
   return formatClientAdData(res, prisma);
 

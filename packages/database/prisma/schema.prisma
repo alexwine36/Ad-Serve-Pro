@@ -122,10 +122,13 @@ model Organization {
 
   companies Company[]
 
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
-  pageAnalytics PageAnalytics[]
-  adAnalytics   AdAnalytics[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  pageAnalytics  PageAnalytics[]
+  adAnalytics    AdAnalytics[]
+  campaignAds    CampaignAd[]
+  advertisements Advertisement[]
+  campaigns      Campaign[]
 }
 
 enum MemberRole {
@@ -182,6 +185,7 @@ model Company {
 
   campaigns      Campaign[]
   advertisements Advertisement[]
+  campaignAds    CampaignAd[]
 }
 
 model CompanyContact {
@@ -219,6 +223,9 @@ model Advertisement {
   companyId String
   company   Company @relation(fields: [companyId], references: [id])
 
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+
   // Relations
   campaigns CampaignAd[]
   analytics AdAnalytics[]
@@ -236,8 +243,12 @@ model Campaign {
   targeting Json // Store targeting criteria
 
   // Relations
-  company   Company             @relation(fields: [companyId], references: [id])
+  company   Company @relation(fields: [companyId], references: [id])
   companyId String
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+
   ads       CampaignAd[]
   analytics CampaignAnalytics[]
 }
@@ -253,6 +264,12 @@ model CampaignAd {
   isActive   Boolean       @default(true)
 
   adAnalytics AdAnalytics[]
+
+  companyId String
+  company   Company @relation(fields: [companyId], references: [id])
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
 
   @@unique([campaignId, adId])
 }

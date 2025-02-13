@@ -39,6 +39,8 @@ export const campaignAdGetAllHandler = async ({
       },
     });
     campaignAdData = campaigns.map((campaign) => ({
+      companyId: campaign.companyId,
+      organizationId: campaign.organizationId,
       adId: ad.id,
       campaignId: campaign.id,
       isActive: false,
@@ -68,6 +70,8 @@ export const campaignAdGetAllHandler = async ({
     });
     campaignAdData = advertisements.map((ad) => ({
       adId: ad.id,
+      companyId: ad.companyId,
+      organizationId: ad.organizationId,
       campaignId: campaign.id,
       isActive: false,
       weight: 1,

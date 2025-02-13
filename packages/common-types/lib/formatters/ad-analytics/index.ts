@@ -28,7 +28,7 @@ const ExtendedAdAnalyticsData = AdAnalyticsData.extend({
 
 export type ExtendedAdAnalyticsData = z.infer<typeof ExtendedAdAnalyticsData>;
 
-export const adAnalyticsSelectFields =
+export const extendedAdAnalyticsSelectFields =
   Prisma.validator<Prisma.AdAnalyticsDefaultArgs>()({
     include: {
       client: true,
@@ -40,10 +40,16 @@ export const adAnalyticsSelectFields =
               id: true,
               name: true,
               status: true,
-              company: true,
+              // company: true,
             },
           },
           ad: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+          company: {
             select: {
               id: true,
               name: true,
@@ -55,21 +61,22 @@ export const adAnalyticsSelectFields =
   });
 
 type AdAnalyticsWithData = Prisma.AdAnalyticsGetPayload<
-  typeof adAnalyticsSelectFields
+  typeof extendedAdAnalyticsSelectFields
 >;
 
-export const formatAdAnalyticsData = (
+export const formatExtendedAdAnalyticsData = (
   adAnalytics: AdAnalyticsWithData
 ): ExtendedAdAnalyticsData => {
   const { client, campaignAd, ...base } = adAnalytics;
-  const { ad, campaign } = campaignAd;
+  const { ad, campaign, company } = campaignAd;
+
   // const base = AdAnalyticsData.parse(adAnalytics);
   const data: ExtendedAdAnalyticsData = {
     ...AdAnalyticsData.parse(base),
     client: ClientData.parse(client),
     ad,
     campaign,
-    company: campaign.company,
+    company,
   };
   return ExtendedAdAnalyticsData.parse(data);
 };

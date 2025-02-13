@@ -1,12 +1,14 @@
 'use client';
 
 import { trpc } from '@/utils/trpc';
-import type {
-  AdvertisementCampaignCounts,
-  AdvertisementData,
+import {
+  ADVERTISEMENT_SIZES,
+  type AdvertisementCampaignCounts,
+  type AdvertisementData,
 } from '@repo/common-types';
 import type { DataTableRowAction } from '@repo/design-system/components/custom/data-table';
 import { DataTable } from '@repo/design-system/components/custom/data-table';
+import { AspectRatio } from '@repo/design-system/components/ui/aspect-ratio';
 import { Button } from '@repo/design-system/components/ui/button';
 import {
   DropdownMenu,
@@ -24,7 +26,6 @@ import { AdvertisementSizeBadge } from '../advertisement-size-badge';
 import { AdvertisementTypeBadge } from '../advertisement-type-badge';
 import type { AdvertisementTypes } from '../advertisement-types';
 import { AdvertisementCampaignCountsDisplay } from '../advertisment-campaign-counts-display';
-
 export const AdvertisementTable: React.FC<AdvertisementTypes> = ({
   companyId,
 }) => {
@@ -35,8 +36,6 @@ export const AdvertisementTable: React.FC<AdvertisementTypes> = ({
   const [rowAction, setRowAction] = useState<
     DataTableRowAction<AdvertisementData> | undefined
   >(undefined);
-
-  console.log(data);
 
   const table = useDataTable({
     data: data || [],
@@ -73,12 +72,13 @@ export const AdvertisementTable: React.FC<AdvertisementTypes> = ({
       {
         accessorKey: 'content',
         header: 'Content',
-        cell: ({ cell }) => {
+        cell: ({ cell, row }) => {
           const content = cell.getValue<string>();
+          const size = ADVERTISEMENT_SIZES[row.original.metadata.size];
           return (
-            <div>
+            <AspectRatio ratio={size.width / size.height}>
               <img src={content} alt="" />
-            </div>
+            </AspectRatio>
           );
         },
       },

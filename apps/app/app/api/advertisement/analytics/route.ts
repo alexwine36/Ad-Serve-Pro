@@ -8,13 +8,13 @@ import { trpcCaller } from '../../../../utils/trpc-server';
 // const content = require('@repo/ad-client/dist/index.js');
 async function handler(req: NextRequest) {
   const bodyReq = await req.json();
-  console.log('bodyReq', bodyReq);
+
   const content = AdvertisementAnalyticsInput.parse(bodyReq);
   // if (!data.success) {
   //   console.log('data.error', data.error, data);
   // }
   // const content = data.data;
-  console.log('content', content);
+
   const { ad, page, client } = parseDataToHandlers(content);
   const caller = await trpcCaller();
   const responseData: {
@@ -22,7 +22,7 @@ async function handler(req: NextRequest) {
   } = {
     count: 0,
   };
-  console.log(ad, page, client);
+
   if (ad.length > 0) {
     try {
       const res = await caller.adAnalytics.create({
@@ -31,7 +31,7 @@ async function handler(req: NextRequest) {
       });
       responseData.count += res.count;
     } catch (error) {
-      console.log('ad error', error);
+      console.error('ad error', error);
     }
   }
 
@@ -43,10 +43,9 @@ async function handler(req: NextRequest) {
       });
       responseData.count += res.count;
     } catch (error) {
-      console.log('page error', error);
+      console.error('page error', error);
     }
   }
-  console.log('bodyReq', bodyReq);
 
   const response = Response.json(responseData);
   return response;
