@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "clean": "git clean -xdf .cache .turbo dist node_modules",
-    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false",
+    "int:test:watch": "infisical run --env=dev -- vitest watch",
+    "int:test": "NODE_ENV=test vitest run"
   },
   "dependencies": {
     "@repo/auth": "workspace:*",
@@ -19,6 +21,8 @@
     "zod": "3.24.1"
   },
   "devDependencies": {
+    "@faker-js/faker": "^9.3.0",
+    "@repo/testing": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@trpc/server": "11.0.0-rc.708",
     "@types/node": "^22.10.5",

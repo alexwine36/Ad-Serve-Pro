@@ -39,6 +39,11 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
       },
       {
         type: 'add',
+        path: 'packages/{{ dashCase name }}/vitest.config.ts',
+        templateFile: 'templates/vitest.config.ts.hbs',
+      },
+      {
+        type: 'add',
         skip: (answers) => {
           if (!answers.keys) {
             return 'Skipping keys file generation';
