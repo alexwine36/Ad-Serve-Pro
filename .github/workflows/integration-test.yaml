@@ -9,9 +9,10 @@ on:
 env:
   DATABASE_URL: postgres://postgres:postgres@localhost:5432/test
 
+concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
-  unit-test:
+  integration-test:
     runs-on: ubuntu-latest
     # Service containers to run with `container-job`
     services:
@@ -42,7 +43,7 @@ jobs:
       - uses: ./.github/actions/ci-setup
 
       - name: Migrate Database
-        run: pnpm db:migrate
+        run: pnpm db:push
         # env:
         #   DATABASE_URL: ${{ env.DATABASE_URL }}
 
