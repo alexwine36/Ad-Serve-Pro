@@ -1,5 +1,4 @@
 import type { TRPCContextInner } from '@repo/trpc/src/server/create-context';
-import { populateUser } from '../../../../../auth/utils/format-user.js';
 import type { MeSchema } from './me-schema.ts';
 
 type MeOptions = {
@@ -10,10 +9,11 @@ type MeOptions = {
 export const meHandler = async ({ ctx, input }: MeOptions) => {
   const { prisma, session } = ctx;
 
-  if (!session) {
-    return session;
-  }
-  return await populateUser(session?.user, prisma);
+  // if (!session) {
+
+  // }
+
+  return session?.user;
 };
 
 export type MeResponse = ReturnType<typeof meHandler>;

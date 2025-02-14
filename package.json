@@ -16,6 +16,7 @@
     "dev": "infisical run --env=dev -- turbo dev",
     "format": "ultracite format",
     "gen:resource": "./scripts/generate-resource.sh",
+    "int:test": "turbo int:test",
     "lint": "ultracite lint",
     "lint:ci": "biome check --diagnostic-level=error",
     "migrate": "cd packages/database && npx prisma format && npx prisma generate && npx prisma db push",
