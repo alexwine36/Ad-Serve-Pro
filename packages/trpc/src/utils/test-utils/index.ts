@@ -4,7 +4,7 @@ import { PrismaClient } from '@repo/database';
 import { appRouter } from '@repo/trpc/src/server/routers/_app';
 import { createCallerFactory } from '@repo/trpc/src/server/trpc';
 import { getTestContext } from './get-context';
-import type { TestUserTypes } from './get-user';
+import type { TestUserTypes } from './types';
 
 const prisma = new PrismaClient();
 

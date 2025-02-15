@@ -1,5 +1,6 @@
 import { CompanyData } from '@repo/common-types';
 import type { TRPCContextInnerWithSession } from '@repo/trpc/src/server/create-context';
+import { TRPCError } from '@trpc/server';
 import type { CompanyCreateSchema } from './company-create-schema';
 
 type CompanyCreateOptions = {
@@ -15,7 +16,10 @@ export const companyCreateHandler = async ({
   const { currentOrganizationId } = session.user;
 
   if (!currentOrganizationId) {
-    throw new Error('No current organization');
+    throw new TRPCError({
+      code: 'UNAUTHORIZED',
+      message: 'No current organization',
+    });
   }
 
   const { social, ...rest } = input;

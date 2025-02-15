@@ -25,4 +25,12 @@ describe('Organization', () => {
       expect(updatedUser?.currentOrganizationId).toBe(res.id);
     });
   });
+  describe('get-all', () => {
+    test('should return organizations for org-user', async () => {
+      const trpc = await getTestCaller('org-admin');
+      const res = await trpc.organization.getAll({});
+      expect(res).toBeTruthy();
+      expect(res.length).toBeGreaterThan(0);
+    });
+  });
 });

@@ -1,7 +1,8 @@
 // import { initTRPC } from '@trpc/server';
 // import superjson from 'superjson';
 import type { PrismaClient } from '@repo/database';
-import { type TestUserTypes, getUser } from './get-user';
+import { getUser } from './get-user';
+import type { TestUserTypes } from './types';
 
 export const getTestContext = async (
   userType: TestUserTypes,

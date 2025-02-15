@@ -1,5 +1,6 @@
 import authedProcedure from '@repo/trpc/src/server/procedures/authed-procedure';
 import { router } from '@repo/trpc/src/server/trpc';
+import publicProcedure from '../../procedures/public-procedure';
 import { statAdAnalyticsComparisonHandler } from './stat-ad-analytics-comparison-handler';
 import { StatAdAnalyticsComparisonSchema } from './stat-ad-analytics-comparison-schema';
 import { statAdAnalyticsHandler } from './stat-ad-analytics-handler';
@@ -14,7 +15,7 @@ export const statRouter = router({
     .input(StatAdAnalyticsComparisonSchema)
     .query(statAdAnalyticsComparisonHandler),
 
-  adAnalytics: authedProcedure
+  adAnalytics: publicProcedure
     .input(StatAdAnalyticsSchema)
     .query(statAdAnalyticsHandler),
 });

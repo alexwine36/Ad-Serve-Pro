@@ -934,6 +934,9 @@ importers:
         specifier: 3.24.1
         version: 3.24.1
     devDependencies:
+      '@anatine/zod-mock':
+        specifier: ^3.13.5
+        version: 3.13.5(@faker-js/faker@9.3.0)(zod@3.24.1)
       '@faker-js/faker':
         specifier: ^9.3.0
         version: 9.3.0
