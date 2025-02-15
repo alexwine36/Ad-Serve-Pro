@@ -4,6 +4,8 @@
   "version": "0.0.0",
   "scripts": {
     "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "test": "NODE_ENV=test vitest run",
+    "test:watch": "NODE_ENV=test vitest watch",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
    "dependencies": {
@@ -15,6 +17,7 @@
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
+    "@repo/testing": "workspace:*",
     "@types/node": "22.10.5",
     "@types/react": "19.0.2",
     "@types/react-dom": "^19.0.2",

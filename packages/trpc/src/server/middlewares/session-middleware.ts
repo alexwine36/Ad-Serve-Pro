@@ -84,9 +84,9 @@ export const isAdminMiddleware = isAuthed.unstable_pipe(({ ctx, next }) => {
 export const isOrgAdminMiddleware = isAuthed.unstable_pipe(({ ctx, next }) => {
   const { user } = ctx;
   // NOTE: This is a placeholder for now. We need to implement this in the future.
-  // if (!user?.organization?.isOrgAdmin) {
-  //   throw new TRPCError({ code: 'UNAUTHORIZED' });
-  // }
+  if (user?.currentRole !== 'ADMIN') {
+    throw new TRPCError({ code: 'UNAUTHORIZED' });
+  }
   return next({ ctx: { user: user } });
 });
 

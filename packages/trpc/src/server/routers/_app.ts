@@ -1,4 +1,4 @@
-import { router } from '@repo/trpc/src/server/trpc';
+import { router } from '../trpc';
 import { pageAnalyticsRouter } from './page-analytics/_router';
 
 import { campaignAdRouter } from './campaign-ad/_router';

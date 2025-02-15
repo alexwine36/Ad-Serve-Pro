@@ -1,9 +1,9 @@
 import type { Prisma } from '@repo/database';
-import type { TRPCContextInnerWithSession } from '@repo/trpc/src/server/create-context';
+import type { TRPCContextInner } from '@repo/trpc/src/server/create-context';
 import type { StatAdAnalyticsSchema } from './stat-ad-analytics-schema';
 
 type StatAdAnalyticsOptions = {
-  ctx: TRPCContextInnerWithSession;
+  ctx: TRPCContextInner;
   input: StatAdAnalyticsSchema;
 };
 

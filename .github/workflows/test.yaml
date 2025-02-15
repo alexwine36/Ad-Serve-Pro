@@ -1,4 +1,4 @@
-name: Unit Tests
+name: Test
 
 on:
   push:
@@ -6,9 +6,35 @@ on:
       - main
   pull_request:
 
+env:
+  DATABASE_URL: postgres://postgres:postgres@localhost:5432/test
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+
 jobs:
-  unit-test:
+  test:
     runs-on: ubuntu-latest
+
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_DB: test
+        # Set health checks to wait until postgres has started
+        ports:
+        # Maps tcp port 5432 on service container to the host
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
       - uses: actions/checkout@v4
@@ -17,12 +43,15 @@ jobs:
 
       - uses: ./.github/actions/ci-setup
 
-      - name: Running Unit Tests...
+      - name: Migrate Database
+        run: pnpm db:push
+
+      - name: Running Test...
         run: pnpm test:ci
         env:
           NODE_OPTIONS: "--max_old_space_size=8192"
 
-      - name: Unit Tests ✅
+      - name: Test ✅
         if: ${{ success() }}
         run: |
           curl --request POST \
@@ -32,11 +61,11 @@ jobs:
           --data '{
             "context": "unit-test",
             "state": "success",
-            "description": "Unit Tests passed",
+            "description": "Test passed",
             "target_url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           }'
 
-      - name: Unit Tests 🚨
+      - name: Test 🚨
         if: ${{ failure() }}
         run: |
           curl --request POST \
@@ -46,6 +75,6 @@ jobs:
           --data '{
             "context": "unit-test",
             "state": "failure",
-            "description": "Unit Tests failed",
+            "description": "Test failed",
             "target_url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           }'

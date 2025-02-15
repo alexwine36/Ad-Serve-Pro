@@ -18,9 +18,6 @@ export const organizationCreateHandler = async ({
 
   const res = await prisma.organization.create({
     data: {
-      // name,
-      // slug: slug || slugify(name),
-      // type: 'Something',
       ...input,
       members: {
         create: {
@@ -28,6 +25,14 @@ export const organizationCreateHandler = async ({
           email: user.email,
         },
       },
+    },
+  });
+  await prisma.user.update({
+    where: {
+      email: user.email,
+    },
+    data: {
+      currentOrganizationId: res.id,
     },
   });
   return res;

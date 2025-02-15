@@ -9,6 +9,10 @@ type MeOptions = {
 export const meHandler = async ({ ctx, input }: MeOptions) => {
   const { prisma, session } = ctx;
 
+  // if (!session) {
+
+  // }
+
   return session?.user;
 };
 

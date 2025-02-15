@@ -14,16 +14,10 @@ export const companyGetOneHandler = async ({
 
   const res = await prisma.company.findFirst({
     where: {
-      OR: [
-        {
-          id: input.id || input.unknown,
-          organizationId: session?.user.currentOrganizationId,
-        },
-        {
-          slug: input.slug || input.unknown,
-          organizationId: session?.user.currentOrganizationId,
-        },
-      ],
+      id: input.id || input.unknown,
+      organizationId: session?.user.currentOrganizationId,
+
+      slug: input.slug || input.unknown,
     },
   });
   return res;
