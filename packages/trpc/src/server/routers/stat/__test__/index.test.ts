@@ -7,7 +7,7 @@ describe('Stat', () => {
       const res = await trpc.stat.adAnalytics({
         includeAll: true,
       });
-      expect(res).toBeTruthy();
+      expect(res).toBeGreaterThanOrEqual(0);
     });
   });
 });
