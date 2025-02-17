@@ -7,6 +7,7 @@ import {
   BriefcaseBusiness,
   LayoutDashboard,
   LifeBuoyIcon,
+  Megaphone,
   SendIcon,
   Settings2Icon,
 } from 'lucide-react';
@@ -44,6 +45,11 @@ export const SidebarLinks: SidebarLinks = {
       title: 'Dashboard',
       url: '/app/',
       icon: LayoutDashboard,
+    },
+    {
+      title: 'Ad Placements',
+      url: '/app/ad-placement',
+      icon: Megaphone,
     },
     {
       title: 'Companies',

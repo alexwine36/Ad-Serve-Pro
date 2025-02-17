@@ -6,6 +6,18 @@ import { getStartOfDate } from './utils/get-normalized-date';
 export const CampaignStatus = CampaignStatusSchema;
 export type CampaignStatus = z.infer<typeof CampaignStatus>;
 
+export const CampaignStatusCounts = z
+  .record(CampaignStatus, z.number())
+  .default({
+    DRAFT: 0,
+    SCHEDULED: 0,
+    ACTIVE: 0,
+    COMPLETED: 0,
+    PAUSED: 0,
+    CANCELLED: 0,
+  });
+export type CampaignStatusCounts = z.infer<typeof CampaignStatusCounts>;
+
 export const CampaignTargeting = z.object({
   pathIncludes: z.string().optional(),
 });

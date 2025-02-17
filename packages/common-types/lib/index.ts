@@ -1,4 +1,5 @@
 export * from './ad-analytics';
+export * from './ad-placement';
 export * from './advertisement';
 export * from './advertisement-analytics';
 export * from './campaign';
