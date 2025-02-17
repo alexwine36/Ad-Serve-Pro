@@ -38,6 +38,17 @@ describe('Company', () => {
       const getCompanySlug = await trpc.company.getOne({ slug: res.slug });
       expect(getCompanySlug).toBeTruthy();
       expect(getCompanySlug?.slug).toBe(res.slug);
+
+      const getCompanyUnknownId = await trpc.company.getOne({
+        unknown: res.id,
+      });
+      expect(getCompanyUnknownId).toBeTruthy();
+      expect(getCompanyUnknownId?.id).toBe(res.id);
+      const getCompanyUnknownSlug = await trpc.company.getOne({
+        unknown: res.slug,
+      });
+      expect(getCompanyUnknownSlug).toBeTruthy();
+      expect(getCompanyUnknownSlug?.slug).toBe(res.slug);
     });
   });
 });
