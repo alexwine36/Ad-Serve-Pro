@@ -42,7 +42,7 @@ export const appRouter = router({
     }),
   // Handlers
 
-adPlacement: adPlacementRouter,
+  adPlacement: adPlacementRouter,
 
   pageAnalytics: pageAnalyticsRouter,
 
