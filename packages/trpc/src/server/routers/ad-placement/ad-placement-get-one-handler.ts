@@ -3,6 +3,7 @@ import {
   formatAdPlacementData,
 } from '@repo/common-types';
 import type { TRPCContextInnerWithSession } from '@repo/trpc/src/server/create-context';
+import { TRPCError } from '@trpc/server';
 import type { AdPlacementGetOneSchema } from './ad-placement-get-one-schema';
 
 type AdPlacementGetOneOptions = {
@@ -22,6 +23,12 @@ export const adPlacementGetOneHandler = async ({
     },
     ...adPlacementSelectFields,
   });
+  if (!res) {
+    throw new TRPCError({
+      code: 'NOT_FOUND',
+      message: 'Ad placement not found',
+    });
+  }
   return formatAdPlacementData(res);
 };
 
