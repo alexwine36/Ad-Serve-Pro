@@ -2,31 +2,29 @@
 
 import { trpc } from '@/utils/trpc';
 import {
-type AdPlacementCampaignAdData,
-AdPlacementCampaignAdInput,
-getSchemaDefaults,
+  type AdPlacementCampaignAdData,
+  AdPlacementCampaignAdInput,
+  getSchemaDefaults,
 } from '@repo/common-types';
+import {
+  Form,
+  FormInput,
+  zodResolver,
+} from '@repo/design-system/components/inputs';
+import { Button } from '@repo/design-system/components/ui/button';
 import { useToast } from '@repo/design-system/hooks/use-toast';
 import type React from 'react';
 import { useForm } from 'react-hook-form';
-import {
-Form,
-FormInput,
-zodResolver,
-} from '@repo/design-system/components/inputs';
-import { Button } from '@repo/design-system/components/ui/button';
-import { AdPlacementCampaignAdTypes } from '../ad-placement-campaign-ad-types';
-
+import type { AdPlacementCampaignAdTypes } from '../ad-placement-campaign-ad-types';
 
 type AdPlacementCampaignAdFormProps = AdPlacementCampaignAdTypes & {
-onSuccess: (value: AdPlacementCampaignAdData) => void;
-adPlacementCampaignAd?: AdPlacementCampaignAdData;
+  onSuccess: (value: AdPlacementCampaignAdData) => void;
+  adPlacementCampaignAd?: AdPlacementCampaignAdData;
 };
 
-export const AdPlacementCampaignAdForm: React.FC<AdPlacementCampaignAdFormProps> = ({
-  adPlacementCampaignAd,
-  onSuccess,
-  }) => {
+export const AdPlacementCampaignAdForm: React.FC<
+  AdPlacementCampaignAdFormProps
+> = ({ adPlacementCampaignAd, onSuccess }) => {
   const { toast } = useToast();
 
   const utils = trpc.useUtils();
@@ -34,52 +32,58 @@ export const AdPlacementCampaignAdForm: React.FC<AdPlacementCampaignAdFormProps>
   const form = useForm<AdPlacementCampaignAdInput>({
     resolver: zodResolver(AdPlacementCampaignAdInput),
     defaultValues: {
-    ...getSchemaDefaults(AdPlacementCampaignAdInput),
-    ...adPlacementCampaignAd,
+      ...getSchemaDefaults(AdPlacementCampaignAdInput),
+      ...adPlacementCampaignAd,
     },
-    });
+  });
 
-    const handleSuccess = (data: AdPlacementCampaignAdData) => {
+  const handleSuccess = (data: AdPlacementCampaignAdData) => {
     toast({
-    title: 'Success',
-    description: adPlacementCampaignAd ? 'AdPlacementCampaignAd saved' : 'AdPlacementCampaignAd created',
-    variant: 'success',
+      title: 'Success',
+      description: adPlacementCampaignAd
+        ? 'AdPlacementCampaignAd saved'
+        : 'AdPlacementCampaignAd created',
+      variant: 'success',
     });
     utils.adPlacementCampaignAd.getAll.invalidate();
     onSuccess(data);
-    };
+  };
 
-    const { mutate: create } = trpc.adPlacementCampaignAd.create.useMutation({
+  const { mutate: create } = trpc.adPlacementCampaignAd.create.useMutation({
     onSuccess: (d) => {
-    handleSuccess(d);
+      handleSuccess(d);
     },
-    });
+  });
 
-    const { mutate: update } = trpc.adPlacementCampaignAd.update.useMutation({
+  const { mutate: update } = trpc.adPlacementCampaignAd.update.useMutation({
     onSuccess: (d) => {
-    handleSuccess(d);
+      handleSuccess(d);
     },
-    });
+  });
 
-    const onSubmit = (data: AdPlacementCampaignAdInput) => {
+  const onSubmit = (data: AdPlacementCampaignAdInput) => {
     console.log(data);
     if (adPlacementCampaignAd?.id) {
-    // update
-    update({
-    id: adPlacementCampaignAd.id,
-    ...data,
-    });
+      // update
+      update({
+        id: adPlacementCampaignAd.id,
+        ...data,
+      });
     } else {
-    create(data);
+      create(data);
     }
-    };
+  };
 
-    return (
+  return (
     <Form {...form}>
       <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
         <div className="flex w-full flex-wrap gap-4">
-          <FormInput className="min-w-72 flex-auto" label="Name" control={form.control} name="name" />
-
+          <FormInput
+            className="min-w-72 flex-auto"
+            label="Name"
+            control={form.control}
+            name="name"
+          />
         </div>
 
         <div className="flex justify-end">
@@ -89,5 +93,5 @@ export const AdPlacementCampaignAdForm: React.FC<AdPlacementCampaignAdFormProps>
         </div>
       </form>
     </Form>
-    );
-    };
+  );
+};

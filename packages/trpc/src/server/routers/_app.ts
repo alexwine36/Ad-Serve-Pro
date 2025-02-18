@@ -44,7 +44,7 @@ export const appRouter = router({
     }),
   // Handlers
 
-adPlacementCampaignAd: adPlacementCampaignAdRouter,
+  adPlacementCampaignAd: adPlacementCampaignAdRouter,
 
   adPlacement: adPlacementRouter,
 

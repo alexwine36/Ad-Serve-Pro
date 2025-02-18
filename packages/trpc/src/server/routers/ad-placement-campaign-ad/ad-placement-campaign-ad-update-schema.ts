@@ -1,7 +1,9 @@
-import { z } from "zod";
-import { AdPlacementCampaignAdUpdateInput } from "@repo/common-types";
+import { AdPlacementCampaignAdUpdateInput } from '@repo/common-types';
+import type { z } from 'zod';
 
 export const AdPlacementCampaignAdUpdateSchema =
-AdPlacementCampaignAdUpdateInput;
+  AdPlacementCampaignAdUpdateInput;
 
-export type AdPlacementCampaignAdUpdateSchema = z.infer<typeof AdPlacementCampaignAdUpdateSchema>;
+export type AdPlacementCampaignAdUpdateSchema = z.infer<
+  typeof AdPlacementCampaignAdUpdateSchema
+>;
