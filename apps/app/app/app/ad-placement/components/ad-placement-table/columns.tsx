@@ -32,7 +32,7 @@ export function getColumns({
         const id = cell.getValue<string>();
         return (
           <Button variant={'ghost'} size={'icon'} asChild>
-            <Link href={`/ad-placement/${id}`}>
+            <Link href={`/app/ad-placement/${id}`}>
               <Eye />
             </Link>
           </Button>

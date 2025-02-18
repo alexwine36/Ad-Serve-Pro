@@ -4,7 +4,7 @@ import { auth } from '../../../../../packages/auth/auth';
 import { Header } from '../components/header';
 import { AdPlacementCard } from './components/ad-placement-card';
 
-const AdPlacementPage = async () => {
+const AdPlacementsPage = async () => {
   const session = await auth();
 
   if (!session?.user.currentOrganizationId) {
@@ -15,7 +15,7 @@ const AdPlacementPage = async () => {
 
   return (
     <>
-      <Header page="Companies" pages={[]} />
+      <Header page="Ad Placements" pages={[]} />
 
       <Container className="flex flex-col gap-4">
         <AdPlacementCard />
@@ -24,4 +24,4 @@ const AdPlacementPage = async () => {
   );
 };
 
-export default AdPlacementPage;
+export default AdPlacementsPage;

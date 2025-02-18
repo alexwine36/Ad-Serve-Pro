@@ -1,5 +1,6 @@
 // Exports
 
+export * from './ad-placement-campaign-ad/handlers';
 export * from './ad-placement/handlers';
 export * from './page-analytics/handlers';
 export * from './campaign-ad/handlers';

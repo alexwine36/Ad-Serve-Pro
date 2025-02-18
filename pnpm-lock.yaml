@@ -608,6 +608,9 @@ importers:
       pluralize-esm:
         specifier: 9.0.5
         version: 9.0.5
+      prismjs:
+        specifier: ^1.29.0
+        version: 1.29.0
       quill:
         specifier: 2.0.3
         version: 2.0.3
@@ -660,6 +663,9 @@ importers:
       '@types/node':
         specifier: ^22.10.5
         version: 22.10.5
+      '@types/prismjs':
+        specifier: ^1.26.5
+        version: 1.26.5
       '@types/quill':
         specifier: ^2.0.14
         version: 2.0.14
@@ -7420,6 +7426,10 @@ packages:
     resolution: {integrity: sha512-aFI3Yi+ApUxkwCJJwyQSwpyzUX7YX3ihzuHNHOyv4GJg3X5tQsmRaJEnZ+ZyfHpMtnyahhmXVfbTZ+lS8ZtfKw==}
     engines: {node: '>=18.18'}
     hasBin: true
+
+  prismjs@1.29.0:
+    resolution: {integrity: sha512-Kx/1w86q/epKcmte75LNrEoT+lX8pBpavuAbvJWRXar7Hz8jrtF+e3vY751p0R8H9HdArwaCTNDDzHg/ScJK1Q==}
+    engines: {node: '>=6'}
 
   proc-log@4.2.0:
     resolution: {integrity: sha512-g8+OnU/L2v+wyiVK+D5fA34J7EH8jZ8DDlvwhRCMxmMj7UCBvxiO1mGeN+36JXIKF4zevU4kRBd8lVgG9vLelA==}
@@ -16509,6 +16519,8 @@ snapshots:
       '@prisma/engines': 6.1.0
     optionalDependencies:
       fsevents: 2.3.3
+
+  prismjs@1.29.0: {}
 
   proc-log@4.2.0: {}
 
