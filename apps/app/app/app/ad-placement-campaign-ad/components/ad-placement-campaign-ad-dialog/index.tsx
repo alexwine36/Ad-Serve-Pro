@@ -15,12 +15,13 @@ import type React from 'react';
 import { AdPlacementCampaignAdForm } from '../ad-placement-campaign-ad-form';
 import type { AdPlacementCampaignAdTypes } from '../ad-placement-campaign-ad-types';
 
-export interface AdPlacementCampaignAdDialogProps
-  extends React.ComponentPropsWithoutRef<typeof Dialog>,
-    AdPlacementCampaignAdTypes {
-  adPlacementCampaignAd?: AdPlacementCampaignAdData;
-  showTrigger?: boolean;
-}
+export type AdPlacementCampaignAdDialogProps = React.ComponentPropsWithoutRef<
+  typeof Dialog
+> &
+  AdPlacementCampaignAdTypes & {
+    adPlacementCampaignAd?: AdPlacementCampaignAdData;
+    showTrigger?: boolean;
+  };
 
 export const AdPlacementCampaignAdDialog: React.FC<
   AdPlacementCampaignAdDialogProps

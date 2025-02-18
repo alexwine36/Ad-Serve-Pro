@@ -6,11 +6,7 @@ import {
   AdPlacementCampaignAdInput,
   getSchemaDefaults,
 } from '@repo/common-types';
-import {
-  Form,
-  FormInput,
-  zodResolver,
-} from '@repo/design-system/components/inputs';
+import { Form, zodResolver } from '@repo/design-system/components/inputs';
 import { Button } from '@repo/design-system/components/ui/button';
 import { useToast } from '@repo/design-system/hooks/use-toast';
 import type React from 'react';
@@ -78,12 +74,12 @@ export const AdPlacementCampaignAdForm: React.FC<
     <Form {...form}>
       <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
         <div className="flex w-full flex-wrap gap-4">
-          <FormInput
+          {/* <FormInput
             className="min-w-72 flex-auto"
             label="Name"
             control={form.control}
             name="name"
-          />
+          /> */}
         </div>
 
         <div className="flex justify-end">
