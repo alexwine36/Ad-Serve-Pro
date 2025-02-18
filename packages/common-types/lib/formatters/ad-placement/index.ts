@@ -6,6 +6,9 @@ export const adPlacementSelectFields =
   Prisma.validator<Prisma.AdPlacementDefaultArgs>()({
     include: {
       campaignAds: {
+        where: {
+          isActive: true,
+        },
         include: {
           campaignAd: {
             include: {

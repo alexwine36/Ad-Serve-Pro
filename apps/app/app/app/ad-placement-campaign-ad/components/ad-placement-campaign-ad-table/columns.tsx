@@ -10,7 +10,9 @@ import type {
   DataTableRowAction,
 } from '@repo/design-system/components/custom/data-table';
 import { AspectRatio } from '@repo/design-system/components/ui/aspect-ratio';
+import { Button } from '@repo/design-system/components/ui/button';
 import { Checkbox } from '@repo/design-system/components/ui/checkbox';
+import Link from 'next/link';
 import { AdvertisementSizeBadge } from '../../../advertisement/components/advertisement-size-badge';
 import { AdvertisementTypeBadge } from '../../../advertisement/components/advertisement-type-badge';
 import { CampaignStatusBadge } from '../../../campaign/components/campaign-status-badge';
@@ -73,9 +75,35 @@ export function getColumns({
       remove: !!adPlacementId,
     },
     {
+      accessorKey: 'company.name',
+      header: 'Company Name',
+      remove: !!campaignAdId,
+      cell: ({ cell, row }) => {
+        const companyName = cell.getValue<string>();
+        const companyId = row.original.company.id;
+        return (
+          <Button variant={'link'} asChild>
+            <Link href={`/app/company/${companyId}`}>{companyName}</Link>
+          </Button>
+        );
+      },
+    },
+    {
       accessorKey: 'campaignAd.campaign.name',
       header: 'Campaign Name',
       remove: !!campaignAdId,
+      cell: ({ cell, row }) => {
+        const campaignName = cell.getValue<string>();
+        const companyId = row.original.campaignAd.campaign.companyId;
+        const campaignId = row.original.campaignAd.campaign.id;
+        return (
+          <Button variant={'link'} asChild>
+            <Link href={`/app/company/${companyId}/campaign/${campaignId}`}>
+              {campaignName}
+            </Link>
+          </Button>
+        );
+      },
     },
     {
       accessorKey: 'campaignAd.campaign.status',

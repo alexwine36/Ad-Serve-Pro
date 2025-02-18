@@ -5,6 +5,7 @@ import { trpcCaller } from '../../../../utils/trpc-server';
 import { AdPlacementCampaignAdCard } from '../../ad-placement-campaign-ad/components/ad-placement-campaign-ad-card';
 import { Header } from '../../components/header';
 import { AdPlacementCode } from '../components/ad-placement-code';
+import { AdPlacementStats } from '../components/ad-placement-stats';
 
 const AdPlacementPage = async ({
   params,
@@ -37,7 +38,11 @@ const AdPlacementPage = async ({
       />
 
       <Container className="flex flex-col gap-4">
-        <AdPlacementCode adPlacement={adPlacement} />
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-[_3fr,2fr]">
+          <AdPlacementStats adPlacement={adPlacement} />
+          <AdPlacementCode adPlacement={adPlacement} />
+        </div>
+
         <AdPlacementCampaignAdCard adPlacementId={id} />
       </Container>
     </>

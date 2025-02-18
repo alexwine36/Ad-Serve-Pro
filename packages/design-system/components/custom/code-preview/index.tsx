@@ -47,7 +47,7 @@ export const CodePreview: React.FC<CodePreviewProps> = ({
         </span>
       )}
 
-      <pre className="relative px-[0.3rem] py-[0.2rem] font-mono font-semibold text-sm">
+      <pre className="overflow-x-scroll px-[0.3rem] py-[0.2rem] font-mono font-semibold text-sm">
         <code
           // biome-ignore lint/security/noDangerouslySetInnerHtml: needed for code highlight
           dangerouslySetInnerHTML={{

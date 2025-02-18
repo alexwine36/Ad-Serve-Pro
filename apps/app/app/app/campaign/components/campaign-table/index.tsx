@@ -52,6 +52,8 @@ export const CampaignTable: React.FC<CampaignTypes> = ({ companyId }) => {
         enableSorting: true,
       },
       {
+        enableColumnFilter: true,
+        filterFn: 'arrIncludesSome',
         accessorKey: 'status',
         header: 'Status',
         cell: ({ cell }) => {

@@ -13,7 +13,10 @@ export const adPlacementCampaignAdSelectFields =
         ...adPlacementSelectFields,
       },
       campaignAd: {
-        ...campaignAdSelectFields,
+        include: {
+          ...campaignAdSelectFields.include,
+          company: true,
+        },
       },
     },
   });
@@ -29,6 +32,7 @@ export const formatAdPlacementCampaignAdData = (
     ...adPlacementCampaignAd,
     adPlacement: formatAdPlacementData(adPlacementCampaignAd.adPlacement),
     campaignAd: formatCampaignAdData(adPlacementCampaignAd.campaignAd),
+    company: adPlacementCampaignAd.campaignAd.company,
   };
   return AdPlacementCampaignAdData.parse(data);
 };
