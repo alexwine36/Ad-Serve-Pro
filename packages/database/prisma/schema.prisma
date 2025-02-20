@@ -129,6 +129,7 @@ model Organization {
   campaignAds    CampaignAd[]
   advertisements Advertisement[]
   campaigns      Campaign[]
+  adTargets      AdPlacement[]
 }
 
 enum MemberRole {
@@ -253,6 +254,35 @@ model Campaign {
   analytics CampaignAnalytics[]
 }
 
+model AdPlacement {
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+
+  name        String
+  description String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  campaignAds AdPlacementCampaignAd[]
+}
+
+model AdPlacementCampaignAd {
+  id            String      @id @default(cuid())
+  adPlacementId String
+  adPlacement   AdPlacement @relation(fields: [adPlacementId], references: [id])
+
+  campaignAdId String
+  campaignAd   CampaignAd @relation(fields: [campaignAdId], references: [id])
+
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([adPlacementId, campaignAdId])
+}
+
 model CampaignAd {
   id         String        @id @default(cuid())
   createdAt  DateTime      @default(now())
@@ -268,8 +298,9 @@ model CampaignAd {
   companyId String
   company   Company @relation(fields: [companyId], references: [id])
 
-  organizationId String
-  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId         String
+  organization           Organization            @relation(fields: [organizationId], references: [id])
+  adPlacementCampaignAds AdPlacementCampaignAd[]
 
   @@unique([campaignId, adId])
 }

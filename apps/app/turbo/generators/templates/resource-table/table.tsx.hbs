@@ -29,6 +29,7 @@ export const {{ capitalizedName }}Table: React.FC<{{ capitalizedName }}Types> = 
     >(undefined);
 
     {{#if includeMethods.delete}}
+    const utils = trpc.useUtils();
     const { mutate: delete{{ capitalizedName }} } = trpc.{{ propertyName }}.delete.useMutation({
     onSuccess: () => {
     utils.{{ propertyName }}.getAll.invalidate();

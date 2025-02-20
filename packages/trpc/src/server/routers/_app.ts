@@ -1,4 +1,8 @@
 import { router } from '../trpc';
+import { adPlacementCampaignAdRouter } from './ad-placement-campaign-ad/_router';
+
+import { adPlacementRouter } from './ad-placement/_router';
+
 import { pageAnalyticsRouter } from './page-analytics/_router';
 
 import { campaignAdRouter } from './campaign-ad/_router';
@@ -39,6 +43,10 @@ export const appRouter = router({
       };
     }),
   // Handlers
+
+  adPlacementCampaignAd: adPlacementCampaignAdRouter,
+
+  adPlacement: adPlacementRouter,
 
   pageAnalytics: pageAnalyticsRouter,
 

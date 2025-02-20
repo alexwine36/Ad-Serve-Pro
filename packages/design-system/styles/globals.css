@@ -44,7 +44,15 @@
       "Noto Color Emoji";
 
     --font-mono: var(--font-roboto-mono);
+
+    --code-token: 263.4 70% 50.4%;
+    --code-selector: 142.1 76.2% 36.3%;
+    --code-operator: 26 90.5% 37.1%;
+    --code-attr: 201.3 96.3% 32.2%;
+    --code-comment: 215.3 25% 26.7% / 0.8;
+    --code-punctuation: 215.3 25% 26.7%;
   }
+
   .dark {
     --background: 0 0% 2%;
     --foreground: 0 0% 95%;
@@ -79,6 +87,13 @@
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    --code-token: 258.3 89.5% 66.3%;
+    --code-selector: 141.9 69.2% 58%;
+    --code-operator: 26 90.5% 37.1%;
+    --code-attr: 198.4 93.2% 59.6%;
+    --code-punctuation: 212.7 26.8% 83.9%;
+    --code-comment: var(--code-punctuation) / 0.8;
   }
 }
 

@@ -40,6 +40,7 @@ export const Text = ({ className, size, variant, ...props }: TextProps) => {
   if (variant === 'code') {
     Comp = 'code';
   }
+
   return (
     <Comp
       className={cn(textVariants({ size, variant, className }))}

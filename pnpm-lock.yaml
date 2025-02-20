@@ -147,8 +147,8 @@ importers:
         specifier: 7.54.2
         version: 7.54.2(react@19.0.0)
       remeda:
-        specifier: 2.20.1
-        version: 2.20.1
+        specifier: 2.20.2
+        version: 2.20.2
       require-in-the-middle:
         specifier: 7.4.0
         version: 7.4.0
@@ -236,8 +236,8 @@ importers:
         specifier: ^19.0.2
         version: 19.0.3(@types/react@19.0.7)
       remeda:
-        specifier: ^2.20.1
-        version: 2.20.1
+        specifier: ^2.20.2
+        version: 2.20.2
       typescript:
         specifier: ^5.7.2
         version: 5.7.3
@@ -343,8 +343,8 @@ importers:
         specifier: ^19.0.2
         version: 19.0.2(@types/react@19.0.7)
       remeda:
-        specifier: ^2.20.1
-        version: 2.20.1
+        specifier: ^2.20.2
+        version: 2.20.2
       tsup:
         specifier: ^8.3.6
         version: 8.3.6(@swc/core@1.10.14(@swc/helpers@0.5.15))(jiti@1.21.7)(postcss@8.5.1)(tsx@4.19.2)(typescript@5.7.3)(yaml@2.7.0)
@@ -449,6 +449,9 @@ importers:
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
+      remeda:
+        specifier: ^2.20.2
+        version: 2.20.2
       tsx:
         specifier: ^4.19.2
         version: 4.19.2
@@ -605,6 +608,9 @@ importers:
       pluralize-esm:
         specifier: 9.0.5
         version: 9.0.5
+      prismjs:
+        specifier: 1.29.0
+        version: 1.29.0
       quill:
         specifier: 2.0.3
         version: 2.0.3
@@ -633,8 +639,8 @@ importers:
         specifier: 2.15.0
         version: 2.15.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       remeda:
-        specifier: 2.20.1
-        version: 2.20.1
+        specifier: 2.20.2
+        version: 2.20.2
       server-only:
         specifier: 0.0.1
         version: 0.0.1
@@ -657,6 +663,9 @@ importers:
       '@types/node':
         specifier: ^22.10.5
         version: 22.10.5
+      '@types/prismjs':
+        specifier: ^1.26.5
+        version: 1.26.5
       '@types/quill':
         specifier: ^2.0.14
         version: 2.0.14
@@ -700,8 +709,8 @@ importers:
         specifier: 19.0.0
         version: 19.0.0
       remeda:
-        specifier: 2.20.1
-        version: 2.20.1
+        specifier: 2.20.2
+        version: 2.20.2
       zod:
         specifier: 3.24.1
         version: 3.24.1
@@ -836,8 +845,8 @@ importers:
         specifier: 19.0.0
         version: 19.0.0
       remeda:
-        specifier: 2.20.1
-        version: 2.20.1
+        specifier: 2.20.2
+        version: 2.20.2
     devDependencies:
       '@repo/testing':
         specifier: workspace:*
@@ -925,8 +934,8 @@ importers:
         specifier: 19.0.0
         version: 19.0.0
       remeda:
-        specifier: 2.20.1
-        version: 2.20.1
+        specifier: 2.20.2
+        version: 2.20.2
       superjson:
         specifier: 2.2.2
         version: 2.2.2
@@ -7418,6 +7427,10 @@ packages:
     engines: {node: '>=18.18'}
     hasBin: true
 
+  prismjs@1.29.0:
+    resolution: {integrity: sha512-Kx/1w86q/epKcmte75LNrEoT+lX8pBpavuAbvJWRXar7Hz8jrtF+e3vY751p0R8H9HdArwaCTNDDzHg/ScJK1Q==}
+    engines: {node: '>=6'}
+
   proc-log@4.2.0:
     resolution: {integrity: sha512-g8+OnU/L2v+wyiVK+D5fA34J7EH8jZ8DDlvwhRCMxmMj7UCBvxiO1mGeN+36JXIKF4zevU4kRBd8lVgG9vLelA==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
@@ -7746,8 +7759,8 @@ packages:
   remark@15.0.1:
     resolution: {integrity: sha512-Eht5w30ruCXgFmxVUSlNWQ9iiimq07URKeFS3hNc8cUWy1llX4KDWfyEDZRycMc+znsN9Ux5/tJ/BFdgdOwA3A==}
 
-  remeda@2.20.1:
-    resolution: {integrity: sha512-gsEsSmjE0CHkNp6xEsWsU/6JVNWq7rqw+ZfzNMbVV4YFIPtTj/i0FfxurTRI6Z9sAnQufU9de2Cb3xHsUTFTMA==}
+  remeda@2.20.2:
+    resolution: {integrity: sha512-38pfm5aUq6mUkNYbt7TdY2WEk9mSqRVV+6UsoTjabwmbu8obLbh8sYYSX2WQ3W4u6EYp3XxUKqIiwGFZu+OY9g==}
 
   require-directory@2.1.1:
     resolution: {integrity: sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==}
@@ -16507,6 +16520,8 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
+  prismjs@1.29.0: {}
+
   proc-log@4.2.0: {}
 
   process-nextick-args@2.0.1: {}
@@ -17007,7 +17022,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  remeda@2.20.1:
+  remeda@2.20.2:
     dependencies:
       type-fest: 4.33.0
 
